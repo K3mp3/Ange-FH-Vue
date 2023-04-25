@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login Form</title>
+
+    <!--Google fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">  
+
+    <!--Styling-->
+    <link rel="stylesheet" href="./src/styling/style.scss" defer>
+
+    <!--Font Awesome-->
+    <script src="https://kit.fontawesome.com/bf03cab5e8.js" crossorigin="anonymous"></script>
+
+    <!--Scripts-->
+    <script type="module" src="./scripts/admin/main.ts" defer></script>
+  </head>
+  <body>
+    <header>
+      <section class="header-container">
+      <nav>
+        <div class="nav-container dark-background">
+          <div class="nav-links">
+            <a class="navbar-brand" href="index.html" ><img src="./public/assets/img/AngeFH_rgb.jpg"></a>
+            <ul class="desktop-links hidden">
+              <li><a href="./myprojects.html">My Projects</a></li>
+              <li><a href="./myresume.html">Experience</a></li>
+            </ul>
+          </div>
+          <section class="hero-container" id="hero-containerID">
+            <button class="menuToggleBtn" aria-label="toggle menu">
+              <span class="first-row rows">
+                <span></span>
+                <span></span>
+                <span></span>
+              </span>
+              <span class="second-row rows">
+                <span></span>
+                <span></span>
+                <span></span>
+              </span>
+              <span class="third-row rows">
+                <span></span>
+                <span></span>
+                <span></span>
+              </span>
+            </button>
+          </section>
+        </div>
+        <div class="menu-overlay hide-menu-overlay">
+          <ul>
+            <li><a href="./myprojects.html">My Projects</a></li>
+            <li><a href="./myresume.html">Experience</a></li>
+          </ul>
+        </div>
+      </nav>
+    </section>
+</header>
+  </body>
+</html>
