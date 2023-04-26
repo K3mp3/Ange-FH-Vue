@@ -1,12 +1,32 @@
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const cors = require("cors");
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
 
-var app = express();
+const mongoose = require("mongoose");
+require("dotenv").config();
+
+const MongoClient = require("mongodb").MongoClient
+
+const app = express();
+
+async function init() {
+    try {
+        const options = {useNewUrlParser: true, useUnifiedTopology: true};
+        await mongoose.connect(process.env.MONGODB_URI, options); 
+        console.log("connected to the database!");   
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+init();
+
+app.use(cors());
 
 app.use(logger('dev'));
 app.use(express.json());
