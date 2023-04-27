@@ -1,3 +1,5 @@
+import showFrontPage from "./frontpage";
+
 const accountForm = document.createElement("form");
 const accountFormContainer = document.createElement("div");
 const h2 = document.createElement("h2");
@@ -77,13 +79,15 @@ function loginUser(e: Event) {
     })
     .then(res => res.json())
     .then(data => {
+        console.log("data", data);
         if (data.username) {
             console.log("data", data);
             alert(`Good morning ${data.username}`);
             localStorage.setItem("username", data.username);
             localStorage.setItem("id", data.id);
-
             console.log("username", data.username, "id", data.id);
+
+            showFrontPage();
         } else {
             alert("Failed login attempt, please check your username and password!");
         }

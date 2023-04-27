@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-const crypto = require("crypto-js");
 const { ObjectId } = require('mongodb');
 const bcrypt = require("bcrypt"); 
 
@@ -32,17 +31,23 @@ router.post("/createuser", async(req, res) => {
 
 router.post("/loginuser", async(req, res) => {
   const { username, password, email } = req.body;
+  console.log("body", req.body)
 
   try {
     const foundUser = await UserModel.findOne({ username: username, email: email });
+    console.log("foundUser", foundUser);
     const match = await bcrypt.compare(password, foundUser.password);
+    console.log("match", match);
     if (match) {
-      res.json({ username: foundUser.username });
+      res.status(201).json({ username: foundUser.username });
+      console.log("ja")
     } else {
       res.json("Wrong username or password!");
+      console.log("nej")
     }
   } catch (error) {
     res.json("Wrong username or password!");
+    console.log("nej 2")
   }
 })
 
