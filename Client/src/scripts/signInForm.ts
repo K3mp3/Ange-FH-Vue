@@ -2,6 +2,9 @@ import removeSignInForm from "./frontpage";
 
 const accountForm = document.createElement("form");
 const accountFormContainer = document.createElement("div");
+const textContainer = document.createElement("div");
+const leftTextContainer = document.createElement("div");
+const rightTextContainer = document.createElement("div");
 const h2 = document.createElement("h2");
 const p = document.createElement("p");
 const createAccountLink = document.createElement("button");
@@ -12,11 +15,31 @@ const inputPassword = document.createElement("input");
 const signInBtn = document.createElement("button");
 const createAccountBtn = document.createElement("button");
 
+let width = document.documentElement.clientWidth;
+
+function updateScreenSize() {
+    width = document.documentElement.clientWidth;
+    checkScreenSize();
+}
+
+function checkScreenSize() {
+    if (width < 499) {
+        accountFormContainer.classList.add("account-form-container");
+    }
+
+    else {
+        accountFormContainer.classList.remove("account-form-container");
+        accountFormContainer.classList.add("account-form-container-large");
+    }
+}
+
 export default function createLoginForm() {
     console.log("test");
     accountForm.classList.add("account-form");
     accountFormContainer.classList.add("account-form-container");
-    h2.classList.add("h2");
+    textContainer.classList.add("text-container");
+    leftTextContainer.classList.add("left-text-container");
+    rightTextContainer.classList.add("right-text-container");
     p.classList.add("p");
     createAccountLink.classList.add("create-account-link");
     signInBtn.classList.add("sign-in-btn");
@@ -39,8 +62,11 @@ export default function createLoginForm() {
     document.body.appendChild(accountForm);
     accountForm.appendChild(accountFormContainer);
     accountFormContainer.appendChild(h2);
-    accountFormContainer.appendChild(p);
-    p.appendChild(createAccountLink);
+    accountFormContainer.appendChild(textContainer);
+    textContainer.appendChild(leftTextContainer);
+    textContainer.appendChild(rightTextContainer);
+    leftTextContainer.appendChild(p);
+    rightTextContainer.appendChild(createAccountLink);
     labelForUsername.appendChild(inputUsername);
     accountFormContainer.appendChild(inputUsername);
     accountFormContainer.appendChild(inputEmail);
@@ -51,6 +77,9 @@ export default function createLoginForm() {
 
     createAccountLink.addEventListener("click", createAccountForm);
     signInBtn.addEventListener("click", loginUser);
+
+    window.addEventListener("resize", updateScreenSize);
+    checkScreenSize();
 }
 
 createLoginForm();
