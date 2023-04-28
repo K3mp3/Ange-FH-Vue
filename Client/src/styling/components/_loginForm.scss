@@ -7,7 +7,7 @@ body {
 }
 
 .account-form {
-    max-width: 500px;
+    max-width: 315px;
     height: 100vh;
     margin: auto;
     display: flex;
@@ -118,6 +118,16 @@ body {
 }
 
 @media screen and (min-width: 499px) {
+    
+    .account-form {
+        min-width: 500px;
+        height: 100vh;
+        margin: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
     .account-form-container-large {
         width: 90%;
         margin: auto;
