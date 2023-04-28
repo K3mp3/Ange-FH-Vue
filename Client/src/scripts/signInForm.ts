@@ -1,4 +1,4 @@
-import showFrontPage from "./frontpage";
+import removeSignInForm from "./frontpage";
 
 const accountForm = document.createElement("form");
 const accountFormContainer = document.createElement("div");
@@ -87,7 +87,7 @@ function loginUser(e: Event) {
             localStorage.setItem("id", data.id);
             console.log("username", data.username, "id", data.id);
 
-            showFrontPage();
+            removeSignInForm();
         } else {
             alert("Failed login attempt, please check your username and password!");
         }
