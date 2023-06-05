@@ -2,17 +2,27 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const mongoose = require("mongoose");
 const cors = require("cors");
+const MongoClient = require("mongodb").MongoClient
+
+require("dotenv").config();
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 
-const mongoose = require("mongoose");
-require("dotenv").config();
-
-const MongoClient = require("mongodb").MongoClient
-
 const app = express();
+
+const server = require('http').Server(app);
+
+const io = require('socket.io')(server, {
+  cors: {
+    origin: '*',
+    methods: ['GET', 'POST'],
+  },
+});
+
+const socket = require('./socket')(io);
 
 async function init() {
     try {
