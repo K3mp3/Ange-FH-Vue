@@ -10,11 +10,7 @@ import StartPageAsideLinks from './StartPageAsideLinks.vue';
 </template>
 <style scoped>
     nav {
-        padding: 20px;
         background-color: #ffffff;
-        margin: 0;
-        display: flex;
-        justify-content: space-between;
-        flex-direction: row;
+        margin: auto;
     }
 </style>
