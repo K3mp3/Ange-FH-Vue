@@ -1,5 +1,34 @@
 <script setup lang="ts">
+    import { ref } from 'vue';
     import { RouterLink } from 'vue-router'
+
+    let screenSize = ref();
+    let width = document.documentElement.clientWidth;
+
+    function init() {
+        console.log("hej");
+        window.addEventListener("resize", updateScreenSize);
+        window.addEventListener("resize", controlScreenSize);
+
+        if (width < 910) {
+            screenSize.value = true;
+        }
+    }
+
+    init();
+
+    function controlScreenSize() {
+        if (width > 909) {
+            console.log("width", width);
+            screenSize.value = false;
+        } else {
+            screenSize.value = true;
+        }
+    }
+
+    function updateScreenSize() {
+        width = document.documentElement.clientWidth;
+    }
 
     const links: string[] = ["Create room", "About", "Contact", "FAQ"];
 
@@ -14,7 +43,7 @@
             <img src="../../../public/img/AngeFH_rgb.jpg">
         </div>
         <div class="navigation-container">
-            <ul>
+            <ul :class="{hide: screenSize === true}">
                 <li v-for="link in links"><router-link :to="getRoute(link)" class="router-link">{{ link }}</router-link></li>
             </ul>
         </div>
@@ -49,6 +78,10 @@
         align-items: center;
         gap: 60px;
         padding: 20px;
+    }
+
+    .hide {
+        display: none;
     }
 
     li {
