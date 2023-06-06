@@ -12,7 +12,7 @@
 </script>
 <template>
     <div class="logo-container">
-
+        <img src="../../../public/img/AngeFH_rgb.jpg">
     </div>
     <div class="navigation-container">
 
@@ -22,12 +22,10 @@
     .logo-container {
         background-color: #5dc3dd;
         width: 100%;
-        height: 50px;
     }
 
     .navigation-container {
         background-color: #dd5dd2;
         width: 100%;
-        height: 50px;
     }
 </style>
