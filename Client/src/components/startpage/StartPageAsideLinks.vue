@@ -1,5 +1,6 @@
 <script setup lang="ts">
-    import { ref } from 'vue';
+    import type { IHamburgerIcon } from '@/models/IHamburgerIcon';
+import { ref } from 'vue';
     import { RouterLink } from 'vue-router'
 
     let screenSize = ref();
@@ -32,6 +33,12 @@
 
     const links: string[] = ["Create room", "About", "Contact", "FAQ"];
 
+    const hamburgerIcon: IHamburgerIcon[] = [
+        {dot: document.createElement('span')},
+        {dot: document.createElement('span')},
+        {dot: document.createElement('span')},
+    ]
+
     function getRoute(link: string) {
         const trimmedLink = link.trim().replace(/\s/g, '').toLowerCase();
         return `/${trimmedLink}`;
@@ -46,6 +53,9 @@
             <ul :class="{hide: screenSize === true}">
                 <li v-for="link in links"><router-link :to="getRoute(link)" class="router-link">{{ link }}</router-link></li>
             </ul>
+            <section class="hero-container" id="hero-containerID" :class="{hide: screenSize === false}">
+                <span v-for="dot in hamburgerIcon" class="rows"></span>
+            </section>
         </div>
     </div>
 </template>
@@ -56,6 +66,26 @@
         justify-content: space-between;
         flex-direction: row;
         margin: auto;
+        padding: 20px;
+    }
+
+    .hero-container {
+        height: 100%;
+        width: 67px;
+        background-color: blue;
+        display: flex;
+        flex-direction: column;
+        padding: 4px;
+        justify-content: center;
+    }
+
+    span {
+        width: 10px;
+        height: 10px;
+        display: block;
+        border-radius: 50%;
+        background-color: #ffffff;
+        margin: 2px;
     }
 
     .logo-container {
