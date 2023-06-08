@@ -1,6 +1,6 @@
 <script setup lang="ts">
     import type { IHamburgerIcon } from '@/models/IHamburgerIcon';
-import { ref } from 'vue';
+    import { ref } from 'vue';
     import { RouterLink } from 'vue-router'
 
     let screenSize = ref();
@@ -43,6 +43,24 @@ import { ref } from 'vue';
         const trimmedLink = link.trim().replace(/\s/g, '').toLowerCase();
         return `/${trimmedLink}`;
     }
+
+    function expandAllDots() {
+        const heroContainer = document.getElementById('hero-containerID');
+        if (heroContainer) {
+        heroContainer.classList.add('expand');
+        }
+    }
+
+    function shrinkAllDots() {
+        const heroContainer = document.getElementById('hero-containerID');
+        if (heroContainer) {
+        heroContainer.classList.remove('expand');
+        }
+    }
+
+    function openMobileMenu() {
+        console.log("click")
+    }
 </script>
 <template>
     <div class="nav-container">
@@ -53,7 +71,7 @@ import { ref } from 'vue';
             <ul :class="{hide: screenSize === true}">
                 <li v-for="link in links"><router-link :to="getRoute(link)" class="router-link">{{ link }}</router-link></li>
             </ul>
-            <section class="hero-container" id="hero-containerID" :class="{hide: screenSize === false}">
+            <section class="hero-container" id="hero-containerID" :class="{ hide: screenSize === false }" @mouseover="expandAllDots" @mouseout="shrinkAllDots" @click="openMobileMenu">                
                 <span v-for="dot in hamburgerIcon" class="rows"></span>
             </section>
         </div>
@@ -66,13 +84,23 @@ import { ref } from 'vue';
         justify-content: space-between;
         flex-direction: row;
         margin: auto;
-        padding: 20px;
+    }
+
+    .logo-container {
+        width: 100%;
+        display: flex;
+        align-items: center;
+    }
+
+    .navigation-container {
+        width: 100%;
+        display: flex;
+        justify-content: end;
     }
 
     .hero-container {
         height: 100%;
-        width: 67px;
-        background-color: blue;
+        width: 55px;
         display: flex;
         flex-direction: column;
         padding: 4px;
@@ -80,25 +108,19 @@ import { ref } from 'vue';
     }
 
     span {
-        width: 10px;
-        height: 10px;
+        transition: all 0.5s ease-in-out;
+        width: 8px;
+        height: 8px;
         display: block;
-        border-radius: 50%;
-        background-color: #ffffff;
-        margin: 2px;
+        border-radius: 4px;
+        background-color: #ff7b0f;
+        margin: 4px;
     }
 
-    .logo-container {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        padding-left: 20px;
-    }
-
-    .navigation-container {
-        width: 100%;
-        display: flex;
-        justify-content: end;
+    .hero-container.expand .rows {
+        width: 40px;
+        transition: all 0.5s ease-in-out;
+        border-radius: 4px;
     }
 
     ul {

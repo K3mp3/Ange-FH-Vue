@@ -12,5 +12,6 @@ import StartPageAsideLinks from './StartPageAsideLinks.vue';
     nav {
         background-color: #ffffff;
         margin: auto;
+        padding: 20px;
     }
 </style>
