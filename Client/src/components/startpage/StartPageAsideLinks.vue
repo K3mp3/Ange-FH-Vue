@@ -1,9 +1,10 @@
 <script setup lang="ts">
-    import type { IHamburgerIcon } from '@/models/IHamburgerIcon';
-    import { ref } from 'vue';
-    import { RouterLink } from 'vue-router'
+    import type { IHamburgerIcon } from "@/models/IHamburgerIcon";
+    import { ref } from "vue";
+    import { RouterLink } from "vue-router"
 
     let screenSize = ref();
+    let mobileMenuOpen = ref(false);
     let width = document.documentElement.clientWidth;
 
     function init() {
@@ -34,32 +35,44 @@
     const links: string[] = ["Create room", "About", "Contact", "FAQ"];
 
     const hamburgerIcon: IHamburgerIcon[] = [
-        {dot: document.createElement('span')},
-        {dot: document.createElement('span')},
-        {dot: document.createElement('span')},
+        {dot: document.createElement("span")},
+        {dot: document.createElement("span")},
+        {dot: document.createElement("span")},
     ]
 
     function getRoute(link: string) {
-        const trimmedLink = link.trim().replace(/\s/g, '').toLowerCase();
+        const trimmedLink = link.trim().replace(/\s/g, "").toLowerCase();
         return `/${trimmedLink}`;
     }
 
     function expandAllDots() {
-        const heroContainer = document.getElementById('hero-containerID');
+        const heroContainer = document.getElementById("hero-containerID");
         if (heroContainer) {
-        heroContainer.classList.add('expand');
+            heroContainer.classList.add("expand");
+            
         }
     }
 
     function shrinkAllDots() {
-        const heroContainer = document.getElementById('hero-containerID');
+        const heroContainer = document.getElementById("hero-containerID");
         if (heroContainer) {
-        heroContainer.classList.remove('expand');
+            heroContainer.classList.remove("expand");
         }
     }
 
     function openMobileMenu() {
+        const navContainer = document.querySelector(".nav-container");
         console.log("click")
+        mobileMenuOpen.value =! mobileMenuOpen.value;
+        console.log(mobileMenuOpen.value);
+        if(mobileMenuOpen) {
+            navContainer?.classList.add(".open")
+            console.log(navContainer);
+        }
+
+        if(mobileMenuOpen.value === false) {
+            shrinkAllDots();
+        }
     }
 </script>
 <template>
@@ -75,6 +88,9 @@
                 <span v-for="dot in hamburgerIcon" class="rows"></span>
             </section>
         </div>
+    </div>
+    <div class="mobile-navigation-menu">
+
     </div>
 </template>
 <style scoped>
@@ -105,6 +121,7 @@
         flex-direction: column;
         padding: 4px;
         justify-content: center;
+        cursor: pointer;
     }
 
     span {
