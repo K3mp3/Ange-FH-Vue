@@ -49,7 +49,6 @@
         const heroContainer = document.getElementById("hero-containerID");
         if (heroContainer) {
             heroContainer.classList.add("expand");
-            
         }
     }
 
@@ -62,16 +61,18 @@
 
     function openMobileMenu() {
         const navContainer = document.querySelector(".nav-container");
+        const mobileNavigationMenu = document.querySelector(".mobile-navigation-menu");
         console.log("click")
         mobileMenuOpen.value =! mobileMenuOpen.value;
         console.log(mobileMenuOpen.value);
-        if(mobileMenuOpen) {
-            navContainer?.classList.add(".open")
+        if(mobileMenuOpen.value === true) {
+            navContainer?.classList.add("open")
             console.log(navContainer);
         }
 
         if(mobileMenuOpen.value === false) {
             shrinkAllDots();
+            navContainer?.classList.remove("open")
         }
     }
 </script>
@@ -100,6 +101,15 @@
         justify-content: space-between;
         flex-direction: row;
         margin: auto;
+    }
+
+    .mobile-navigation-menu{
+        background-color: #d41a1a;
+        width: 100%;
+        height: 100px;
+        left: 0;
+        margin-top: 21px;
+        position: absolute;
     }
 
     .logo-container {
