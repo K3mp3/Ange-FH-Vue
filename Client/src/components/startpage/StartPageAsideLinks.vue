@@ -2,15 +2,25 @@
     import type { IHamburgerIcon } from "@/models/IHamburgerIcon";
     import { ref } from "vue";
     import { RouterLink } from "vue-router"
+    import gsap from "gsap"; 
+    import { onMounted } from "vue";
 
     let screenSize = ref();
     let mobileMenuOpen = ref(false);
+    let menuOnLoad = ref(false);
     let width = document.documentElement.clientWidth;
-
+    
+    const menuTransitionDuration = 0.5; // Adjust as needed
+    
     function init() {
+
+
         console.log("hej");
+
         window.addEventListener("resize", updateScreenSize);
         window.addEventListener("resize", controlScreenSize);
+
+        updateScreenSize()
 
         if (width < 910) {
             screenSize.value = true;
@@ -30,49 +40,51 @@
 
     function updateScreenSize() {
         width = document.documentElement.clientWidth;
-    }
+    }    
 
     const links: string[] = ["Create room", "About", "Contact", "FAQ"];
-
-    const hamburgerIcon: IHamburgerIcon[] = [
-        {dot: document.createElement("span")},
-        {dot: document.createElement("span")},
-        {dot: document.createElement("span")},
-    ]
 
     function getRoute(link: string) {
         const trimmedLink = link.trim().replace(/\s/g, "").toLowerCase();
         return `/${trimmedLink}`;
     }
 
-    function expandAllDots() {
-        const heroContainer = document.getElementById("hero-containerID");
-        if (heroContainer) {
-            heroContainer.classList.add("expand");
-        }
-    }
-
-    function shrinkAllDots() {
-        const heroContainer = document.getElementById("hero-containerID");
-        if (heroContainer) {
-            heroContainer.classList.remove("expand");
-        }
-    }
-
     function openMobileMenu() {
-        const navContainer = document.querySelector(".nav-container");
-        const mobileNavigationMenu = document.querySelector(".mobile-navigation-menu");
-        console.log("click")
-        mobileMenuOpen.value =! mobileMenuOpen.value;
-        console.log(mobileMenuOpen.value);
-        if(mobileMenuOpen.value === true) {
-            navContainer?.classList.add("open")
-            console.log(navContainer);
-        }
+        const span = document.querySelector(".dot");
+        const heroContainer = document.querySelector('.hero-container') as HTMLDivElement;
+        const mobileNavMenu = document.querySelector(".mobile-navigation-menu") as HTMLDivElement;
 
-        if(mobileMenuOpen.value === false) {
-            shrinkAllDots();
-            navContainer?.classList.remove("open")
+        gsap.to(mobileNavMenu, {
+                x: width,
+                opacity: 0,
+                onComplete: () => {
+                    mobileNavMenu.style.pointerEvents = "auto"; // Enable menu interactions
+                },
+        });
+
+        mobileMenuOpen.value =! mobileMenuOpen.value;
+
+        if (mobileMenuOpen.value) {
+            menuOnLoad.value = true;
+            heroContainer.classList.add("expand");
+            gsap.to(mobileNavMenu, {
+                x: 0,
+                duration: menuTransitionDuration,
+                opacity: 1,
+                onComplete: () => {
+                    mobileNavMenu.style.pointerEvents = "auto"; // Enable menu interactions
+                },
+            });
+        } else {
+            mobileNavMenu.style.pointerEvents = "none"; // Disable menu interactions
+            gsap.to(mobileNavMenu, {
+                x: width,
+                duration: menuTransitionDuration,
+                opacity: 0,
+                onComplete: () => {
+                heroContainer.classList.remove("expand");
+                },
+            });
         }
     }
 </script>
@@ -85,16 +97,23 @@
             <ul :class="{hide: screenSize === true}">
                 <li v-for="link in links"><router-link :to="getRoute(link)" class="router-link">{{ link }}</router-link></li>
             </ul>
-            <section class="hero-container" id="hero-containerID" :class="{ hide: screenSize === false }" @mouseover="expandAllDots" @mouseout="shrinkAllDots" @click="openMobileMenu">                
-                <span v-for="dot in hamburgerIcon" class="rows"></span>
-            </section>
+            <div class="hero-container" id="hero-containerID" :class="{ hide: screenSize === false }" @click="openMobileMenu">                
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
         </div>
     </div>
     <div class="mobile-navigation-menu">
-
+        <ul class="mobile-menu">
+            <li v-for="link in links"><router-link :to="getRoute(link)" class="router-link">{{ link }}</router-link></li>
+        </ul>
     </div>
 </template>
 <style scoped>
+    :root {
+        --menu-transition-duration: ${menuTransitionDuration}s;
+    }
     .nav-container {
         background-color: #ffffff;
         display: flex;
@@ -103,13 +122,17 @@
         margin: auto;
     }
 
-    .mobile-navigation-menu{
-        background-color: #d41a1a;
-        width: 100%;
-        height: 100px;
-        left: 0;
-        margin-top: 21px;
+    .mobile-navigation-menu {
+        padding: 20px;
+        margin-top: 20px;
+        background-color: aqua;
         position: absolute;
+        right: 0;
+    }
+
+    .mobile-menu {
+        display: flex;
+        flex-direction: column;
     }
 
     .logo-container {
@@ -136,19 +159,19 @@
 
     span {
         transition: all 0.5s ease-in-out;
-        width: 8px;
-        height: 8px;
+        width: 6px;
+        height: 6px;
         display: block;
         border-radius: 4px;
         background-color: #ff7b0f;
         margin: 4px;
     }
 
-    .hero-container.expand .rows {
-        width: 40px;
+    .hero-container.expand .dot {
         transition: all 0.5s ease-in-out;
-        border-radius: 4px;
+        width: 38px;
     }
+   
 
     ul {
         display: flex;
