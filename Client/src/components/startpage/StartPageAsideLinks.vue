@@ -7,7 +7,6 @@
 
     let screenSize = ref();
     let mobileMenuOpen = ref(false);
-    let menuOnLoad = ref(false);
     let width = document.documentElement.clientWidth;
     
     const menuTransitionDuration = 0.5; // Adjust as needed
@@ -62,6 +61,12 @@
         console.log("enter")
         gsap.to(dots, { width: "6px", duration: 0.1 }); 
     }
+
+    const emit = defineEmits(['toggle']);
+    function emitMobileMenu() {
+        mobileMenuOpen.value = !mobileMenuOpen.value;
+        emit("toggle", mobileMenuOpen.value)
+    }
 </script>
 <template>
     <div class="nav-container">
@@ -72,7 +77,7 @@
             <ul :class="{hide: screenSize === true}">
                 <li v-for="link in links"><router-link :to="getRoute(link)" class="router-link">{{ link }}</router-link></li>
             </ul>
-            <button class="mobile-menu-btn" :class="{ hide: screenSize === false }" @mouseenter="mouseEnterAnimation" @mouseleave="mouseLeaveAnimation">                
+            <button class="mobile-menu-btn" :class="{ hide: screenSize === false }" @click="emitMobileMenu" @mouseenter="mouseEnterAnimation" @mouseleave="mouseLeaveAnimation">                
                 <span class="dot"></span>
                 <span class="dot"></span>
                 <span class="dot"></span>

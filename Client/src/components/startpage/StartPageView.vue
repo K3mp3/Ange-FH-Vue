@@ -1,11 +1,18 @@
 <script setup lang="ts">
-import StartPageAsideLinks from './StartPageAsideLinks.vue';
+    import { ref } from 'vue';
+    import StartPageAsideLinks from './StartPageAsideLinks.vue';
+    import StartPageMobileNavigation from './StartPageMobileNavigation.vue';
 
-    
+    let isMenuOpen = ref(false);
+
+    function handleMobileMenu(isOpen: boolean) {
+        isMenuOpen.value = isOpen;
+    }
 </script>
 <template>
     <nav>
-        <StartPageAsideLinks></StartPageAsideLinks>
+        <StartPageAsideLinks @toggle="handleMobileMenu"></StartPageAsideLinks>
+        <StartPageMobileNavigation :is-open="isMenuOpen"></StartPageMobileNavigation>
     </nav>
 </template>
 <style scoped>
