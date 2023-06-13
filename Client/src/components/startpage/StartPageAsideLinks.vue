@@ -49,43 +49,18 @@
         return `/${trimmedLink}`;
     }
 
-    function openMobileMenu() {
-        const span = document.querySelector(".dot");
-        const heroContainer = document.querySelector('.hero-container') as HTMLDivElement;
-        const mobileNavMenu = document.querySelector(".mobile-navigation-menu") as HTMLDivElement;
+    function mouseEnterAnimation() {
+        const mobileMenuBtn = document.querySelector(".mobile-menu-btn") as HTMLButtonElement;
+        const dots = mobileMenuBtn.querySelectorAll(".dot") as NodeListOf<HTMLElement>;
+        console.log("enter")
+        gsap.to(dots, { width: "38px", duration: 0.1 });    
+    }
 
-        gsap.to(mobileNavMenu, {
-                x: width,
-                opacity: 0,
-                onComplete: () => {
-                    mobileNavMenu.style.pointerEvents = "auto"; // Enable menu interactions
-                },
-        });
-
-        mobileMenuOpen.value =! mobileMenuOpen.value;
-
-        if (mobileMenuOpen.value) {
-            menuOnLoad.value = true;
-            heroContainer.classList.add("expand");
-            gsap.to(mobileNavMenu, {
-                x: 0,
-                duration: menuTransitionDuration,
-                opacity: 1,
-                onComplete: () => {
-                    mobileNavMenu.style.pointerEvents = "auto"; // Enable menu interactions
-                },
-            });
-        } else {
-            mobileNavMenu.style.pointerEvents = "none"; // Disable menu interactions
-            gsap.to(mobileNavMenu, {
-                x: width,
-                duration: menuTransitionDuration,
-                opacity: 0,
-                onComplete: () => {
-                heroContainer.classList.remove("expand");
-                },
-            });
-        }
+    function mouseLeaveAnimation() {
+         const mobileMenuBtn = document.querySelector(".mobile-menu-btn") as HTMLButtonElement;
+        const dots = mobileMenuBtn.querySelectorAll(".dot") as NodeListOf<HTMLElement>;
+        console.log("enter")
+        gsap.to(dots, { width: "6px", duration: 0.1 }); 
     }
 </script>
 <template>
@@ -97,17 +72,12 @@
             <ul :class="{hide: screenSize === true}">
                 <li v-for="link in links"><router-link :to="getRoute(link)" class="router-link">{{ link }}</router-link></li>
             </ul>
-            <div class="hero-container" id="hero-containerID" :class="{ hide: screenSize === false }" @click="openMobileMenu">                
+            <button class="mobile-menu-btn" :class="{ hide: screenSize === false }" @mouseenter="mouseEnterAnimation" @mouseleave="mouseLeaveAnimation">                
                 <span class="dot"></span>
                 <span class="dot"></span>
                 <span class="dot"></span>
-            </div>
+            </button>
         </div>
-    </div>
-    <div class="mobile-navigation-menu">
-        <ul class="mobile-menu">
-            <li v-for="link in links"><router-link :to="getRoute(link)" class="router-link">{{ link }}</router-link></li>
-        </ul>
     </div>
 </template>
 <style scoped>
@@ -122,19 +92,6 @@
         margin: auto;
     }
 
-    .mobile-navigation-menu {
-        padding: 20px;
-        margin-top: 20px;
-        background-color: aqua;
-        position: absolute;
-        right: 0;
-    }
-
-    .mobile-menu {
-        display: flex;
-        flex-direction: column;
-    }
-
     .logo-container {
         width: 100%;
         display: flex;
@@ -147,7 +104,7 @@
         justify-content: end;
     }
 
-    .hero-container {
+    .mobile-menu-btn {
         height: 100%;
         width: 55px;
         display: flex;
@@ -155,6 +112,11 @@
         padding: 4px;
         justify-content: center;
         cursor: pointer;
+    }
+
+    button {
+        background-color: transparent;
+        border: none;
     }
 
     span {
@@ -166,12 +128,6 @@
         background-color: #ff7b0f;
         margin: 4px;
     }
-
-    .hero-container.expand .dot {
-        transition: all 0.5s ease-in-out;
-        width: 38px;
-    }
-   
 
     ul {
         display: flex;
