@@ -13,19 +13,31 @@ router.get('/', async (req, res, next) => {
 
 
 router.post("/createuser", async(req, res) => {
+  const { username, email } = req.body;
   console.log("body", req.body);
+  try {
+    const foundUser = await UserModel.findOne({ username: username, email: email });
+    console.log("foundUser", foundUser) 
 
-  const saltRounds = 10;
-  const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
+    if(foundUser) {
+      res.status(201).json("It seems that you allready have an account here.")
+    } else {
+      const saltRounds = 10;
+      const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
 
-  let newUser = await UserModel.create({
-    username: req.body.username,
-    password: hashedPassword,
-    email: req.body.email
-  });
+      let newUser = await UserModel.create({
+        username: req.body.username,
+        password: hashedPassword,
+        email: req.body.email
+      });
 
-  console.log("newUser", newUser);
-  res.status(201).json(newUser);
+      console.log("newUser", newUser);
+      res.status(201).json(newUser);
+    }
+  } catch (error) {
+    res.json("Wrong username or password!");
+    console.log("nej 2")
+  }
 })
 
 
