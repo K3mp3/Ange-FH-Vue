@@ -8,7 +8,7 @@
             <NavView></NavView>
         </header>
         <main>
-        <router-view></router-view>
+            <router-view></router-view>
         </main>
         <footer></footer>
     </div>
