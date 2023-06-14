@@ -10,13 +10,14 @@
     }
 </script>
 <template>
-    <nav>
+    <header>
         <StartPageAsideLinks @toggle="handleMobileMenu"></StartPageAsideLinks>
         <StartPageMobileNavigation :is-open="isMenuOpen"></StartPageMobileNavigation>
-    </nav>
+    </header>
 </template>
 <style scoped>
-    nav {
+    header {
+        width: 100%;
         background-color: #ffffff;
         margin: auto;
         padding: 20px;

@@ -3,7 +3,6 @@
     import { ref } from "vue";
     import { RouterLink } from "vue-router"
     import gsap from "gsap"; 
-    import { onMounted } from "vue";
 
     let screenSize = ref();
     let mobileMenuOpen = ref(false);
@@ -12,8 +11,6 @@
     const menuTransitionDuration = 0.5; // Adjust as needed
     
     function init() {
-
-
         console.log("hej");
 
         window.addEventListener("resize", updateScreenSize);
@@ -95,6 +92,8 @@
         justify-content: space-between;
         flex-direction: row;
         margin: auto;
+        position: relative;
+        z-index: 1;
     }
 
     .logo-container {
