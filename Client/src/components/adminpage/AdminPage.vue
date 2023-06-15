@@ -36,13 +36,6 @@
         <input type="file" @change="fileInput"/>
         <button accept="image/jpeg, image/png, image/jpg" @click="emitImage">Upload image</button>
         <!-- <img :src="imageUrl" alt="Uploaded Image" v-if="imageUrl" /> -->
-
-    
-</script>
-<template>
-    <div class="small-container">
-        <input type="file" />
-
     </div>
 </template>
 <style scoped>
