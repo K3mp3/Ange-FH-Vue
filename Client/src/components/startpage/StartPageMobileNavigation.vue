@@ -35,7 +35,7 @@ nav {
   background-color: #ffffff;
 }
 nav.open {
-  width: 100%;
+  
   right: 0;
 }
 

@@ -1,14 +1,14 @@
 <script setup lang="ts">
-    import StartView from "../views/StartView.vue";
+    import NavView from "../views/NavView.vue";
 </script>
 
 <template>
     <div>
         <header>
-            <StartView></StartView>
+            <NavView></NavView>
         </header>
         <main>
-        <router-view></router-view>
+            <router-view></router-view>
         </main>
         <footer></footer>
     </div>
