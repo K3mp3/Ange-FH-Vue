@@ -68,7 +68,7 @@
     }
 </script>
 <template>
-    <div class="nav-container">
+    <nav>
         <div class="logo-container">
             <img src="../../../public/img/AngeFH_rgb.jpg">
         </div>
@@ -82,13 +82,13 @@
                 <span class="dot"></span>
             </button>
         </div>
-    </div>
+    </nav>
 </template>
 <style scoped>
     :root {
         --menu-transition-duration: ${menuTransitionDuration}s;
     }
-    .nav-container {
+    nav {
         background-color: #ffffff;
         display: flex;
         justify-content: space-between;
