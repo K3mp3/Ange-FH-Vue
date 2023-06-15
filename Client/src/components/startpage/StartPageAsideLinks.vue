@@ -20,6 +20,8 @@
 
         if (width < 910) {
             screenSize.value = true;
+        } else {
+            screenSize.value = false;
         }
     }
 
