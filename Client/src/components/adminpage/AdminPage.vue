@@ -4,6 +4,7 @@
 
     const selectedFile = ref<File | null>(null);
     const imageUrl = ref<string | null>(null);
+    const movieTitle = ref("");
 
 
     function fileInput(e: Event) {
@@ -16,7 +17,7 @@
         }
     }
 
-    const emits = defineEmits<{ (e: "moviePoster", poster: FormData): void }>();
+    const emits = defineEmits<{ (e: "movieInfo", poster: FormData, movietitle: string): void }>();
 
     async function emitImage() {
         if (!selectedFile.value) {
@@ -27,20 +28,37 @@
         const formData = new FormData();
         formData.append("image", selectedFile.value)
         //console.log(formData);
+        console.log(movieTitle.value);
 
-        emits ("moviePoster", formData)
+        emits ("movieInfo", formData, movieTitle.value)
+
     }
 </script>
 <template>
-    <div class="small-container">
-        <input type="file" @change="fileInput"/>
-        <button accept="image/jpeg, image/png, image/jpg" @click="emitImage">Upload image</button>
-        <!-- <img :src="imageUrl" alt="Uploaded Image" v-if="imageUrl" /> -->
+    <div class="large-container">
+        <div class="small-container">
+            <input type="file" @change="fileInput"/>
+            <label for="movie-title-input">Film titel</label>
+            <input type="text" v-model="movieTitle" name="movie-title-input"/>
+            <button accept="image/jpeg, image/png, image/jpg" @click="emitImage">Upload image</button>
+            <!-- <img :src="imageUrl" alt="Uploaded Image" v-if="imageUrl" /> -->
+        </div>
     </div>
 </template>
 <style scoped>
-    .small-container {
+    .large-container {
         background-color: aliceblue;
         padding: 20px;
+    }
+    .small-container {
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        max-width: 290px;
+        margin: auto;
+    }
+
+    input {
+        margin-bottom: 10px;
     }
 </style>
