@@ -70,7 +70,7 @@
 <template>
     <nav>
         <div class="logo-container">
-            <img src="../../../public/img/AngeFH_rgb.jpg">
+            <img src="../../../public/img/AngeFH_rgb.jpg" />
         </div>
         <div class="navigation-container">
             <ul :class="{hide: screenSize === true}">
@@ -89,13 +89,13 @@
         --menu-transition-duration: ${menuTransitionDuration}s;
     }
     nav {
-        background-color: #ffffff;
         display: flex;
         justify-content: space-between;
         flex-direction: row;
         margin: auto;
         position: relative;
         z-index: 1;
+        background-color: #fff;
     }
 
     .logo-container {
