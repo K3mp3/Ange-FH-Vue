@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 const multer = require("multer");
+const fs = require('fs');
+const path = require('path');
 const MovieModel = require ("../models/movie_model");
 
 const fileStorageEngine = multer.diskStorage({
@@ -35,15 +37,25 @@ router.post('/savemovie', upload.single("poster"), async (req, res) => {
     }
 });
 
-// router.get('/savemovie', async (req, res) => {
-//   try {
-//     const movies = await MovieModel.find();
-//     res.status(200).json(movies);
-//     console.log(movies);
-//   } catch (error) {
-//     console.log("Error retrieving movies:", error);
-//     res.status(500).json({ error: "Failed to retrieve movies" });
-//   }
-// });
+router.get('/posters', (req, res) => {
+  const postersPath = path.join(process.cwd(), 'images');
+
+  fs.readdir(postersPath, (error, files) => {
+    if (error) {
+      console.log("Error reading posters directory:", error);
+      res.status(500).json({ error: "Failed to retrieve posters" });
+    } else {
+      const posters = files.map(file => {
+        return {
+          filename: file,
+          url: `${req.protocol}://${req.get('host')}/images/${file}`
+        };
+      });
+
+      res.status(200).json(posters);
+    }
+  });
+});
+
 
 module.exports = router;

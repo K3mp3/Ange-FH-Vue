@@ -3,14 +3,14 @@
     import axios from 'axios';
     import { ref } from 'vue';
 
-    interface MovieResponse {
-        poster: string;
-        title: string;
+    interface Poster {
+        filename: string;
+        url: string;
     }
 
 
     const savedMovie = ref<any>(null);
-    const imageUrl = ref<string | null>(null); // Add a new ref for the image URL
+    const imageUrl = ref<Poster[]>([]);
 
     async function saveMovieInfo(moviePoster: File, movieTitle: string) {
         console.log("poster", moviePoster, "title", movieTitle);
@@ -32,39 +32,37 @@
             title: title,
             };
             
-            // imageUrl.value = await getImageUrl(savedMovie.value.poster); // Set the image URL
-
             console.log("savedMovie.value", savedMovie.value);
         } catch (error) {
             console.log("Failed to save movie:", error);
         }
     }
 
-    // async function getImageUrl(poster: string): Promise<string> {
-    //     // Update the URL to the server endpoint where the images are served
-    //     const serverUrl = 'http://localhost:3000';
+    async function getPosters() {
+  try {
+    const response = await axios.get('http://localhost:3000/movie/posters');
+    const posters = response.data;
 
-    //     try {
-    //         const response = await axios.get(`${serverUrl}/images/${poster}`, {
-    //         responseType: 'blob',
-    //         });
-
-    //         // Create a blob URL from the response data
-    //         const imageUrl = URL.createObjectURL(response.data);
-    //         return imageUrl;
-    //     } catch (error) {
-    //         console.log("Failed to fetch image:", error);
-    //         return '';
-    //     }
-    // }
+    imageUrl.value = posters.map((poster: Poster) => ({
+      filename: poster.filename,
+      url: `http://localhost:3000/images/${poster.filename}`,
+    }));
+  } catch (error) {
+    console.error('Failed to retrieve posters:', error);
+  }
+}
 </script>
 
 <template>
     <div>
       <AdminPageVue @movieInfo="saveMovieInfo"></AdminPageVue>
-      <!-- <img :src="getImageUrl(savedMovie?.poster)" alt="Uploaded Image" v-if="savedMovie" /> -->
+      <button @click="getPosters">Get posters</button>
+        <div v-for="poster in imageUrl" :key="poster.filename">
+            <img :src="poster.url" :alt="poster.filename" />
+        </div>
     </div>
 </template>
 <style scoped>
-  
+  /* scroll-snap-type: y
+  scroll-behavior: smooth */
 </style>
