@@ -1,43 +1,45 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref } from "vue";
 
 const movieTitle = ref("");
 const moviePoster = ref();
 
 function fileInput(e: Event) {
-    const inputElement = e.target as HTMLInputElement;
+  const inputElement = e.target as HTMLInputElement;
 
-    const image = inputElement.files?.[0];
-    console.log(image)
+  const image = inputElement.files?.[0];
+  console.log(image);
 
-    if (image) {
-        moviePoster.value = image;
-        console.log("moviePoster", moviePoster.value);
-    }
+  if (image) {
+    moviePoster.value = image;
+    console.log("moviePoster", moviePoster.value);
+  }
 }
 
-const emits = defineEmits<{ (e: "movieInfo", poster: File, title: string): void }>();
+const emits = defineEmits<{
+  (e: "movieInfo", poster: File, title: string): void;
+}>();
 
 function emitImage() {
-    if (!moviePoster.value) {
-        return;
-    }
+  if (!moviePoster.value) {
+    return;
+  }
 
-    // Emit the "movieInfo" event with the poster and title
-    emits("movieInfo", moviePoster.value, movieTitle.value);
+  // Emit the "movieInfo" event with the poster and title
+  emits("movieInfo", moviePoster.value, movieTitle.value);
 }
 </script>
 
 <template>
   <div class="large-container">
     <div class="small-container">
-        <form @submit.prevent="emitImage" enctype="multipart/form-data">
-            <label for="file">Ladda up film poster</label>
-            <input type="file" @change="fileInput"/>
-            <label for="movie-title-input">Film titel</label>
-            <input type="text" v-model="movieTitle" name="movie-title-input" />
-            <button>Upload image</button>
-        </form>
+      <form @submit.prevent="emitImage" enctype="multipart/form-data">
+        <label for="file">Ladda up film poster</label>
+        <input type="file" @change="fileInput" />
+        <label for="movie-title-input">Film titel</label>
+        <input type="text" v-model="movieTitle" name="movie-title-input" />
+        <button>Upload image</button>
+      </form>
     </div>
   </div>
 </template>
