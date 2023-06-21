@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import AdminPageVue from "@/components/adminpage/AdminPage.vue";
 import axios from "axios";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 
 interface Movie {
   _id: string;
@@ -41,21 +41,25 @@ async function saveMovieInfo(moviePoster: File, movieTitle: string) {
   }
 }
 
-async function getPosters() {
+onMounted(async () => {
   try {
     const response = await axios.get("http://localhost:3000/movie");
     movies.value = response.data;
+    console.log(movies.value)
   } catch (error) {
     console.error("Failed to retrieve posters:", error);
   }
-}
+})
+
+  
+
 </script>
 
 <template>
   <div>
     <AdminPageVue @movieInfo="saveMovieInfo"></AdminPageVue>
-    <button @click="getPosters">Get posters</button>
-    <div v-for="movie in movies" :key="movie._id">
+    
+    <div v-for="movie in movies" :key="movie._id" class="movies">
       <img
         :src="`http://localhost:3000/movie/image/${movie.poster}`"
         :alt="movie.title"
@@ -66,4 +70,16 @@ async function getPosters() {
 <style scoped>
 /* scroll-snap-type: y
   scroll-behavior: smooth */
+
+  .movies {
+    background-color: rgb(206, 213, 219);
+    display: flex;
+    flex-direction: row;
+  }
+
+  img {
+    max-width: 200px;
+    background-color: aqua;
+    padding: 20px;
+  }
 </style>

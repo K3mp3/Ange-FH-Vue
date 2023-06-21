@@ -5,4 +5,4 @@ const storedMovieInfo = mongoose.Schema({
   title: String,
 });
 
-module.exports = mongoose.model("storedmovieinfo", storedMovieInfo);
+module.exports = mongoose.model("storedmovies", storedMovieInfo);
