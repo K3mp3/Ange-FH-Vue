@@ -58,12 +58,17 @@ onMounted(async () => {
 <template>
   <div>
     <AdminPageVue @movieInfo="saveMovieInfo"></AdminPageVue>
-    
-    <div v-for="movie in movies" :key="movie._id" class="movies">
-      <img
-        :src="`http://localhost:3000/movie/image/${movie.poster}`"
-        :alt="movie.title"
-      />
+
+    <div class="large-container">
+      <h1>Aktiva filmer</h1>
+      <div class="medium-container">
+        <div v-for="movie in movies" :key="movie._id" class="movies">
+          <img
+            :src="`http://localhost:3000/movie/image/${movie.poster}`"
+            :alt="movie.title"
+          />
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -71,15 +76,23 @@ onMounted(async () => {
 /* scroll-snap-type: y
   scroll-behavior: smooth */
 
-  .movies {
-    background-color: rgb(206, 213, 219);
+  .large-container {
+    background-color: #f7f7f7;
+  }
+
+  h1 {
+    text-align: center;
+  }
+
+  .medium-container {
     display: flex;
     flex-direction: row;
+    justify-content: center;
+    margin: auto;
   }
 
   img {
-    max-width: 200px;
-    background-color: aqua;
+    max-height: 300px;
     padding: 20px;
   }
 </style>
