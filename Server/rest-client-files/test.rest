@@ -1,0 +1,26 @@
+@host = http://localhost:3000
+
+GET {{host}}/movie/savemovie
+
+###
+
+## Skapa ny film
+# @name createMovie
+POST {{host}}/movie/savemovie HTTP/1.1
+Content-Type: multipart/form-data;charset=UTF-8; boundary=divider
+Accept: application/json
+
+--divider
+Content-Disposition: form-data; name=poster; filename=tux.jpg
+Content-Type: image/png
+
+< ./tux.jpg
+--divider
+Content-Disposition: form-data; name="title"
+
+Tux at the movies
+--divider--
+
+###
+
+GET http://localhost:3000/movie/image/tux.jpg

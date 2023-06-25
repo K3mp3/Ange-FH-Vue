@@ -1,46 +1,71 @@
 <script setup lang="ts">
+import { ref } from "vue";
 
-    import { ref } from 'vue';
+const movieTitle = ref("");
+const moviePoster = ref();
 
-    const selectedFile = ref<File | null>(null);
-    const imageUrl = ref<string | null>(null);
+function fileInput(e: Event) {
+  const inputElement = e.target as HTMLInputElement;
 
+  const image = inputElement.files?.[0];
+  console.log(image);
 
-    function fileInput(e: Event) {
-        const inputElement = e.target as HTMLInputElement;
-        selectedFile.value = inputElement.files ? inputElement.files[0] : null
+  if (image) {
+    moviePoster.value = image;
+    console.log("moviePoster", moviePoster.value);
+  }
+}
 
-        //console.log(selectedFile.value);
-        if (selectedFile.value) {
-            imageUrl.value = URL.createObjectURL(selectedFile.value);
-        }
-    }
+const emits = defineEmits<{
+  (e: "movieInfo", poster: File, title: string): void;
+}>();
 
-    const emits = defineEmits<{ (e: "moviePoster", poster: FormData): void }>();
+function emitImage() {
+  if (!moviePoster.value) {
+    return;
+  }
 
-    async function emitImage() {
-        if (!selectedFile.value) {
-            //console.log("No file selected.");
-            return;
-        }
-
-        const formData = new FormData();
-        formData.append("image", selectedFile.value)
-        //console.log(formData);
-
-        emits ("moviePoster", formData)
-    }
+  // Emit the "movieInfo" event with the poster and title
+  emits("movieInfo", moviePoster.value, movieTitle.value);
+}
 </script>
-<template>
+
+  <div class="large-container">
     <div class="small-container">
-        <input type="file" @change="fileInput"/>
-        <button accept="image/jpeg, image/png, image/jpg" @click="emitImage">Upload image</button>
-        <!-- <img :src="imageUrl" alt="Uploaded Image" v-if="imageUrl" /> -->
-    </div>
+      <form @submit.prevent="emitImage" enctype="multipart/form-data">
+        <label for="file">Ladda up film poster</label>
+        <input type="file" @change="fileInput" />
+        <label for="movie-title-input">Film titel</label>
+        <input type="text" v-model="movieTitle" name="movie-title-input" />
+        <button>Upload image</button>
+      </form>
+
+  </div>
 </template>
+
 <style scoped>
-    .small-container {
-        background-color: aliceblue;
-        padding: 20px;
-    }
+.large-container {
+  background-color: aliceblue;
+  padding: 20px;
+}
+
+.small-container {
+  padding: 20px;
+  max-width: 290px;
+  margin: auto;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+label {
+  margin-bottom: 2px;
+}
+
+input {
+  margin-bottom: 20px;
+}
 </style>
