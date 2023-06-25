@@ -67,6 +67,7 @@ onMounted(async () => {
             :src="`http://localhost:3000/movie/image/${movie.poster}`"
             :alt="movie.title"
           />
+          <button>Radera film</button>
         </div>
       </div>
     </div>
@@ -78,6 +79,7 @@ onMounted(async () => {
 
   .large-container {
     background-color: #f7f7f7;
+    padding-top: 40px;
   }
 
   h1 {
@@ -91,8 +93,19 @@ onMounted(async () => {
     margin: auto;
   }
 
+  .movies {
+    display: flex;
+    flex-direction: column;
+  }
+
   img {
+    max-width: 100%;
     max-height: 300px;
     padding: 20px;
+  }
+
+  button {
+    width: 100px;
+    margin: 10px auto;
   }
 </style>

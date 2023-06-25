@@ -51,14 +51,22 @@ function emitImage() {
 }
 
 .small-container {
-  display: flex;
-  flex-direction: column;
   padding: 20px;
   max-width: 290px;
   margin: auto;
 }
 
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+label {
+  margin-bottom: 2px;
+}
+
 input {
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 </style>
