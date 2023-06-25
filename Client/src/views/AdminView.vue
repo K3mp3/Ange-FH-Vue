@@ -69,6 +69,7 @@ function deleteMovie(movie: IMovie) {
             :src="`http://localhost:3000/movie/image/${movie.poster}`"
             :alt="movie.title"
           />
+          <h3>{{ movie.title }}</h3>
           <button @click="() => deleteMovie(movie)">Radera film</button>
         </div>
       </div>
