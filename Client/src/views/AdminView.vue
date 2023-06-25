@@ -3,14 +3,14 @@ import AdminPageVue from "@/components/adminpage/AdminPage.vue";
 import axios from "axios";
 import { onMounted, ref } from "vue";
 
-interface Movie {
+interface IMovie {
   _id: string;
   title: string;
   poster: string;
 }
 
 const savedMovie = ref<any>(null);
-const movies = ref<Movie[]>([]);
+const movies = ref<IMovie[]>([]);
 
 async function saveMovieInfo(moviePoster: File, movieTitle: string) {
   console.log("poster", moviePoster, "title", movieTitle);
@@ -51,7 +51,9 @@ onMounted(async () => {
   }
 })
 
-  
+function deleteMovie(movie: IMovie) {
+  console.log("movie", movie._id);
+}
 
 </script>
 
@@ -67,7 +69,7 @@ onMounted(async () => {
             :src="`http://localhost:3000/movie/image/${movie.poster}`"
             :alt="movie.title"
           />
-          <button>Radera film</button>
+          <button @click="() => deleteMovie(movie)">Radera film</button>
         </div>
       </div>
     </div>
