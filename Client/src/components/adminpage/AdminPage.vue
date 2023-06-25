@@ -30,7 +30,6 @@ function emitImage() {
 }
 </script>
 
-<template>
   <div class="large-container">
     <div class="small-container">
       <form @submit.prevent="emitImage" enctype="multipart/form-data">
@@ -40,7 +39,7 @@ function emitImage() {
         <input type="text" v-model="movieTitle" name="movie-title-input" />
         <button>Upload image</button>
       </form>
-    </div>
+
   </div>
 </template>
 

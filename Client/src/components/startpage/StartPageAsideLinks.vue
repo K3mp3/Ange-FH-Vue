@@ -20,6 +20,8 @@
 
         if (width < 910) {
             screenSize.value = true;
+        } else {
+            screenSize.value = false;
         }
     }
 
@@ -66,9 +68,9 @@
     }
 </script>
 <template>
-    <div class="nav-container">
+    <nav>
         <div class="logo-container">
-            <img src="../../../public/img/AngeFH_rgb.jpg">
+            <img src="../../../public/img/AngeFH_rgb.jpg" />
         </div>
         <div class="navigation-container">
             <ul :class="{hide: screenSize === true}">
@@ -80,20 +82,20 @@
                 <span class="dot"></span>
             </button>
         </div>
-    </div>
+    </nav>
 </template>
 <style scoped>
     :root {
         --menu-transition-duration: ${menuTransitionDuration}s;
     }
-    .nav-container {
-        background-color: #ffffff;
+    nav {
         display: flex;
         justify-content: space-between;
         flex-direction: row;
         margin: auto;
         position: relative;
         z-index: 1;
+        background-color: #fff;
     }
 
     .logo-container {
