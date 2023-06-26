@@ -30,17 +30,17 @@ function emitImage() {
 }
 </script>
 <template>
-    <div class="large-container">
-        <div class="small-container">
-            <form @submit.prevent="emitImage" enctype="multipart/form-data">
-                <label for="file">Ladda up film poster</label>
-                <input type="file" @change="fileInput" />
-                <label for="movie-title-input">Film titel</label>
-                <input type="text" v-model="movieTitle" name="movie-title-input" />
-                <button>Upload image</button>
-            </form>
-        </div>
+  <div class="large-container">
+    <div class="small-container">
+      <form @submit.prevent="emitImage" enctype="multipart/form-data">
+        <label for="file">Ladda up film poster</label>
+        <input type="file" @change="fileInput" />
+        <label for="movie-title-input">Film titel</label>
+        <input type="text" v-model="movieTitle" name="movie-title-input" />
+        <button>Upload image</button>
+      </form>
     </div>
+  </div>
 </template>
 
 <style scoped>

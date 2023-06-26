@@ -36,6 +36,7 @@ async function saveMovieInfo(moviePoster: File, movieTitle: string) {
     };
 
     console.log("savedMovie.value", savedMovie.value);
+    location.reload();
   } catch (error) {
     console.log("Failed to save movie:", error);
   }
@@ -51,8 +52,26 @@ onMounted(async () => {
   }
 })
 
-function deleteMovie(movie: IMovie) {
-  console.log("movie", movie._id);
+async function deleteMovie(movie: IMovie) {
+  console.log("movie", movie.poster);
+
+  let movieName = movie.poster
+  let movieId = movie._id
+
+  try {
+    const response = await axios.post(
+      "http://localhost:3000/movie/deletemovie",
+      { movieId: movieId, movieName: movieName }
+    );
+
+    const { movie } = response.data;
+
+    console.log("response", response.data);
+
+    location.reload();
+  } catch (error) {
+    console.log("Failed to save movie:", error);
+  }
 }
 
 </script>
@@ -69,6 +88,7 @@ function deleteMovie(movie: IMovie) {
             :src="`http://localhost:3000/movie/image/${movie.poster}`"
             :alt="movie.title"
           />
+          <h3>{{ movie.title }}</h3>
           <button @click="() => deleteMovie(movie)">Radera film</button>
         </div>
       </div>
