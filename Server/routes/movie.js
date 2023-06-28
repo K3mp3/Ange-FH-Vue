@@ -1,9 +1,10 @@
 var express = require("express");
 var router = express.Router();
 const multer = require("multer");
-const fs = require("fs");
 const path = require("path");
+const fs = require("fs");
 const MovieModel = require("../models/movie_model");
+const movie_model = require("../models/movie_model");
 
 const fileStorageEngine = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -54,5 +55,24 @@ router.get("/image/:name", (req, res) => {
   console.log("NAME:", imageName);
   res.sendFile(imageName, { root: path.join("./images") });
 });
+
+router.post("/deletemovie", async (req, res) => {
+  const { movieId, movieName } = req.body;
+
+  console.log("movieId:", movieId, "movieName:", movieName);
+
+  try {
+    await movie_model.findByIdAndRemove(movieId);
+
+    fs.unlinkSync(path.join("./images", movieName));
+
+    console.log("Movie deleted successfully!");
+
+    res.status(200).json({ message: "Movie deleted successfully" });
+  } catch (error) {
+    console.log("Failed to delete movie:", error);
+    res.status(500).json({ error: "Failed to delete movie" });
+  }
+})
 
 module.exports = router;
