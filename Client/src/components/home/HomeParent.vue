@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import { ref, toRefs, onMounted } from 'vue';
+import { ref, toRefs, onMounted, reactive } from 'vue';
 import axios from 'axios';
 import 'vue3-carousel/dist/carousel.css'
-import { Carousel, Slide, Navigation } from 'vue3-carousel'
+import { Carousel, Slide, Navigation, Pagination } from 'vue3-carousel'
 
-import { useMovieStore } from '../../stores/movie'
-import { storeToRefs } from 'pinia';
+const width = document.documentElement.clientWidth;
 
 interface IMovie {
   _id: string;
@@ -14,7 +13,6 @@ interface IMovie {
 }
 
 const movies = ref<IMovie[]>([]);
-const currentSlide = ref(0);
 
 onMounted(async () => {
   try {
@@ -24,100 +22,137 @@ onMounted(async () => {
   } catch (error) {
     console.error("Failed to retrieve posters:", error);
   }
+
+  window.addEventListener("resize", settings);
+
+  settings();
 });
 
-const currentSlideObject = (slide: IMovie, index: number) => {
-  if (index === currentSlide.value) {
-    // Handle the current slide logic here
-  }
+const breakpoints = {
+  290: {
+    itemsToShow: 1.5,
+    snapAlign: "center"
+  },
+  390: {
+    itemsToShow: 1.75,
+    snapAlign: "center"
+  },
+  480: {
+    itemsToShow: 2,
+    snapAlign: "start"
+  },
+  570: {
+    itemsToShow: 2.25,
+    snapAlign: "start"
+  },
+  660: {
+    itemsToShow: 2.5,
+    snapAlign: "start"
+  },
+  750: {
+    itemsToShow: 3,
+    snapAlign: "start"
+  },
+  840: {
+    itemsToShow: 4,
+    snapAlign: "start"
+  },
+  930: {
+    itemsToShow: 5,
+    snapAlign: "start"
+  },
+  1020: {
+    itemsToShow: 6,
+    snapAlign: "start"
+  },
+  1120: {
+    itemsToShow: 7,
+    snapAlign: "start"
+  },
+  1220: {
+    itemsToShow: 8,
+    snapAlign: "start"
+  },
+  1320: {
+    itemsToShow: 9,
+    snapAlign: "start"
+  },
+  1520: {
+    itemsToShow: 10,
+    snapAlign: "start"
+  },
+  2020: {
+    itemsToShow: 11,
+    snapAlign: "start"
+  },
 }
 
-const fullScreenVideo = (index: number) => {
-  currentSlide.value = index;
-  setTimeout(() => {
-    // Handle the full screen video logic here
-  }, 500);
+
+function settings() {
+  return {
+    itemsToShow: 1,
+		snapAlign: "center"
+  }
 }
 </script>
 
 <template>
-  <div class="min-w-[1200px] relative">
-    <Carousel
-      ref="carousel"
-      v-model="currentSlide"
-      :items-to-show="8"
-      :items-to-scroll="1"
-      :wrap-around="true"
-      :transition="500"
-      snapAlign="start"
-      class="bg-transparent"
-    >
-      <Slide
-        v-for="(slide, index) in movies"
-        :key="slide._id"
-        class="flex items-center object-cover text-white bg-transparent"
-      >
-        <div
-          class="object-cover h-[100%] hover:brightness-125 cursor-pointer"
-          :class="[
-            currentSlide !== index ? 'border-4 border-transparent' : 'border-4 border-white',
-            currentSlideObject(slide, index)
-          ]"
-        >
-          <img
-            style="user-select: none"
-            class="pointer-events-none h-[100%] z-[-1]"
+<div id="app">
+	<carousel :settings="settings" :breakpoints="breakpoints" class="carousel">
+		<slide v-for="slide in movies" :key="slide._id">
+			<div class="carousel__item">
+        <img
             :src="`http://localhost:3000/movie/image/${slide.poster}`"
           >
-        </div>
-      </Slide>
-      <template #addons>
-        <Navigation />
-      </template>
-    </Carousel>
-  </div>
+      </div>
+		</slide>
+
+		<template #addons>
+			<navigation />
+		</template>
+	</carousel>
+</div>
 </template>
 
 <style scoped>
-.large-container {
-  padding-top: 40px;
-  margin: auto;
+.carousel {
   background-color: aqua;
-  overflow: hidden;
+}
+.carousel__item {
+  width: 100%;
+	background-color: #642afb;
+	color: white;
+	font-size: 20px;
+	border-radius: 8px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+  margin-top: 20px;
 }
 
-h1 {
-  margin-left: 20px;
-  color: #eeeeee;
-  margin-bottom: 40px;
+.carousel__slide {
+	padding: 10px;
 }
 
-.medium-container {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  background-color: beige;
-  
-}
-
-.movies {
-  flex: 0 0 auto; /* Prevent flex items from growing */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: aquamarine;
-  padding: 0 20px;
-  text-align: center;
+.carousel__prev,
+.carousel__next {
+	background-color: #fff7;
 }
 
 img {
-  max-height: 300px;
-  padding: 0 20px;
-  background-color: aquamarine;
+  max-width: 100%;
+  border-radius: 10px;
 }
 
-h3 {
-  margin: 5px 0 0 20px;
-  color: #eeeeee;
+@media screen and (min-width: 1800px) {
+  .carousel__item {
+    max-height: 411px;
+    width: 100%;
+  }
+
+  img {
+    max-height: 391px;
+    max-width: 100%;
+  }
 }
 </style>
