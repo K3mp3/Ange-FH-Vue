@@ -32,6 +32,9 @@ router.get("/", async (req, res) => {
 router.post("/savemovie", upload.single("poster"), async (req, res) => {
   const { title } = req.body;
   const poster = req.file.filename; // Hämta filnamnet för den sparade bilden
+  const link = req.body.link;
+
+  console.log("link:", link);
 
   console.log(poster);
 
@@ -39,6 +42,7 @@ router.post("/savemovie", upload.single("poster"), async (req, res) => {
     const newMovie = await MovieModel.create({
       poster: poster,
       title: title,
+      link: link,
     });
 
     console.log("newMovie", newMovie);

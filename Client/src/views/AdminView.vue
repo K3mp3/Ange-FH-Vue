@@ -7,17 +7,19 @@ interface IMovie {
   _id: string;
   title: string;
   poster: string;
+  link: string
 }
 
 const savedMovie = ref<any>(null);
 const movies = ref<IMovie[]>([]);
 
-async function saveMovieInfo(moviePoster: File, movieTitle: string) {
-  console.log("poster", moviePoster, "title", movieTitle);
+async function saveMovieInfo(moviePoster: File, movieTitle: string, movieLink: string) {
+  console.log("poster:", moviePoster, "title:", movieTitle, "movieLink:", movieLink);
 
   const formData = new FormData();
   formData.append("poster", moviePoster);
   formData.append("title", movieTitle);
+  formData.append("link", movieLink);
 
   try {
     const response = await axios.post(
@@ -26,13 +28,14 @@ async function saveMovieInfo(moviePoster: File, movieTitle: string) {
     );
     console.log("Movie saved successfully!", response.data);
 
-    const { poster, title } = response.data;
+    const { poster, title, link } = response.data;
 
     console.log("response", response.data);
 
     savedMovie.value = {
       poster: poster,
       title: title,
+      link: link,
     };
 
     console.log("savedMovie.value", savedMovie.value);

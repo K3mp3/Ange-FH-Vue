@@ -3,6 +3,7 @@ import { ref } from "vue";
 
 const movieTitle = ref("");
 const moviePoster = ref();
+const movieLink = ref("");
 
 function fileInput(e: Event) {
   const inputElement = e.target as HTMLInputElement;
@@ -17,7 +18,7 @@ function fileInput(e: Event) {
 }
 
 const emits = defineEmits<{
-  (e: "movieInfo", poster: File, title: string): void;
+  (e: "movieInfo", poster: File, title: string, link: string): void;
 }>();
 
 function emitImage() {
@@ -26,7 +27,7 @@ function emitImage() {
   }
 
   // Emit the "movieInfo" event with the poster and title
-  emits("movieInfo", moviePoster.value, movieTitle.value);
+  emits("movieInfo", moviePoster.value, movieTitle.value, movieLink.value);
 }
 </script>
 
@@ -35,9 +36,15 @@ function emitImage() {
     <div class="small-container">
       <form @submit.prevent="emitImage" enctype="multipart/form-data">
         <label for="file">Ladda up film poster</label>
+
         <input type="file" @change="fileInput" />
+
         <label for="movie-title-input">Film titel</label>
         <input type="text" v-model="movieTitle" name="movie-title-input" />
+
+        <label for="movie-link-input">Länk till film trailer</label>
+        <input type="text" v-model="movieLink" name="movie-link-input" />
+
         <button>Upload image</button>
       </form>
     </div>
