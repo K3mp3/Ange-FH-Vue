@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, toRefs, onMounted, reactive } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import axios from 'axios';
 import 'vue3-carousel/dist/carousel.css'
 import { Carousel, Slide, Navigation, Pagination } from 'vue3-carousel'
@@ -10,9 +10,11 @@ interface IMovie {
   _id: string;
   title: string;
   poster: string;
+  link: string;
 }
 
 const movies = ref<IMovie[]>([]);
+console.log("movies:", movies)
 
 onMounted(async () => {
   try {
@@ -26,6 +28,11 @@ onMounted(async () => {
   window.addEventListener("resize", settings);
 
   settings();
+});
+
+const getFirstMovieTrailerLink = computed(() => {
+  const firstMovie = movies.value[0];
+  return firstMovie ? firstMovie.link : '';
 });
 
 const breakpoints = {
@@ -87,40 +94,59 @@ const breakpoints = {
   },
 }
 
-
 function settings() {
   return {
     itemsToShow: 1,
 		snapAlign: "center"
   }
 }
+
+function test() {
+  console.log("test");
+}
 </script>
 
 <template>
-<div id="app">
-	<carousel :settings="settings" :breakpoints="breakpoints" class="carousel">
-		<slide v-for="slide in movies" :key="slide._id">
-			<div class="carousel__item">
-        <img
-            :src="`http://localhost:3000/movie/image/${slide.poster}`"
-          >
-      </div>
-		</slide>
+  <header>
+    <div class="movie-trailer-container">
+      <iframe @click="test" :src="getFirstMovieTrailerLink" title="YouTube video player" frameborder="0"  allowfullscreen></iframe>
+    </div>
+  </header>
+  <div class="app">
+    <carousel :settings="settings" :breakpoints="breakpoints" class="carousel">
+      <slide v-for="slide in movies" :key="slide._id">
+        <div class="carousel__item">
+          <img
+              :src="`http://localhost:3000/movie/image/${slide.poster}`"
+            >
+        </div>
+      </slide>
 
-		<template #addons>
-			<navigation />
-		</template>
-	</carousel>
-</div>
+      <template #addons>
+        <navigation />
+      </template>
+    </carousel>
+  </div>
 </template>
 
 <style scoped>
+header {
+}
+
+iframe {
+  width: 100%;
+  height: 100vh;
+}
+
+.app {
+  margin-top: 100px;
+  padding: 20px;
+}
 .carousel {
-  background-color: aqua;
+
 }
 .carousel__item {
   width: 100%;
-	background-color: #642afb;
 	color: white;
 	font-size: 20px;
 	border-radius: 8px;

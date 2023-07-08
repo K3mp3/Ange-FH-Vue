@@ -30,11 +30,12 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/savemovie", upload.single("poster"), async (req, res) => {
-  const { title } = req.body;
   const poster = req.file.filename; // Hämta filnamnet för den sparade bilden
+  const image = req.file.filename;
+  const { title } = req.body;
   const link = req.body.link;
 
-  console.log("link:", link);
+  console.log("image:", image);
 
   console.log(poster);
 

@@ -7,41 +7,46 @@ interface IMovie {
   _id: string;
   title: string;
   poster: string;
+  image: string;
   link: string
 }
 
 const savedMovie = ref<any>(null);
 const movies = ref<IMovie[]>([]);
 
-async function saveMovieInfo(moviePoster: File, movieTitle: string, movieLink: string) {
-  console.log("poster:", moviePoster, "title:", movieTitle, "movieLink:", movieLink);
+async function saveMovieInfo(moviePoster: File, movieImage: File, movieTitle: string, movieLink: string) {
+  // console.log("poster:", moviePoster, "movieImage:", movieImage, "title:", movieTitle, "movieLink:", movieLink);
 
   const formData = new FormData();
   formData.append("poster", moviePoster);
+  formData.append("image", movieImage);
   formData.append("title", movieTitle);
   formData.append("link", movieLink);
+
+  console.log("formdata:", formData)
 
   try {
     const response = await axios.post(
       "http://localhost:3000/movie/savemovie",
       formData
     );
-    console.log("Movie saved successfully!", response.data);
+    // console.log("Movie saved successfully!", response.data);
 
-    const { poster, title, link } = response.data;
+    const { poster, title, link, image } = response.data;
 
-    console.log("response", response.data);
+    // console.log("response", response.data);
 
     savedMovie.value = {
       poster: poster,
       title: title,
       link: link,
+      image: image
     };
 
-    console.log("savedMovie.value", savedMovie.value);
+    // console.log("savedMovie.value", savedMovie.value);
     location.reload();
   } catch (error) {
-    console.log("Failed to save movie:", error);
+    // console.log("Failed to save movie:", error);
   }
 }
 
