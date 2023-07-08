@@ -7,14 +7,13 @@ interface IMovie {
   _id: string;
   title: string;
   poster: string;
-  image: string;
   link: string
 }
 
 const savedMovie = ref<any>(null);
 const movies = ref<IMovie[]>([]);
 
-async function saveMovieInfo(moviePoster: File, movieImage: File, movieTitle: string, movieLink: string) {
+async function saveMovieInfo(moviePoster: File, movieTitle: string, movieLink: string) {
   // console.log("poster:", moviePoster, "movieImage:", movieImage, "title:", movieTitle, "movieLink:", movieLink);
 
   const formData = new FormData();
@@ -31,7 +30,7 @@ async function saveMovieInfo(moviePoster: File, movieImage: File, movieTitle: st
     );
     // console.log("Movie saved successfully!", response.data);
 
-    const { poster, title, link, image } = response.data;
+    const { poster, title, link } = response.data;
 
     // console.log("response", response.data);
 
@@ -39,35 +38,11 @@ async function saveMovieInfo(moviePoster: File, movieImage: File, movieTitle: st
       poster: poster,
       title: title,
       link: link,
-      image: image
     };
 
     // console.log("savedMovie.value", savedMovie.value);
-    location.reload();
   } catch (error) {
     // console.log("Failed to save movie:", error);
-  }
-
-  saveMovieImage(movieImage);
-}
-
-async function saveMovieImage(movieImage: File) {
-  console.log("movieImage:", movieImage);
-
-  const formData = new FormData();
-  formData.append("image", movieImage)
-  console.log("formdata:", formData)
-
-  try {
-    const response = await axios.post(
-      "http://localhost:3000/movie/savemovieimage",
-      formData
-    )
-
-    const { image } = response.data;
-
-  } catch (error) {
-    console.log(error);
   }
 }
 
