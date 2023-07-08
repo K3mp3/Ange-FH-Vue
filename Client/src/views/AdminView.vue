@@ -7,17 +7,23 @@ interface IMovie {
   _id: string;
   title: string;
   poster: string;
-  link: string
+  link: string;
 }
 
 const savedMovie = ref<any>(null);
 const movies = ref<IMovie[]>([]);
 
-async function saveMovieInfo(moviePoster: File, movieTitle: string, movieLink: string) {
+async function saveMovieInfo(
+  moviePoster: File,
+  movieImage: File,
+  movieTitle: string,
+  movieLink: string
+) {
   // console.log("poster:", moviePoster, "movieImage:", movieImage, "title:", movieTitle, "movieLink:", movieLink);
 
   const formData = new FormData();
   formData.append("poster", moviePoster);
+  formData.append("image", movieImage);
   formData.append("title", movieTitle);
   formData.append("link", movieLink);
 
@@ -50,17 +56,17 @@ onMounted(async () => {
   try {
     const response = await axios.get("http://localhost:3000/movie");
     movies.value = response.data;
-    console.log(movies.value)
+    console.log(movies.value);
   } catch (error) {
     console.error("Failed to retrieve posters:", error);
   }
-})
+});
 
 async function deleteMovie(movie: IMovie) {
   console.log("movie", movie.poster);
 
-  let movieName = movie.poster
-  let movieId = movie._id
+  let movieName = movie.poster;
+  let movieId = movie._id;
 
   try {
     const response = await axios.post(
@@ -77,7 +83,6 @@ async function deleteMovie(movie: IMovie) {
     console.log("Failed to save movie:", error);
   }
 }
-
 </script>
 
 <template>
