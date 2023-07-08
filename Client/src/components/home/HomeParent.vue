@@ -2,9 +2,8 @@
 import { ref, computed, onMounted } from 'vue';
 import axios from 'axios';
 import 'vue3-carousel/dist/carousel.css'
-import { Carousel, Slide, Navigation, Pagination } from 'vue3-carousel'
-
-const width = document.documentElement.clientWidth;
+import { Carousel, Slide, Navigation } from 'vue3-carousel'
+import { gsap } from 'gsap';
 
 interface IMovie {
   _id: string;
@@ -20,9 +19,24 @@ interface IMovieBackground {
 const movies = ref<IMovie[]>([]);
 console.log("movies:", movies)
 
-const moviebackground = ref<IMovieBackground[]>([]);
+const movieTrailerTitle = ref<HTMLElement | null>(null);
+const movieTrailerTicketBtn = ref<HTMLElement | null>(null);
 
 onMounted(async () => {
+  gsap.from(movieTrailerTitle.value, {
+    y: '-400%',
+    opacity: 0,
+    duration: 1,
+    ease: 'power2.out',
+  });
+
+  gsap.from(movieTrailerTicketBtn.value, {
+    x: '-400%',
+    opacity: 0,
+    duration: 1,
+    ease: 'power2.out',
+  });
+
   try {
     const response = await axios.get("http://localhost:3000/movie");
     movies.value = response.data;
@@ -101,19 +115,15 @@ function settings() {
 		snapAlign: "center"
   }
 }
-
-function test() {
-  console.log("test");
-}
 </script>
 
 <template>
   <header>
     <div class="movie-trailer-container">
-      <iframe @click="test" :src="getFirstMovieTrailerLink" title="YouTube video player" frameborder="0"  allowfullscreen></iframe>
+      <iframe :src="getFirstMovieTrailerLink" title="YouTube video player" frameborder="0"  allowfullscreen></iframe>
       <div class="movie-information">
-        <h1>{{ getFirstMovieTitle }}</h1>
-        <button>Köp biljetter</button>
+        <h1 ref="movieTrailerTitle">{{ getFirstMovieTitle }}</h1>
+        <button ref="movieTrailerTicketBtn">Köp biljetter</button>
       </div>
     </div>
   </header>
@@ -192,6 +202,10 @@ img {
     align-items: center;
     justify-content: center;
     gap: 40px;
+  }
+
+  .hidden {
+    display: none;
   }
 
   h1 {
