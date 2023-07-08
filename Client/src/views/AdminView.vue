@@ -19,11 +19,10 @@ async function saveMovieInfo(moviePoster: File, movieImage: File, movieTitle: st
 
   const formData = new FormData();
   formData.append("poster", moviePoster);
-  formData.append("image", movieImage);
   formData.append("title", movieTitle);
   formData.append("link", movieLink);
 
-  console.log("formdata:", formData)
+  // console.log("formdata:", formData)
 
   try {
     const response = await axios.post(
@@ -47,6 +46,28 @@ async function saveMovieInfo(moviePoster: File, movieImage: File, movieTitle: st
     location.reload();
   } catch (error) {
     // console.log("Failed to save movie:", error);
+  }
+
+  saveMovieImage(movieImage);
+}
+
+async function saveMovieImage(movieImage: File) {
+  console.log("movieImage:", movieImage);
+
+  const formData = new FormData();
+  formData.append("image", movieImage)
+  console.log("formdata:", formData)
+
+  try {
+    const response = await axios.post(
+      "http://localhost:3000/movie/savemovieimage",
+      formData
+    )
+
+    const { image } = response.data;
+
+  } catch (error) {
+    console.log(error);
   }
 }
 
