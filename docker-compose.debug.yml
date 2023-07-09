@@ -1,0 +1,31 @@
+version: '3.4'
+
+services:
+  mongo:
+    image: mongo:latest
+    ports:
+      - 27017:27017
+
+  vuesigninform:
+    image: vuesigninform
+    build:
+      context: Client
+      dockerfile: ./Dockerfile
+    environment:
+      NODE_ENV: development
+    ports:
+      - 5173:5173
+      - 9228:9228
+    command: [ "node", "--inspect=0.0.0.0:9228", "index.js" ]
+
+  server:
+    image: server
+    build:
+      context: Server
+      dockerfile: ./Dockerfile
+    environment:
+      NODE_ENV: development
+    ports:
+      - 3000:3000
+      - 9229:9229
+    command: [ "node", "--inspect=0.0.0.0:9229", "./bin/www" ]
