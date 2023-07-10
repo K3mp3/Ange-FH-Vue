@@ -107,6 +107,10 @@ const breakpoints = {
     itemsToShow: 5,
     snapAlign: "start"
   },
+  730: {
+    itemsToShow: 6,
+    snapAlign: "start"
+  },
 }
 
 function settings() {
@@ -231,4 +235,6 @@ img {
     justify-content: end;
   }
 }
+
+/* Theater attribution: Image by <a href="https://www.freepik.com/free-photo/long-hair-artist-stage_11107899.htm#query=theater&position=14&from_view=search&track=sph">Freepik</a> */
 </style>
