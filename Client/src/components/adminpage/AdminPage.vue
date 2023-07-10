@@ -2,6 +2,7 @@
 import { ref } from "vue";
 
 const moviePoster = ref();
+const movieImage = ref();
 const movieTitle = ref("");
 const movieLink = ref("");
 
@@ -17,17 +18,40 @@ function posterInput(e: Event) {
   }
 }
 
+function imageInput(e: Event) {
+  const inputElement = e.target as HTMLInputElement;
+
+  const image = inputElement.files?.[0];
+  // console.log(image);
+
+  if (image) {
+    movieImage.value = image;
+  }
+}
+
 const emits = defineEmits<{
-  (e: "movieInfo", poster: File, title: string, link: string): void;
+  (
+    e: "movieInfo",
+    poster: File,
+    movieImage: File,
+    title: string,
+    link: string
+  ): void;
 }>();
 
 function emitImage() {
-  if (!moviePoster.value) {
+  if (!moviePoster.value || !movieImage.value) {
     return;
   }
 
   // Emit the "movieInfo" event with the poster and title
-  emits("movieInfo", moviePoster.value, movieTitle.value, movieLink.value);
+  emits(
+    "movieInfo",
+    moviePoster.value,
+    movieImage.value,
+    movieTitle.value,
+    movieLink.value
+  );
 }
 </script>
 
@@ -36,7 +60,10 @@ function emitImage() {
     <div class="small-container">
       <form @submit.prevent="emitImage" enctype="multipart/form-data">
         <label for="movie-poster-input">Ladda up film poster</label>
-        <input type="file" @change="posterInput" name="movie-poster-input"/>
+        <input type="file" @change="posterInput" name="movie-poster-input" />
+
+        <label for="movie-image-input">Ladda up film bakgrund</label>
+        <input type="file" @change="imageInput" name="movie-image-input" />
 
         <label for="movie-title-input">Film titel</label>
         <input type="text" v-model="movieTitle" name="movie-title-input" />

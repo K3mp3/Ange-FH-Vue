@@ -1,5 +1,9 @@
 {
-  "dependencies": {
-    "axios": "^1.4.0"
+  "scripts": {
+    "pre-commit": "cd Client && npm run pre-commit && cd .. && cd Server && npm run pre-commit",
+    "prepare": "husky install"
+  },
+  "devDependencies": {
+    "husky": "^8.0.3"
   }
 }
