@@ -30,7 +30,6 @@ function emitImage() {
   emits("movieInfo", moviePoster.value, movieTitle.value, movieLink.value);
 }
 </script>
-
 <template>
   <div class="large-container">
     <div class="small-container">

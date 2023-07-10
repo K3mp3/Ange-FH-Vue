@@ -18,8 +18,8 @@
 <style scoped>
     header {
         width: 100%;
-        background-color: #ffffff;
         margin: auto;
         padding: 20px;
+        background-color: #fff;
     }
 </style>
