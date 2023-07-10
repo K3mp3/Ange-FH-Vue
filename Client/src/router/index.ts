@@ -19,12 +19,12 @@ const router = createRouter({
           name: "admin page",
           component: AdminView,
         },
-        // {
-        //   path: '/',
-        //   name: 'home',
-        //   component: HomeView,
-        //   meta: {index: true}
-        // },
+        {
+          path: '/',
+          name: 'home',
+          component: HomeView,
+          meta: {index: true}
+        },
         // {
         //   path: '/createaccountview',
         //   name: 'createaccount',

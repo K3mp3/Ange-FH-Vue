@@ -2,9 +2,7 @@ var express = require("express");
 var router = express.Router();
 const multer = require("multer");
 const path = require("path");
-const fs = require("fs");
 const MovieModel = require("../models/movie_model");
-const movie_model = require("../models/movie_model");
 
 const fileStorageEngine = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -32,6 +30,9 @@ router.get("/", async (req, res) => {
 router.post("/savemovie", upload.single("poster"), async (req, res) => {
   const { title } = req.body;
   const poster = req.file.filename; // Hämta filnamnet för den sparade bilden
+  const link = req.body.link;
+
+  console.log("link:", link);
 
   console.log(poster);
 
@@ -39,6 +40,7 @@ router.post("/savemovie", upload.single("poster"), async (req, res) => {
     const newMovie = await MovieModel.create({
       poster: poster,
       title: title,
+      link: link,
     });
 
     console.log("newMovie", newMovie);
@@ -62,7 +64,7 @@ router.post("/deletemovie", async (req, res) => {
   console.log("movieId:", movieId, "movieName:", movieName);
 
   try {
-    await movie_model.findByIdAndRemove(movieId);
+    await MovieModel.findByIdAndRemove(movieId);
 
     fs.unlinkSync(path.join("./images", movieName));
 
