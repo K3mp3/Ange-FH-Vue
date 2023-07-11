@@ -1,0 +1,70 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "docker-build",
+      "label": "Client Build",
+      "platform": "node",
+      "dockerBuild": {
+        "dockerfile": "${workspaceFolder}/Client/Dockerfile",
+        "context": "${workspaceFolder}/Client",
+        "pull": true
+      },
+      "node": {
+        "package": "${workspaceFolder}/Client/package.json"
+      }
+    },
+    {
+      "type": "docker-run",
+      "label": "Client Release",
+      "dependsOn": ["Client Build"],
+      "platform": "node",
+      "node": {
+        "package": "${workspaceFolder}/Client/package.json"
+      }
+    },
+    {
+      "type": "docker-build",
+      "label": "Server Build",
+      "platform": "node",
+      "dockerBuild": {
+        "dockerfile": "${workspaceFolder}/Server/Dockerfile",
+        "context": "${workspaceFolder}/Server",
+        "pull": true
+      },
+      "node": {
+        "package": "${workspaceFolder}/Server/package.json"
+      }
+    },
+    {
+      "type": "docker-run",
+      "label": "Server Release",
+      "dependsOn": ["Server Build"],
+      "platform": "node",
+      "node": {
+        "package": "${workspaceFolder}/Server/package.json"
+      }
+    },
+    {
+      "label": "Stack Up",
+      "type": "docker-compose",
+      "dockerCompose": {
+        "up": {
+          "detached": true,
+          "build": true
+        },
+        "files": ["${workspaceFolder}/stack.yml"]
+      }
+    },
+    {
+      "label": "Stack Down",
+      "type": "docker-compose",
+      "dockerCompose": {
+        "down": {
+          "removeVolumes": false
+        },
+        "files": ["${workspaceFolder}/stack.yml"]
+      }
+    }
+  ]
+}

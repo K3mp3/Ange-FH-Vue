@@ -15,6 +15,11 @@ const fileStorageEngine = multer.diskStorage({
 
 const upload = multer({ storage: fileStorageEngine });
 
+const multipleUpload = upload.fields([
+  { name: "poster", maxCount: 1 },
+  { name: "image", maxCount: 1 },
+]);
+
 router.get("/", async (req, res) => {
   try {
     let movies = await MovieModel.find();
@@ -27,18 +32,21 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.post("/savemovie", upload.single("poster"), async (req, res) => {
-  const { title } = req.body;
-  const poster = req.file.filename; // Hämta filnamnet för den sparade bilden
-  const link = req.body.link;
+router.post("/savemovie", multipleUpload, async (req, res) => {
+  console.log("files:", req.files);
+
+  const { title, link } = req.body;
+  const poster = req.files.poster[0].filename;
+  const image = req.files.image[0].filename;
 
   console.log("link:", link);
-
   console.log(poster);
+  console.log(image);
 
   try {
     const newMovie = await MovieModel.create({
       poster: poster,
+      image: image,
       title: title,
       link: link,
     });
@@ -75,6 +83,6 @@ router.post("/deletemovie", async (req, res) => {
     console.log("Failed to delete movie:", error);
     res.status(500).json({ error: "Failed to delete movie" });
   }
-})
+});
 
 module.exports = router;
