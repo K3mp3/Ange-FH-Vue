@@ -1,8 +1,14 @@
 <script setup lang="ts">
-    import type { IHamburgerIcon } from "@/models/IHamburgerIcon";
     import { ref } from "vue";
     import { RouterLink } from "vue-router"
     import gsap from "gsap"; 
+    import type { ImobileNavLinks } from "@/models/ImobileNavLinks";
+
+    import movieIcon from "../../../public/img/nav-icons/popcorn.png"
+    import eventIcon from "../../../public/img/nav-icons/calendar.png"
+    import homeIcon from "../../../public/img/nav-icons/home.png"
+    import infoIcon from "../../../public/img/nav-icons/id-card.png"
+    import contactIcon from "../../../public/img/nav-icons/faq.png"
 
     let screenSize = ref();
     let mobileMenuOpen = ref(false);
@@ -17,7 +23,7 @@
         window.addEventListener("resize", controlScreenSize);
 
         updateScreenSize()
-
+ 
         if (width < 910) {
             screenSize.value = true;
         } else {
@@ -67,57 +73,76 @@
         emit("toggle", mobileMenuOpen.value)
     }
 </script>
+
 <template>
     <nav>
-        <div class="logo-container">
-            <img src="../../../public/img/AngeFH_rgb.jpg" />
-        </div>
-        <div class="navigation-container">
-            <ul :class="{hide: screenSize === true}">
-                <li v-for="link in links"><router-link :to="getRoute(link)" class="router-link">{{ link }}</router-link></li>
+        <div class="nav-container">
+            <ul>
+                <li><router-link to="movies" class="mobile-nav-icon"><img :src="movieIcon" alt="Movie Icon" class="nav-icon" /></router-link></li>
+                <li><router-link to="movies" class="mobile-nav-icon"><img :src="eventIcon" alt="Movie Icon" class="nav-icon" /></router-link></li>
+                <li><router-link to="home" class="mobile-nav-logo"><img :src="homeIcon" alt="Home icon"/></router-link></li>
+                <li><router-link to="movies" class="mobile-nav-icon"><img :src="infoIcon" alt="Movie Icon" class="nav-icon" /></router-link></li>
+                <li><router-link to="movies" class="mobile-nav-icon"><img :src="contactIcon" alt="Movie Icon" class="nav-icon" /></router-link></li> 
             </ul>
-            <button class="mobile-menu-btn" :class="{ hide: screenSize === false }" @click="emitMobileMenu" @mouseenter="mouseEnterAnimation" @mouseleave="mouseLeaveAnimation">                
-                <span class="dot"></span>
-                <span class="dot"></span>
-                <span class="dot"></span>
-            </button>
         </div>
     </nav>
 </template>
+
+ <!-- <div class="logo-container">
+            <img src="../../../public/img/FolketsHusLogo.png" alt="square icon with blue and yellow 'propellers' and the organisation name to the left"/>
+            </div> 
+            <div class="navigation-container">
+                <ul :class="{hide: screenSize === true}">
+                    <li v-for="link in links"><router-link :to="getRoute(link)" class="router-link">{{ link }}</router-link></li>
+                </ul>
+                <div class="mobile-navigation">
+                    
+                </div>
+                 <button class="mobile-menu-btn" :class="{ hide: screenSize === false }" @click="emitMobileMenu" @mouseenter="mouseEnterAnimation" @mouseleave="mouseLeaveAnimation">                
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </button> 
+            </div> -->
+
 <style scoped>
     :root {
         --menu-transition-duration: ${menuTransitionDuration}s;
     }
     nav {
-        display: flex;
-        justify-content: space-between;
-        flex-direction: row;
-        margin: auto;
-        position: relative;
-        z-index: 1;
-        background-color: #fff;
-    }
-
-    .logo-container {
+        position: fixed;
+        bottom: 20px;
+        left: 0;
         width: 100%;
+        height: 70px; /* Adjust the height of the bottom navigation bar */
+        z-index: 1;
         display: flex;
         align-items: center;
+        justify-content: center;
     }
 
-    .navigation-container {
+    .nav-container {
+        width: calc(100% - 2rem);
+        background-color: #292929;
+        display: flex;
+        border-radius: 15px;
+    }
+
+    ul {
         width: 100%;
         display: flex;
-        justify-content: end;
+        justify-content: space-evenly;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 10px;
+    } 
+
+    img {
+        max-width: 2.6rem;
     }
 
-    .mobile-menu-btn {
-        height: 100%;
-        width: 55px;
-        display: flex;
-        flex-direction: column;
-        padding: 4px;
-        justify-content: center;
-        cursor: pointer;
+    .mobile-nav-logo {
+        min-width: 3rem;
     }
 
     button {
@@ -135,14 +160,6 @@
         margin: 4px;
     }
 
-    ul {
-        display: flex;
-        justify-content: space-between;
-        justify-content: center;
-        align-items: center;
-        gap: 60px;
-        padding: 20px;
-    }
 
     .hide {
         display: none;
@@ -155,4 +172,11 @@
     .router-link {
         text-decoration: none;
     }
+
+
+    /* Home attribution image: <a href="https://www.flaticon.com/free-icons/home-button" title="home button icons">Home button icons created by Abdul-Aziz - Flaticon</a> */
+    /* Popcorn attribution image: <a href="https://www.flaticon.com/free-icons/food-and-restaurant" title="food and restaurant icons">Food and restaurant icons created by Abdul-Aziz - Flaticon</a> */
+    /* Events attribution image: <a href="https://www.flaticon.com/free-icons/follow-up" title="follow up icons">Follow up icons created by Abdul-Aziz - Flaticon</a> */
+    /* Info attribution image: <a href="https://www.flaticon.com/free-icons/faq" title="faq icons">Faq icons created by Abdul-Aziz - Flaticon</a> */
+    /* Contact attribution image: <a href="https://www.flaticon.com/free-icons/contact-information" title="contact information icons">Contact information icons created by Abdul-Aziz - Flaticon</a> */
 </style>

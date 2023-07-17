@@ -1,6 +1,6 @@
 <script setup lang="ts">
     import type { IUserSignIn } from '@/models/IUserSignIn';
-import router from '@/router';
+    import router from '@/router';
     import { ref } from 'vue';
 
     const user = ref<IUserSignIn>({username: "", email: "", password: ""})

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import NavView from "../views/NavView.vue";
+    import NavView from "./NavView.vue";
 </script>
 
 <template>
