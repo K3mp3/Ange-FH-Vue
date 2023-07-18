@@ -75,52 +75,18 @@
 </script>
 
 <template>
-    <nav>
-        <div class="nav-container">
-            <ul>
-                <li><router-link to="movies" class="mobile-nav-icon"><img :src="movieIcon" alt="Movie Icon" class="nav-icon" /></router-link></li>
-                <li><router-link to="movies" class="mobile-nav-icon"><img :src="eventIcon" alt="Movie Icon" class="nav-icon" /></router-link></li>
-                <li><router-link to="home" class="mobile-nav-logo"><img :src="homeIcon" alt="Home icon"/></router-link></li>
-                <li><router-link to="movies" class="mobile-nav-icon"><img :src="infoIcon" alt="Movie Icon" class="nav-icon" /></router-link></li>
-                <li><router-link to="movies" class="mobile-nav-icon"><img :src="contactIcon" alt="Movie Icon" class="nav-icon" /></router-link></li> 
-            </ul>
-        </div>
-    </nav>
+    <div class="nav-container">
+        <ul>
+            <li><router-link to="movies" class="mobile-nav-icon"><img :src="movieIcon" alt="Movie Icon" class="nav-icon" /></router-link></li>
+            <li><router-link to="movies" class="mobile-nav-icon"><img :src="eventIcon" alt="Movie Icon" class="nav-icon" /></router-link></li>
+            <li><router-link to="home" class="mobile-nav-logo"><img :src="homeIcon" alt="Home icon"/></router-link></li>
+            <li><router-link to="movies" class="mobile-nav-icon"><img :src="infoIcon" alt="Movie Icon" class="nav-icon" /></router-link></li>
+            <li><router-link to="movies" class="mobile-nav-icon"><img :src="contactIcon" alt="Movie Icon" class="nav-icon" /></router-link></li> 
+        </ul>
+    </div>
 </template>
 
- <!-- <div class="logo-container">
-            <img src="../../../public/img/FolketsHusLogo.png" alt="square icon with blue and yellow 'propellers' and the organisation name to the left"/>
-            </div> 
-            <div class="navigation-container">
-                <ul :class="{hide: screenSize === true}">
-                    <li v-for="link in links"><router-link :to="getRoute(link)" class="router-link">{{ link }}</router-link></li>
-                </ul>
-                <div class="mobile-navigation">
-                    
-                </div>
-                 <button class="mobile-menu-btn" :class="{ hide: screenSize === false }" @click="emitMobileMenu" @mouseenter="mouseEnterAnimation" @mouseleave="mouseLeaveAnimation">                
-                    <span class="dot"></span>
-                    <span class="dot"></span>
-                    <span class="dot"></span>
-                </button> 
-            </div> -->
-
 <style scoped>
-    :root {
-        --menu-transition-duration: ${menuTransitionDuration}s;
-    }
-    nav {
-        position: fixed;
-        bottom: 20px;
-        left: 0;
-        width: 100%;
-        height: 70px; /* Adjust the height of the bottom navigation bar */
-        z-index: 1;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
     .nav-container {
         width: calc(100% - 2rem);
         background-color: #292929;
@@ -134,15 +100,11 @@
         justify-content: space-evenly;
         align-items: center;
         gap: 10px;
-        padding: 10px 10px;
+        padding: 15px 0px;
     } 
 
     img {
-        max-width: 2.6rem;
-    }
-
-    .mobile-nav-logo {
-        min-width: 3rem;
+        max-width: 2rem;
     }
 
     button {

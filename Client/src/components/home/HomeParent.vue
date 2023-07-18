@@ -149,6 +149,10 @@ function settings() {
 </template>
 
 <style scoped>
+  header {
+    margin-top: -83px;
+  }
+
 iframe {
   width: 100%;
   height: 70vh;
