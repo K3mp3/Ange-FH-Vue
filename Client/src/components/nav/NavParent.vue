@@ -1,25 +1,33 @@
 <script setup lang="ts">
-    import { ref } from 'vue';
     import StartPageAsideLinks from './StartPageAsideLinks.vue';
-    import StartPageMobileNavigation from './StartPageMobileNavigation.vue';
-
-    let isMenuOpen = ref(false);
-
-    function handleMobileMenu(isOpen: boolean) {
-        isMenuOpen.value = isOpen;
-    }
+    import NavHeaderLogo from './NavHeaderLogo.vue';
 </script>
 <template>
     <header>
-        <StartPageAsideLinks @toggle="handleMobileMenu"></StartPageAsideLinks>
-        <StartPageMobileNavigation :is-open="isMenuOpen"></StartPageMobileNavigation>
+        <NavHeaderLogo></NavHeaderLogo>
     </header>
+    <nav>
+        <StartPageAsideLinks></StartPageAsideLinks>
+    </nav>
 </template>
 <style scoped>
     header {
+      width: 100%;
+      margin: auto;
+      padding: 20px;
+      top: 0;
+      background-color: rgb(28, 28, 28, 0.9);
+    }
+
+    nav {
+        position: fixed;
+        bottom: 20px;
+        left: 0;
         width: 100%;
-        margin: auto;
-        padding: 20px;
-        background-color: #fff;
+        height: 70px; /* Adjust the height of the bottom navigation bar */
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 </style>

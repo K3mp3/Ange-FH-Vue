@@ -149,6 +149,7 @@ function settings() {
 </template>
 
 <style scoped>
+
 iframe {
   width: 100%;
   height: 70vh;
