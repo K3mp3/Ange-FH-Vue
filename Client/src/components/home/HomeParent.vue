@@ -131,8 +131,10 @@ function settings() {
       </div>
     </div>
   </header>
-  <div class="app">
-    <carousel :settings="settings" :breakpoints="breakpoints" :wrap-around="true" class="carousel">
+  <div class="movies-container">
+    <h1>Kommande <span>filmer</span></h1>
+    <div class="carousel-container">
+      <carousel :settings="settings" :breakpoints="breakpoints" :wrap-around="true" class="carousel">
       <slide v-for="slide in movies" :key="slide._id">
         <div class="carousel__item">
           <img
@@ -145,19 +147,34 @@ function settings() {
         <navigation />
       </template>
     </carousel>
+    </div>
   </div>
 </template>
 
 <style scoped>
-
 iframe {
   width: 100%;
   height: 70vh;
 }
 
-.app {
-  margin-top: 20px;
-  padding: 20px;
+.movie-information {
+  display: none;
+}
+
+h1 {
+  font-size: 1.6rem;
+  font-weight: 900;
+}
+
+span {
+  font-size: 1.6rem;
+  font-weight: 200;
+}
+
+.movies-container {
+  padding: 20px 20px;
+}
+.carousel-container {
   display: flex;
   justify-content: end;
 }
@@ -179,10 +196,11 @@ h1 {
 	justify-content: center;
 	align-items: center;
   margin-top: 20px;
+  padding: 0;
 }
 
 .carousel__slide {
-	padding: 10px;
+  padding: 0;
 }
 
 .carousel__prev,
