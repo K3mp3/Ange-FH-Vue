@@ -56,7 +56,8 @@ function emitImage() {
 </script>
 <template>
   <div class="large-container">
-    <div class="small-container">
+    <div class="medium-container">
+      <div class="small-container">
       <form @submit.prevent="emitImage" enctype="multipart/form-data">
         <label for="movie-poster-input">Ladda up film poster</label>
         <input type="file" @change="posterInput" name="movie-poster-input" />
@@ -72,14 +73,42 @@ function emitImage() {
 
         <button>Upload image</button>
       </form>
+      </div>
+
+      <div class="small-container">
+        <form @submit.prevent="emitEventImage" enctype="multipart/form-data">
+          <label for="event-poster-input">Ladda up event poster</label>
+          <input type="file" @change="posterInput" name="event-poster-input" />
+
+          <label for="event-image-input">Ladda up event bakgrund</label>
+          <input type="file" @change="imageInput" name="event-image-input" />
+
+          <label for="event-title-input">Event titel</label>
+          <input type="text" v-model="movieTitle" name="event-title-input" />
+
+          <label for="event-link-input">Länk till event trailer</label>
+          <input type="text" v-model="movieLink" name="event-link-input" />
+
+          <button>Upload image</button>
+        </form>
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
 .large-container {
-  background-color: aliceblue;
   padding: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.medium-container {
+  gap: 100px;
+  display: flex;
+  background-color: #292929;
+  border-radius: 15px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 4px 8px;
 }
 
 .small-container {
@@ -92,6 +121,7 @@ form {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  color: #fff;
 }
 
 label {
