@@ -109,7 +109,8 @@ async function deleteMovie(movie: IMovie) {
   scroll-behavior: smooth */
 
   .large-container {
-    background-color: #f7f7f7;
+    background-color: #292929;
+    color: #fff;
     padding-top: 40px;
   }
 
