@@ -42,9 +42,6 @@ const emits = defineEmits<{
 
 function emitImage() {
   console.log("done-Movie")
-  if (!moviePoster.value || !movieImage.value) {
-    return;
-  }
 
   // Emit the "movieInfo" event with the poster and title
   emits(

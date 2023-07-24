@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import AdminPageMoviesVue from "@/components/adminpage/AdminPageMoviesVue.vue";
+import AdminPageMoviesVue from "@/components/adminpage/AdminPageMovies.vue";
 import AdminPageEvents from "@/components/adminpage/AdminPageEvents.vue";
 import axios from "axios";
 import { onMounted, ref } from "vue";
@@ -126,7 +126,7 @@ async function saveEventInfo(
 
   try {
     const response = await axios.post(
-      "http://localhost:3000/movie/saveevent",
+      "http://localhost:3000/event/saveevent",
       formData
     );
     // console.log("Movie saved successfully!", response.data);
