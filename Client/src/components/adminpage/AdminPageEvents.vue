@@ -1,20 +1,20 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-const moviePoster = ref();
-const movieImage = ref();
-const movieTitle = ref("");
-const movieLink = ref("");
+const eventPoster = ref();
+const eventImage = ref();
+const eventTitle = ref("");
+const eventLink = ref("");
 
 function posterInput(e: Event) {
   const inputElement = e.target as HTMLInputElement;
 
   const image = inputElement.files?.[0];
-  // console.log(image);
+  console.log(image);
 
   if (image) {
-    moviePoster.value = image;
-    // console.log("moviePoster", moviePoster.value);
+    eventPoster.value = image;
+    console.log("eventPoster", eventPoster.value);
   }
 }
 
@@ -22,67 +22,43 @@ function imageInput(e: Event) {
   const inputElement = e.target as HTMLInputElement;
 
   const image = inputElement.files?.[0];
-  // console.log(image);
+  console.log(image);
 
   if (image) {
-    movieImage.value = image;
+    eventImage.value = image;
   }
 }
 
 const emits = defineEmits<{
   (
-    e: "movieInfo",
+    e: "eventInfo",
     poster: File,
-    movieImage: File,
+    eventImage: File,
     title: string,
     link: string
   ): void;
 }>();
 
 function emitImage() {
-  if (!moviePoster.value || !movieImage.value) {
+  console.log("done-Event")
+  if (!eventPoster.value || !eventImage.value) {
     return;
   }
 
   // Emit the "movieInfo" event with the poster and title
   emits(
-    "movieInfo",
-    moviePoster.value,
-    movieImage.value,
-    movieTitle.value,
-    movieLink.value
+    "eventInfo",
+    eventPoster.value,
+    eventImage.value,
+    eventTitle.value,
+    eventLink.value
   );
 }
 </script>
+
 <template>
-  <div class="movie-parent-container">
-    <h1>Välkommen</h1>
-    <h4>Ladda upp filmer och event</h4>
-    <div class="medium-container">
-      <div class="small-container">
-      <form @submit.prevent="emitImage" enctype="multipart/form-data">
-        <label for="movie-poster-input" class="file-upload-label">Film poster</label>
-        <div class="file-upload-container-movie">
-          <input type="file" @change="posterInput" name="movie-poster-input" class="movie-upload file-upload" />
-        </div>
 
-        <label for="movie-image-input">Ladda up film bakgrund</label>
-        <div class="file-upload-container-movie">
-          <input type="file" @change="imageInput" name="movie-image-input" class="movie-upload file-upload" />
-        </div>
-
-        <label for="movie-title-input">Film titel</label>
-        <input type="text" v-model="movieTitle" name="movie-title-input" class="input-text-movie text-input" />
-
-        <label for="movie-link-input">Länk till film trailer</label>
-        <input type="text" v-model="movieLink" name="movie-link-input" class="input-text-movie text-input" />
-
-        <button class="movie-btn">Ladda upp film poster</button>
-      </form>
-      </div>
-
-      <div class="small-container">
-        <form @submit.prevent="emitEventImage" enctype="multipart/form-data">
+        <form @submit.prevent="emitImage" enctype="multipart/form-data">
           <label for="event-poster-input">Ladda up event poster</label>
           <div class="file-upload-container-event">
             <input type="file" @change="posterInput" name="event-poster-input" class="event-upload file-upload" />
@@ -94,51 +70,17 @@ function emitImage() {
           </div>
 
           <label for="event-title-input">Event titel</label>
-          <input type="text" v-model="movieTitle" name="event-title-input" class="input-text-event text-input" />
+          <input type="text" v-model="eventTitle" name="event-title-input" class="input-text-event text-input" />
 
           <label for="event-link-input">Länk till event trailer</label>
-          <input type="text" v-model="movieLink" name="event-link-input" class="input-text-event text-input" />
+          <input type="text" v-model="eventLink" name="event-link-input" class="input-text-event text-input" />
 
           <button class="event-btn">Ladda upp event poster</button>
         </form>
-      </div>
-    </div>
-  </div>
+
 </template>
 
 <style scoped>
-.movie-parent-container {
-  background-color: #292929;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  color: #fff;
-}
-
-h1 {
-  font-weight: 700;
-  margin-bottom: 10px;
-}
-
-.medium-container {
-  gap: 70px;
-  display: flex;
-  background-color: #292929;
-  border-radius: 15px;
-  box-shadow: rgba(0, 0, 0, 0.25) 0px 4px 8px;
-  text-align: left;
-  margin-top: 30px;
-}
-
-.small-container {
-  padding: 20px;
-  max-width: 290px;
-  margin: auto;
-}
-
 form {
   display: flex;
   flex-direction: column;
@@ -218,6 +160,10 @@ button {
   font-weight: 300;
   height: 50px;
   border-radius: 10px;
+}
+
+button:hover {
+  cursor: pointer;
 }
 
 .movie-btn {
