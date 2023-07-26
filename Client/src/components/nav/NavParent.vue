@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import StartPageAsideLinks from './StartPageAsideLinks.vue';
+    import NavBottom from './NavBottom.vue';
     import NavHeaderLogo from './NavHeaderLogo.vue';
 </script>
 <template>
@@ -7,7 +7,7 @@
         <NavHeaderLogo></NavHeaderLogo>
     </header>
     <nav>
-        <StartPageAsideLinks></StartPageAsideLinks>
+        <NavBottom></NavBottom>
     </nav>
 </template>
 <style scoped>
