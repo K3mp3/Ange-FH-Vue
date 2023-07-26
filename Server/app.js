@@ -11,6 +11,7 @@ require("dotenv").config();
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const moviesRouter = require('./routes/movie');
+const eventsRouter = require('./routes/event');
 
 
 const app = express();
@@ -49,5 +50,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/movie', moviesRouter);
+app.use('/event', eventsRouter);
 
 module.exports = app;
