@@ -136,6 +136,17 @@
         text-decoration: none;
     }
 
+    
+    @media screen and (min-width: 420px) {
+        ul {
+            gap: 9px;
+            padding: 13px 0px;
+        } 
+
+        img {
+            max-width: 2.2rem;
+        }
+    }
 
     /* Home attribution image: <a href="https://www.flaticon.com/free-icons/home-button" title="home button icons">Home button icons created by Abdul-Aziz - Flaticon</a> */
     /* Popcorn attribution image: <a href="https://www.flaticon.com/free-icons/food-and-restaurant" title="food and restaurant icons">Food and restaurant icons created by Abdul-Aziz - Flaticon</a> */

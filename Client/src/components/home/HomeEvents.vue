@@ -75,39 +75,39 @@ const getFirstMovieTitle = computed(() => {
 })
 
 const breakpoints = {
-  290: {
+  310: {
     itemsToShow: 1.5,
-    snapAlign: "center"
+    snapAlign: "start"
   },
-  400: {
+  420: {
     itemsToShow: 1.75,
-    snapAlign: "center"
+    snapAlign: "start"
   },
-  490: {
+  510: {
     itemsToShow: 2,
     snapAlign: "start"
   },
-  580: {
+  600: {
     itemsToShow: 2.25,
     snapAlign: "start"
   },
-  670: {
+  690: {
     itemsToShow: 2.5,
     snapAlign: "start"
   },
-  760: {
+  780: {
     itemsToShow: 3,
     snapAlign: "start"
   },
-  850: {
+  870: {
     itemsToShow: 4,
     snapAlign: "start"
   },
-  640: {
+  660: {
     itemsToShow: 5,
     snapAlign: "start"
   },
-  730: {
+  750: {
     itemsToShow: 6,
     snapAlign: "start"
   },
@@ -155,6 +155,8 @@ iframe {
 h1 {
   font-size: 1.6rem;
   font-weight: 900;
+  margin-left: 10px;
+  color: #eeeeee;
 }
 
 span {
@@ -163,7 +165,7 @@ span {
 }
 
 .movies-container {
-    margin-top: 20px;
+  margin-top: 20px;
   padding: 20px;
 }
 .carousel-container {
@@ -173,10 +175,6 @@ span {
 
 .carousel {
   max-width: 90vw;
-}
-
-h1 {
-  color: #eeeeee;
 }
 
 .carousel__item {
@@ -197,7 +195,7 @@ h1 {
 
 img {
   max-width: 100%;
-  border-radius: 10px;
+  padding: 0 10px;
 }
 
 @media screen and (min-width: 1800px) {
