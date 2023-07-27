@@ -149,6 +149,10 @@
     }
 
     @media screen and (min-width: 510px) {
+        .nav-container {
+            width: calc(100% - 2.1rem);
+        }
+
         ul {
             gap: 8px;
             padding: 12px 0px;
