@@ -198,6 +198,26 @@ img {
   padding: 0 10px;
 }
 
+@media screen and (min-width: 420px) {
+  h1 {
+    font-size: 1.7rem;
+  }
+
+  span {
+    font-size: 1.7rem;
+  }
+}
+
+@media screen and (min-width: 510px) {
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  span {
+    font-size: 1.8rem;
+  }
+}
+
 @media screen and (min-width: 1800px) {
 
   h1 {

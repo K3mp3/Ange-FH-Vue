@@ -209,6 +209,16 @@ img {
   }
 }
 
+@media screen and (min-width: 510px) {
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  span {
+    font-size: 1.8rem;
+  }
+}
+
 @media screen and (min-width: 1800px) {
   .movie-information {
     width: 32vw;
