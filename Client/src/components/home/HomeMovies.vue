@@ -75,39 +75,39 @@ const getFirstMovieTitle = computed(() => {
 })
 
 const breakpoints = {
-  310: {
+  320: {
     itemsToShow: 1.5,
     snapAlign: "start"
   },
-  420: {
+  430: {
     itemsToShow: 1.75,
     snapAlign: "start"
   },
-  510: {
+  540: {
     itemsToShow: 2,
     snapAlign: "start"
   },
-  600: {
+  650: {
     itemsToShow: 2.25,
     snapAlign: "start"
   },
-  690: {
+  760: {
     itemsToShow: 2.5,
     snapAlign: "start"
   },
-  780: {
+  870: {
     itemsToShow: 3,
     snapAlign: "start"
   },
-  870: {
+  980: {
     itemsToShow: 4,
     snapAlign: "start"
   },
-  660: {
+  1090: {
     itemsToShow: 5,
     snapAlign: "start"
   },
-  750: {
+  1200: {
     itemsToShow: 6,
     snapAlign: "start"
   },
@@ -177,9 +177,10 @@ span {
 
 .movies-container {
   margin-top: 10px;
+  padding: 20px;
 }
 .carousel-container {
-  padding-left: 40px;
+  padding-left: 0px;
   margin-top: 20px;
 }
 
@@ -192,16 +193,23 @@ span {
   width: 100%;
 	color: white;
 	font-size: 20px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
   margin-top: 20px;
+  padding: 0;
+}
+
+.carousel__slide {
+  padding: 0;
 }
 
 img {
   max-width: 100%;
-  max-height: 339px;
   padding: 0 10px;
 }
 
-@media screen and (min-width: 420px) {
+@media screen and (min-width: 430px) {
   h1 {
     font-size: 1.7rem;
   }
@@ -211,7 +219,7 @@ img {
   }
 }
 
-@media screen and (min-width: 510px) {
+@media screen and (min-width: 540px) {
   h1 {
     font-size: 1.8rem;
   }
@@ -221,7 +229,7 @@ img {
   }
 }
 
-@media screen and (min-width: 600px) {
+@media screen and (min-width: 650px) {
   h1 {
     font-size: 1.9rem;
   }

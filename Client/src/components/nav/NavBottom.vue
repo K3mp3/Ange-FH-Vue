@@ -137,7 +137,7 @@
     }
 
     
-    @media screen and (min-width: 420px) {
+    @media screen and (min-width: 430px) {
         ul {
             gap: 9px;
             padding: 13px 0px;
@@ -148,7 +148,7 @@
         }
     }
 
-    @media screen and (min-width: 510px) {
+    @media screen and (min-width: 540px) {
         .nav-container {
             width: calc(100% - 2.1rem);
         }
@@ -163,7 +163,7 @@
         }
     }
 
-    @media screen and (min-width: 600px) {
+    @media screen and (min-width: 650px) {
         .nav-container {
             width: calc(100% - 2.2rem);
         }
