@@ -132,21 +132,23 @@ function settings() {
     </div>
   </header>
   <div class="movies-container">
-    <h1>Kommande <span>filmer</span></h1>
     <div class="carousel-container">
-      <carousel :settings="settings" :breakpoints="breakpoints" :wrap-around="true" class="carousel">
-      <slide v-for="slide in movies" :key="slide._id" class="slide">
-        <div class="carousel__item">
-          <img
-              :src="`http://localhost:3000/movie/image/${slide.poster}`"
-            >
-        </div>
-      </slide>
+      <h1>Kommande <span>filmer</span></h1>
+      <div class="carousel-items-container">
+        <carousel :settings="settings" :breakpoints="breakpoints" :wrap-around="true" class="carousel">
+        <slide v-for="slide in movies" :key="slide._id" class="slide">
+          <div class="carousel__item">
+            <img
+                :src="`http://localhost:3000/movie/image/${slide.poster}`"
+              >
+          </div>
+        </slide>
 
-      <template #addons>
-        <navigation />
-      </template>
-    </carousel>
+        <template #addons>
+          <navigation />
+        </template>
+      </carousel>
+      </div>
     </div>
   </div>
 </template>
@@ -175,27 +177,27 @@ span {
 
 .movies-container {
   margin-top: 10px;
-  padding: 20px;
 }
 .carousel-container {
-  display: flex;
-  justify-content: end;
+  padding-left: 40px;
+  margin-top: 20px;
 }
 
-.carousel {
-  max-width: 90vw;
+.carousel-items-container {
+  display: flex;
+  justify-content: end;
 }
 
 .carousel__item {
   width: 100%;
 	color: white;
 	font-size: 20px;
-	border-radius: 8px;
   margin-top: 20px;
 }
 
 img {
   max-width: 100%;
+  max-height: 339px;
   padding: 0 10px;
 }
 
@@ -216,6 +218,16 @@ img {
 
   span {
     font-size: 1.8rem;
+  }
+}
+
+@media screen and (min-width: 600px) {
+  h1 {
+    font-size: 1.9rem;
+  }
+
+  span {
+    font-size: 1.9rem;
   }
 }
 

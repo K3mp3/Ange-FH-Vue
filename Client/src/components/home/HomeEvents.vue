@@ -5,18 +5,18 @@ import 'vue3-carousel/dist/carousel.css'
 import { Carousel, Slide, Navigation } from 'vue3-carousel'
 import { gsap } from 'gsap';
 
-interface IMovie {
+interface IEvent {
   _id: string;
   title: string;
   poster: string;
   link: string;
 }
 
-interface IMovieBackground {
+interface IEventBackground {
   image: string;
 }
 
-const movies = ref<IMovie[]>([]);
+const movies = ref<IEvent[]>([]);
 console.log("movies:", movies)
 
 const movieTrailerTitle = ref<HTMLElement | null>(null);
@@ -123,21 +123,23 @@ function settings() {
 
 <template>
   <div class="movies-container">
-    <h1>Kommande <span>Event</span></h1>
     <div class="carousel-container">
-      <carousel :settings="settings" :breakpoints="breakpoints" :wrap-around="true" class="carousel">
-      <slide v-for="slide in movies" :key="slide._id">
-        <div class="carousel__item">
-          <img
-              :src="`http://localhost:3000/movie/image/${slide.poster}`"
-            >
-        </div>
-      </slide>
+      <h1>Kommande <span>Event</span></h1>
+      <div class="carousel-items-container">
+        <carousel :settings="settings" :breakpoints="breakpoints" :wrap-around="true" class="carousel">
+        <slide v-for="slide in movies" :key="slide._id">
+          <div class="carousel__item">
+            <img
+                :src="`http://localhost:3000/movie/image/${slide.poster}`"
+              >
+          </div>
+        </slide>
 
-      <template #addons>
-        <navigation />
-      </template>
-    </carousel>
+        <template #addons>
+          <navigation />
+        </template>
+      </carousel>
+      </div>
     </div>
   </div>
 </template>
@@ -165,16 +167,17 @@ span {
 }
 
 .movies-container {
-  margin-top: 20px;
-  padding: 20px;
-}
-.carousel-container {
-  display: flex;
-  justify-content: end;
+  margin-top: 40px;
 }
 
-.carousel {
-  max-width: 90vw;
+.carousel-container {
+  padding-left: 40px;
+  margin-top: 20px;
+}
+
+.carousel-items-container {
+  display: flex;
+  justify-content: end;
 }
 
 .carousel__item {
@@ -215,6 +218,16 @@ img {
 
   span {
     font-size: 1.8rem;
+  }
+}
+
+@media screen and (min-width: 600px) {
+  h1 {
+    font-size: 1.9rem;
+  }
+
+  span {
+    font-size: 1.9rem;
   }
 }
 
