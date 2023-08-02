@@ -141,6 +141,15 @@ function settings() {
 </template>
 
 <style scoped>
+  /* Keep this part when moving all the styling to its own files. 
+Remove the scoped part aswell when moving the style*/
+.carousel__prev, 
+  .carousel__next, 
+  .carousel__prev:hover, 
+  .carousel__next:hover {
+      color: white;
+  }
+
 iframe {
   width: 100%;
   height: 70vh;
@@ -163,7 +172,7 @@ span {
 }
 
 .movies-container {
-  margin-top: 0px;
+  margin-top: 40px;
   padding: 20px;
 }
 .carousel-container {
@@ -196,6 +205,18 @@ img {
   padding: 0 10px;
 }
 
+@media screen and (min-width: 320px) {
+  .movies-container {
+    margin-top: 40px;
+    padding: 0px;
+  }
+
+  .carousel-container {
+    margin-left: 20px;
+    margin-top: 20px;
+  }
+}
+
 @media screen and (min-width: 430px) {
   h1 {
     font-size: 1.7rem;
@@ -223,6 +244,16 @@ img {
 
   span {
     font-size: 1.9rem;
+  }
+}
+
+@media screen and (min-width: 760px) {
+  h1 {
+    font-size: 2rem;
+  }
+
+  span {
+    font-size: 2rem;
   }
 }
 
