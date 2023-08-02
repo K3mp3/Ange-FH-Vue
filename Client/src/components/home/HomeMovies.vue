@@ -166,7 +166,7 @@ Remove the scoped part aswell when moving the style*/
 
 iframe {
   width: 100%;
-  height: 70vh;
+  height: 300px;
 }
 
 .movie-information {
@@ -264,6 +264,11 @@ img {
 }
 
 @media screen and (min-width: 760px) {
+  iframe {
+    width: 100%;
+    height: 350px;
+  }
+
   h1 {
     font-size: 1.9rem;
   }
@@ -287,18 +292,22 @@ img {
   }
 }
 
-@media screen and (min-width: 1800px) {
+@media screen and (min-width: 1200px) {
+  iframe {
+    width: 100%;
+    height: 700px;
+  }
   .movie-information {
     width: 32vw;
-    height: 500px;
+    height: 650px;
     position: relative;
     z-index: 1;
-    margin-top: -62vh;
+    margin-top: -650px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 40px;
+    gap: 30px;
   }
 
   .hidden {
@@ -306,7 +315,7 @@ img {
   }
 
   h1 {
-    font-size: 4rem;
+    font-size: 2.5rem;
     font-weight: 900;
   }
 

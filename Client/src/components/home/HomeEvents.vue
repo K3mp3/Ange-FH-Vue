@@ -271,10 +271,10 @@ img {
   }
 }
 
-@media screen and (min-width: 1800px) {
+@media screen and (min-width: 1200px) {
 
   h1 {
-    font-size: 4rem;
+    font-size: 2.5rem;
     font-weight: 900;
   }
 
