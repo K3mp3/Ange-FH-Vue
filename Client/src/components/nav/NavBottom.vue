@@ -136,6 +136,62 @@
         text-decoration: none;
     }
 
+    
+    @media screen and (min-width: 430px) {
+        ul {
+            gap: 9px;
+            padding: 13px 0px;
+        } 
+
+        img {
+            max-width: 2.2rem;
+        }
+    }
+
+    @media screen and (min-width: 540px) {
+        .nav-container {
+            width: calc(100% - 2.1rem);
+        }
+
+        ul {
+            gap: 8px;
+            padding: 12px 0px;
+        } 
+
+        img {
+            max-width: 2.3rem;
+        }
+    }
+
+    @media screen and (min-width: 650px) {
+        .nav-container {
+            width: calc(100% - 2.2rem);
+        }
+
+        ul {
+            gap: 7px;
+            padding: 11px 0px;
+        } 
+
+        img {
+            max-width: 2.4rem;
+        }
+    }
+
+    @media screen and (min-width: 760px) {
+        .nav-container {
+            width: calc(100% - 2.3rem);
+        }
+
+        ul {
+            gap: 6px;
+            padding: 10px 0px;
+        } 
+
+        img {
+            max-width: 2.5rem;
+        }
+    }
 
     /* Home attribution image: <a href="https://www.flaticon.com/free-icons/home-button" title="home button icons">Home button icons created by Abdul-Aziz - Flaticon</a> */
     /* Popcorn attribution image: <a href="https://www.flaticon.com/free-icons/food-and-restaurant" title="food and restaurant icons">Food and restaurant icons created by Abdul-Aziz - Flaticon</a> */

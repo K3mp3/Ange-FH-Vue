@@ -5,18 +5,14 @@ import 'vue3-carousel/dist/carousel.css'
 import { Carousel, Slide, Navigation } from 'vue3-carousel'
 import { gsap } from 'gsap';
 
-interface IMovie {
+interface IEvent {
   _id: string;
   title: string;
   poster: string;
   link: string;
 }
 
-interface IMovieBackground {
-  image: string;
-}
-
-const movies = ref<IMovie[]>([]);
+const movies = ref<IEvent[]>([]);
 console.log("movies:", movies)
 
 const movieTrailerTitle = ref<HTMLElement | null>(null);
@@ -75,39 +71,39 @@ const getFirstMovieTitle = computed(() => {
 })
 
 const breakpoints = {
-  290: {
+  320: {
     itemsToShow: 1.5,
-    snapAlign: "center"
+    snapAlign: "start"
   },
-  400: {
+  430: {
     itemsToShow: 1.75,
-    snapAlign: "center"
+    snapAlign: "start"
   },
-  490: {
+  540: {
     itemsToShow: 2,
     snapAlign: "start"
   },
-  580: {
+  650: {
     itemsToShow: 2.25,
     snapAlign: "start"
   },
-  670: {
+  760: {
     itemsToShow: 2.5,
     snapAlign: "start"
   },
-  760: {
+  870: {
     itemsToShow: 3,
     snapAlign: "start"
   },
-  850: {
+  980: {
     itemsToShow: 4,
     snapAlign: "start"
   },
-  640: {
+  1090: {
     itemsToShow: 5,
     snapAlign: "start"
   },
-  730: {
+  1200: {
     itemsToShow: 6,
     snapAlign: "start"
   },
@@ -123,26 +119,37 @@ function settings() {
 
 <template>
   <div class="movies-container">
-    <h1>Kommande <span>Event</span></h1>
     <div class="carousel-container">
-      <carousel :settings="settings" :breakpoints="breakpoints" :wrap-around="true" class="carousel">
-      <slide v-for="slide in movies" :key="slide._id">
-        <div class="carousel__item">
-          <img
-              :src="`http://localhost:3000/movie/image/${slide.poster}`"
-            >
-        </div>
-      </slide>
+      <h1>Kommande <span>Event</span></h1>
+      <div class="carousel-items-container">
+        <carousel :settings="settings" :breakpoints="breakpoints" :wrap-around="true" class="carousel">
+        <slide v-for="slide in movies" :key="slide._id">
+          <div class="carousel__item">
+            <img
+                :src="`http://localhost:3000/movie/image/${slide.poster}`"
+              >
+          </div>
+        </slide>
 
-      <template #addons>
-        <navigation />
-      </template>
-    </carousel>
+        <template #addons>
+          <navigation />
+        </template>
+      </carousel>
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
+  /* Keep this part when moving all the styling to its own files. 
+Remove the scoped part aswell when moving the style*/
+.carousel__prev, 
+  .carousel__next, 
+  .carousel__prev:hover, 
+  .carousel__next:hover {
+      color: white;
+  }
+
 iframe {
   width: 100%;
   height: 70vh;
@@ -155,6 +162,8 @@ iframe {
 h1 {
   font-size: 1.6rem;
   font-weight: 900;
+  margin-left: 10px;
+  color: #eeeeee;
 }
 
 span {
@@ -163,27 +172,23 @@ span {
 }
 
 .movies-container {
-    margin-top: 20px;
+  margin-top: 40px;
   padding: 20px;
 }
 .carousel-container {
+  padding-left: 0px;
+  margin-top: 20px;
+}
+
+.carousel-items-container {
   display: flex;
   justify-content: end;
-}
-
-.carousel {
-  max-width: 90vw;
-}
-
-h1 {
-  color: #eeeeee;
 }
 
 .carousel__item {
   width: 100%;
 	color: white;
 	font-size: 20px;
-	border-radius: 8px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -197,7 +202,73 @@ h1 {
 
 img {
   max-width: 100%;
-  border-radius: 10px;
+  padding: 0 10px;
+}
+
+@media screen and (min-width: 320px) {
+  .movies-container {
+    margin-top: 40px;
+    padding: 0px;
+  }
+
+  .carousel-container {
+    margin-left: 20px;
+    margin-top: 20px;
+  }
+}
+
+@media screen and (min-width: 430px) {
+  h1 {
+    font-size: 1.6rem;
+  }
+
+  span {
+    font-size: 1.6rem;
+  }
+}
+
+@media screen and (min-width: 540px) {
+  h1 {
+    font-size: 1.7rem;
+  }
+
+  span {
+    font-size: 1.7rem;
+  }
+}
+
+@media screen and (min-width: 650px) {
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  span {
+    font-size: 1.8rem;
+  }
+}
+
+@media screen and (min-width: 760px) {
+  h1 {
+    font-size: 1.9rem;
+  }
+
+  span {
+    font-size: 1.9rem;
+  }
+}
+
+@media screen and (min-width: 870px) {
+  .movies-container {
+    padding-left: 40px;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  span {
+    font-size: 2rem;
+  }
 }
 
 @media screen and (min-width: 1800px) {
