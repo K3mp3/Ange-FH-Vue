@@ -219,16 +219,26 @@ img {
 
 @media screen and (min-width: 430px) {
   h1 {
-    font-size: 1.7rem;
+    font-size: 1.6rem;
   }
 
   span {
-    font-size: 1.7rem;
+    font-size: 1.6rem;
   }
 }
 
 @media screen and (min-width: 540px) {
   h1 {
+    font-size: 1.7rem;
+  }
+
+  span {
+    font-size: 1.7rem;
+  }
+}
+
+@media screen and (min-width: 650px) {
+  h1 {
     font-size: 1.8rem;
   }
 
@@ -237,7 +247,7 @@ img {
   }
 }
 
-@media screen and (min-width: 650px) {
+@media screen and (min-width: 760px) {
   h1 {
     font-size: 1.9rem;
   }
@@ -247,7 +257,11 @@ img {
   }
 }
 
-@media screen and (min-width: 760px) {
+@media screen and (min-width: 870px) {
+  .movies-container {
+    padding-left: 40px;
+  }
+
   h1 {
     font-size: 2rem;
   }
