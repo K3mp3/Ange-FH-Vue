@@ -349,37 +349,8 @@ img {
     padding-left: 60px;
   }
 
-  .movie-information {
-    width: 32vw;
-    height: 650px;
-    position: relative;
-    z-index: 1;
-    margin-top: -650px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 30px;
-  }
-
-  .hidden {
-    display: none;
-  }
-
   h1 {
     font-size: 3rem;
-    font-weight: 900;
-  }
-
-  button {
-    background-color: #ff7b0f;
-    border: none;
-    color: #eeeeee;
-    width: 210px;
-    height: 50px;
-    font-size: 1.2rem;
-    font-weight: 700;
-    border-radius: 10px;
   }
 }
 

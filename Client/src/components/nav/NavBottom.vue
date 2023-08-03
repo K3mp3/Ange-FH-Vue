@@ -10,41 +10,9 @@
     import infoIcon from "../../../public/img/nav-icons/id-card.png"
     import contactIcon from "../../../public/img/nav-icons/faq.png"
 
-    let screenSize = ref();
     let mobileMenuOpen = ref(false);
-    let width = document.documentElement.clientWidth;
     
-    const menuTransitionDuration = 0.5; // Adjust as needed
-    
-    function init() {
-        console.log("hej");
-
-        window.addEventListener("resize", updateScreenSize);
-        window.addEventListener("resize", controlScreenSize);
-
-        updateScreenSize()
- 
-        if (width < 910) {
-            screenSize.value = true;
-        } else {
-            screenSize.value = false;
-        }
-    }
-
-    init();
-
-    function controlScreenSize() {
-        if (width > 909) {
-            console.log("width", width);
-            screenSize.value = false;
-        } else {
-            screenSize.value = true;
-        }
-    }
-
-    function updateScreenSize() {
-        width = document.documentElement.clientWidth;
-    }    
+    const menuTransitionDuration = 0.5; // Adjust as needed   
 
     const links: string[] = ["Create room", "About", "Contact", "FAQ"];
 

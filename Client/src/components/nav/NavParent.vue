@@ -1,12 +1,47 @@
 <script setup lang="ts">
+    import { ref } from "vue";
+
     import NavBottom from './NavBottom.vue';
     import NavHeaderLogo from './NavHeaderLogo.vue';
+
+    const screenSize = ref();
+    let width = document.documentElement.clientWidth;
+
+    function controlScreenSize() {
+        if (width > 1200) {
+            console.log("width", width);
+            screenSize.value = false;
+        } else {
+            screenSize.value = true;
+        }
+    }
+
+    function updateScreenSize() {
+        width = document.documentElement.clientWidth;
+    }
+
+    function init() {
+        console.log("hej");
+
+        window.addEventListener("resize", updateScreenSize);
+        window.addEventListener("resize", controlScreenSize);
+
+        updateScreenSize()
+ 
+        if (width < 910) {
+            screenSize.value = true;
+        } else {
+            screenSize.value = false;
+        }
+    }
+
+    init();
 </script>
 <template>
     <header>
         <NavHeaderLogo></NavHeaderLogo>
     </header>
-    <nav>
+    <nav :class="{ hide: screenSize === false }">
         <NavBottom></NavBottom>
     </nav>
 </template>
@@ -29,5 +64,9 @@
         display: flex;
         align-items: center;
         justify-content: center;
+    }
+
+    .hide {
+        display: none;
     }
 </style>
