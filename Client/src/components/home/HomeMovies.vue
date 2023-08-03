@@ -119,12 +119,21 @@ function settings() {
 		snapAlign: "center"
   }
 }
+
+function test() {
+  console.log("iframe")
+  alert("hej");
+}
+
+function handleIframeClick() {
+  console.log("enter");
+}
 </script>
 
 <template>
   <header>
     <div class="movie-trailer-container">
-      <iframe :src="getFirstMovieTrailerLink" title="YouTube video player" frameborder="0"  allowfullscreen></iframe>
+      <iframe :src="getFirstMovieTrailerLink" title="YouTube video player" frameborder="0"  allowfullscreen @click="test" @keydown.enter="handleIframeClick"></iframe>
       <div class="movie-information">
         <h1 ref="movieTrailerTitle">{{ getFirstMovieTitle }}</h1>
         <button ref="movieTrailerTicketBtn">Köp biljetter</button>
@@ -293,6 +302,10 @@ img {
 }
 
 @media screen and (min-width: 1200px) {
+  .movies-container {
+    padding-left: 50px;
+  }
+
   iframe {
     width: 100%;
     height: 700px;
@@ -329,12 +342,44 @@ img {
     font-weight: 700;
     border-radius: 10px;
   }
+}
 
-  .app {
-    margin-top: 200px;
-    padding: 20px;
+@media screen and (min-width: 1700px) {
+  .movies-container {
+    padding-left: 60px;
+  }
+
+  .movie-information {
+    width: 32vw;
+    height: 650px;
+    position: relative;
+    z-index: 1;
+    margin-top: -650px;
     display: flex;
-    justify-content: end;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  h1 {
+    font-size: 3rem;
+    font-weight: 900;
+  }
+
+  button {
+    background-color: #ff7b0f;
+    border: none;
+    color: #eeeeee;
+    width: 210px;
+    height: 50px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    border-radius: 10px;
   }
 }
 

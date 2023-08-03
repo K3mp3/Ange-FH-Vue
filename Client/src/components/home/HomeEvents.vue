@@ -12,8 +12,8 @@ interface IEvent {
   link: string;
 }
 
-const movies = ref<IEvent[]>([]);
-console.log("movies:", movies)
+const events = ref<IEvent[]>([]);
+console.log("events:", events)
 
 const movieTrailerTitle = ref<HTMLElement | null>(null);
 const movieTrailerTicketBtn = ref<HTMLElement | null>(null);
@@ -35,8 +35,8 @@ onMounted(async () => {
 
   try {
     const response = await axios.get("http://localhost:3000/movie");
-    movies.value = response.data;
-    console.log(movies.value);
+    events.value = response.data;
+    console.log(events.value);
   } catch (error) {
     console.error("Failed to retrieve posters:", error);
   }
@@ -49,8 +49,8 @@ onMounted(async () => {
 onMounted(async () => {
   try {
     const response = await axios.get("http://localhost:3000/movie");
-    movies.value = response.data;
-    console.log(movies.value);
+    events.value = response.data;
+    console.log(events.value);
   } catch (error) {
     console.error("Failed to retrieve posters:", error);
   }
@@ -61,12 +61,12 @@ onMounted(async () => {
 });
 
 const getFirstMovieTrailerLink = computed(() => {
-  const firstMovie = movies.value[0];
+  const firstMovie = events.value[0];
   return firstMovie ? firstMovie.link : '';
 });
 
 const getFirstMovieTitle = computed(() => {
-  const firstTitle = movies.value[0];
+  const firstTitle = events.value[0];
   return firstTitle ? firstTitle.title : "";
 })
 
@@ -123,7 +123,7 @@ function settings() {
       <h1>Kommande <span>Event</span></h1>
       <div class="carousel-items-container">
         <carousel :settings="settings" :breakpoints="breakpoints" :wrap-around="true" class="carousel">
-        <slide v-for="slide in movies" :key="slide._id">
+        <slide v-for="slide in events" :key="slide._id">
           <div class="carousel__item">
             <img
                 :src="`http://localhost:3000/movie/image/${slide.poster}`"
@@ -273,6 +273,11 @@ img {
 
 @media screen and (min-width: 1200px) {
 
+  .movies-container {
+    margin-top: 100px;
+    padding-left: 50px;
+  }
+
   h1 {
     font-size: 2.5rem;
     font-weight: 900;
@@ -287,6 +292,12 @@ img {
     font-size: 1.2rem;
     font-weight: 700;
     border-radius: 10px;
+  }
+}
+
+@media screen and (min-width: 1700px) {
+  .movies-container {
+    padding-left: 60px;
   }
 }
 
