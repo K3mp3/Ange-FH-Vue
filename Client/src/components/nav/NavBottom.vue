@@ -10,41 +10,9 @@
     import infoIcon from "../../../public/img/nav-icons/id-card.png"
     import contactIcon from "../../../public/img/nav-icons/faq.png"
 
-    let screenSize = ref();
     let mobileMenuOpen = ref(false);
-    let width = document.documentElement.clientWidth;
     
-    const menuTransitionDuration = 0.5; // Adjust as needed
-    
-    function init() {
-        console.log("hej");
-
-        window.addEventListener("resize", updateScreenSize);
-        window.addEventListener("resize", controlScreenSize);
-
-        updateScreenSize()
- 
-        if (width < 910) {
-            screenSize.value = true;
-        } else {
-            screenSize.value = false;
-        }
-    }
-
-    init();
-
-    function controlScreenSize() {
-        if (width > 909) {
-            console.log("width", width);
-            screenSize.value = false;
-        } else {
-            screenSize.value = true;
-        }
-    }
-
-    function updateScreenSize() {
-        width = document.documentElement.clientWidth;
-    }    
+    const menuTransitionDuration = 0.5; // Adjust as needed   
 
     const links: string[] = ["Create room", "About", "Contact", "FAQ"];
 
@@ -78,10 +46,10 @@
     <div class="nav-container">
         <ul>
             <li><router-link to="movies" class="mobile-nav-icon"><img :src="movieIcon" alt="Movie Icon" class="nav-icon" /></router-link></li>
-            <li><router-link to="movies" class="mobile-nav-icon"><img :src="eventIcon" alt="Movie Icon" class="nav-icon" /></router-link></li>
+            <li><router-link to="event" class="mobile-nav-icon"><img :src="eventIcon" alt="Movie Icon" class="nav-icon" /></router-link></li>
             <li><router-link to="home" class="mobile-nav-logo"><img :src="homeIcon" alt="Home icon"/></router-link></li>
-            <li><router-link to="movies" class="mobile-nav-icon"><img :src="infoIcon" alt="Movie Icon" class="nav-icon" /></router-link></li>
-            <li><router-link to="movies" class="mobile-nav-icon"><img :src="contactIcon" alt="Movie Icon" class="nav-icon" /></router-link></li> 
+            <li><router-link to="om oss" class="mobile-nav-icon"><img :src="infoIcon" alt="Movie Icon" class="nav-icon" /></router-link></li>
+            <li><router-link to="kontakt" class="mobile-nav-icon"><img :src="contactIcon" alt="Movie Icon" class="nav-icon" /></router-link></li> 
         </ul>
     </div>
 </template>

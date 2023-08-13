@@ -119,12 +119,21 @@ function settings() {
 		snapAlign: "center"
   }
 }
+
+function test() {
+  console.log("iframe")
+  alert("hej");
+}
+
+function handleIframeClick() {
+  console.log("enter");
+}
 </script>
 
 <template>
   <header>
     <div class="movie-trailer-container">
-      <iframe :src="getFirstMovieTrailerLink" title="YouTube video player" frameborder="0"  allowfullscreen></iframe>
+      <iframe :src="getFirstMovieTrailerLink" title="YouTube video player" frameborder="0"  allowfullscreen @click="test" @keydown.enter="handleIframeClick"></iframe>
       <div class="movie-information">
         <h1 ref="movieTrailerTitle">{{ getFirstMovieTitle }}</h1>
         <button ref="movieTrailerTicketBtn">Köp biljetter</button>
@@ -166,7 +175,7 @@ Remove the scoped part aswell when moving the style*/
 
 iframe {
   width: 100%;
-  height: 70vh;
+  height: 300px;
 }
 
 .movie-information {
@@ -264,6 +273,11 @@ img {
 }
 
 @media screen and (min-width: 760px) {
+  iframe {
+    width: 100%;
+    height: 350px;
+  }
+
   h1 {
     font-size: 1.9rem;
   }
@@ -287,18 +301,26 @@ img {
   }
 }
 
-@media screen and (min-width: 1800px) {
+@media screen and (min-width: 1200px) {
+  .movies-container {
+    padding-left: 50px;
+  }
+
+  iframe {
+    width: 100%;
+    height: 700px;
+  }
   .movie-information {
     width: 32vw;
-    height: 500px;
+    height: 650px;
     position: relative;
     z-index: 1;
-    margin-top: -62vh;
+    margin-top: -650px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 40px;
+    gap: 30px;
   }
 
   .hidden {
@@ -306,7 +328,7 @@ img {
   }
 
   h1 {
-    font-size: 4rem;
+    font-size: 2.5rem;
     font-weight: 900;
   }
 
@@ -320,12 +342,15 @@ img {
     font-weight: 700;
     border-radius: 10px;
   }
+}
 
-  .app {
-    margin-top: 200px;
-    padding: 20px;
-    display: flex;
-    justify-content: end;
+@media screen and (min-width: 1700px) {
+  .movies-container {
+    padding-left: 60px;
+  }
+
+  h1 {
+    font-size: 3rem;
   }
 }
 
