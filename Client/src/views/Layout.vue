@@ -4,11 +4,14 @@
       <main>
         <router-view></router-view>
       </main>
-      <footer></footer>
+      <footer>
+        <FooterView></FooterView>
+      </footer>
     </div>
   </template>
   
   <script setup lang="ts">
     import NavView from "./NavView.vue";
+    import FooterView from "./FooterView.vue";
   </script>
   
