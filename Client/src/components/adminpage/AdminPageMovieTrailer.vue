@@ -19,20 +19,9 @@ function posterInput(e: Event) {
   }
 }
 
-function imageInput(e: Event) {
-  const inputElement = e.target as HTMLInputElement;
-
-  const image = inputElement.files?.[0];
-  // console.log(image);
-
-  if (image) {
-    movieImage.value = image;
-  }
-}
-
 const emits = defineEmits<{
   (
-    e: "movieInfo",
+    e: "movieTrailerInfo",
     poster: File,
     movieImage: File,
     title: string,
@@ -45,7 +34,7 @@ function emitImage() {
 
   // Emit the "movieInfo" event with the poster and title
   emits(
-    "movieInfo",
+    "movieTrailerInfo",
     moviePoster.value,
     movieImage.value,
     movieTitle.value,
@@ -56,7 +45,7 @@ function emitImage() {
 </script>
 <template>
       <form @submit.prevent="emitImage" enctype="multipart/form-data">
-        <label for="movie-poster-input" class="file-upload-label">Film poster</label>
+        <label for="movie-poster-input" class="file-upload-label">Film bakgrund</label>
         <div class="file-upload-container-movie">
           <input type="file" @change="posterInput" name="movie-poster-input" class="movie-upload file-upload" />
         </div>

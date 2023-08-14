@@ -3,6 +3,7 @@ import AdminPageMoviesVue from "@/components/adminpage/AdminPageMovies.vue";
 import AdminPageEvents from "@/components/adminpage/AdminPageEvents.vue";
 import axios from "axios";
 import { onMounted, ref } from "vue";
+import AdminPageMovieTrailer from "@/components/adminpage/AdminPageMovieTrailer.vue";
 
 interface IMovie {
   _id: string;
@@ -60,6 +61,53 @@ async function saveMovieInfo(
     console.log("savedMovie.value", savedMovie.value);
   } catch (error) {
     console.log("Failed to save movie:", error);
+  }
+}
+
+async function getMovieTrailers() {
+  try {
+  const response = await axios.get("http://localhost:3000/movietrailer");
+  events.value = response.data;
+  console.log(movies.value);
+  } catch (error) {
+    console.error("Failed to retrieve posters:", error);
+  }
+}
+
+async function saveMovieTrailerInfo(
+  moviePoster: File,
+  movieTitle: string,
+  movieLink: string
+) {
+  console.log("poster:", moviePoster, "title:", movieTitle, "movieLink:", movieLink);
+
+  const formData = new FormData();
+  formData.append("poster", moviePoster);
+  formData.append("title", movieTitle);
+  formData.append("link", movieLink);
+
+  console.log("formdata:", formData)
+
+  try {
+    const response = await axios.post(
+      "http://localhost:3000/movietrailer/savemovietrailer",
+      formData
+    );
+    console.log("Movie saved successfully!", response.data);
+
+    const { poster, title, link } = response.data;
+
+    console.log("response", response.data);
+
+    savedMovie.value = {
+      poster: poster,
+      title: title,
+      link: link,
+    };
+
+    console.log("savedMovieTrailer.value", savedMovie.value);
+  } catch (error) {
+    console.log("Failed to save movieTrailer:", error);
   }
 }
 
@@ -183,6 +231,7 @@ onMounted(async () => {
         <h4>Ladda upp filmer och event</h4>
         <div class="entertainment-container">
           <div class="small-container">
+            <AdminPageMovieTrailer @movieTrailerInfo="saveMovieTrailerInfo"></AdminPageMovieTrailer>
             <AdminPageMoviesVue @movieInfo="saveMovieInfo"></AdminPageMoviesVue>
             <AdminPageEvents @eventInfo="saveEventInfo"></AdminPageEvents>
           </div>

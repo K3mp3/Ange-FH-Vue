@@ -61,11 +61,6 @@ function emitImage() {
             <input type="file" @change="posterInput" name="event-poster-input" class="event-upload file-upload" />
           </div>
 
-          <label for="event-image-input">Ladda up event bakgrund</label>
-          <div class="file-upload-container-event">
-            <input type="file" @change="imageInput" name="event-image-input" class="event-upload file-upload" />
-          </div>
-
           <label for="event-title-input">Event titel</label>
           <input type="text" v-model="eventTitle" name="event-title-input" class="input-text-event text-input" />
 
