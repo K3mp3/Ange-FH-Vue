@@ -4,6 +4,8 @@
 <template>
     <div class="footer-container">
        <hr> 
+       <div class="large-container">
+        <div class="medium-container">
         <div class="small-container">
             <h2>Kontakt</h2>
             <router-link to="contact-us" class="footer-link">Kontakta oss</router-link>
@@ -32,21 +34,27 @@
             <h2>Hjälp till</h2>
             <router-link to="help-us" class="footer-link">Kontakta oss</router-link>
         </div>
+       </div>
 
-        <div class="small-container">
-            <h2>Om oss</h2>
-            <router-link to="about-us" class="footer-link">Kontakta oss</router-link>
+        <div class="small-container about-us-container">
+            <div class="text-container">
+                <h2>Om oss</h2>
+                <router-link to="about-us" class="footer-link">Kontakta oss</router-link>
+            </div>
         </div>
 
-        <div class="small-container">
-            <h2>Hitta hit</h2>
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1840.7565882442461!2d15.65756787732601!3d62.524872576316476!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46659a9a94437657%3A0xe617696279a261cc!2s%C3%85nge%20Folkets%20Hus!5e0!3m2!1ssv!2sse!4v1691936578064!5m2!1ssv!2sse" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-            <p>
-                Ånge Folkets Hus <br>
-                Centralgatan 20 <br>
-                841 33 Ånge
-            </p>
+        <div class="small-container map-container">
+            <div class="text-container">
+                <h2>Hitta hit</h2>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1840.7565882442461!2d15.65756787732601!3d62.524872576316476!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46659a9a94437657%3A0xe617696279a261cc!2s%C3%85nge%20Folkets%20Hus!5e0!3m2!1ssv!2sse!4v1691936578064!5m2!1ssv!2sse" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                <p>
+                    Ånge Folkets Hus <br>
+                    Centralgatan 20 <br>
+                    841 33 Ånge
+                </p>
+            </div>
         </div>
+       </div>
     </div>
 </template>
 
@@ -156,6 +164,47 @@
             border-radius: 10px;
             width: 340px;
             height: 220px;
+        }
+    }
+
+    @media screen and (min-width: 1200px) {
+        .large-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            max-width: 1450px;
+            margin: auto;
+        }
+
+        .medium-container {
+            order: 1;
+            width: 100%;
+        }
+
+        .map-container {
+            order: 2;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
+
+        .about-us-container {
+            order: 3;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: end;
+        }
+
+        .text-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        p {
+            margin: 0;
         }
     }
 </style>
