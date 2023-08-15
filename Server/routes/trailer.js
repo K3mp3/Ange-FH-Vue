@@ -3,6 +3,7 @@ var router = express.Router();
 const multer = require("multer");
 const path = require("path");
 const TrailerModel = require("../models/trailer_model");
+const fs = require("fs"); // Import the fs module
 
 const fileStorageEngine = multer.diskStorage({
   destination: (req, file, cb) => {

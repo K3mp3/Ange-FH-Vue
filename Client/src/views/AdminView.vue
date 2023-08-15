@@ -60,6 +60,8 @@ async function saveMovieTrailerInfo(
     };
 
     console.log("savedMovieTrailer.value", savedTrailer.value);
+
+    location.reload();
   } catch (error) {
     console.log("Failed to save movieTrailer:", error);
   }
@@ -144,6 +146,8 @@ async function saveMovieInfo(
     };
 
     console.log("savedMovie.value", savedMovie.value);
+
+    location.reload();
   } catch (error) {
     console.log("Failed to save movie:", error);
   }
@@ -228,6 +232,8 @@ async function saveEventInfo(
     };
 
     // console.log("savedMovie.value", savedMovie.value);
+
+    location.reload();
   } catch (error) {
     // console.log("Failed to save movie:", error);
   }
