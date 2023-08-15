@@ -1,20 +1,16 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-// movies
 const moviePoster = ref();
 const movieTitle = ref("");
 const movieLink = ref("");
 
 function posterInput(e: Event) {
   const inputElement = e.target as HTMLInputElement;
-
   const image = inputElement.files?.[0];
-  // console.log(image);
 
   if (image) {
     moviePoster.value = image;
-    // console.log("moviePoster", moviePoster.value);
   }
 }
 
@@ -28,8 +24,6 @@ const emits = defineEmits<{
 }>();
 
 function emitImage() {
-  console.log("done-Movie")
-
   // Emit the "movieInfo" event with the poster and title
   emits(
     "movieTrailerInfo",
@@ -53,7 +47,7 @@ function emitImage() {
         <label for="movie-link-input">Länk till film trailer</label>
         <input type="text" v-model="movieLink" name="movie-link-input" class="input-text-movie text-input" />
 
-        <button class="movie-btn">Ladda upp film poster</button>
+        <button type="submit" class="movie-btn">Ladda upp film poster</button>
       </form>
 </template>
 

@@ -1,9 +1,11 @@
+<!-- eslint-disable no-underscore-dangle -->
+<!-- eslint-disable no-alert -->
 <script setup lang="ts">
 import AdminPageMoviesVue from "@/components/adminpage/AdminPageMovies.vue";
 import AdminPageEvents from "@/components/adminpage/AdminPageEvents.vue";
 import axios from "axios";
 import { onMounted, ref } from "vue";
-import AdminPageMovieTrailer from "@/components/adminpage/AdminPageMovieTrailer.vue";
+import AdminPageTrailer from "@/components/adminpage/AdminPageTrailer.vue";
 
 
 // Trailer
@@ -22,9 +24,8 @@ async function getTrailer() {
   try {
   const response = await axios.get("http://localhost:3000/trailer");
   trailers.value = response.data;
-  console.log(trailers.value);
   } catch (error) {
-    console.error("Failed to retrieve posters:", error);
+    alert(error);
   }
 }
 
@@ -33,43 +34,32 @@ async function saveMovieTrailerInfo(
   movieTitle: string,
   movieLink: string
 ) {
-  console.log("poster:", moviePoster, "title:", movieTitle, "movieLink:", movieLink);
-
   const formData = new FormData();
   formData.append("poster", moviePoster);
   formData.append("title", movieTitle);
   formData.append("link", movieLink);
-
-  console.log("formdata:", formData)
 
   try {
     const response = await axios.post(
       "http://localhost:3000/trailer/savetrailer",
       formData
     );
-    console.log("Movie saved successfully!", response.data);
 
     const { poster, title, link } = response.data;
 
-    console.log("response", response.data);
-
     savedTrailer.value = {
-      poster: poster,
-      title: title,
-      link: link,
+      poster,
+      title,
+      link,
     };
-
-    console.log("savedMovieTrailer.value", savedTrailer.value);
 
     location.reload();
   } catch (error) {
-    console.log("Failed to save movieTrailer:", error);
+    alert(error);
   }
 }
 
 async function deleteTrailer(trailer: ITrailer) {
-  console.log("movie", trailer.poster);
-
   const movieName = trailer.poster;
   // eslint-disable-next-line no-underscore-dangle
   const movieId = trailer._id;
@@ -81,11 +71,9 @@ async function deleteTrailer(trailer: ITrailer) {
       { trailerId: movieId, movieName: movieName }
     );
 
-    console.log("response", response.data);
-
     location.reload();
   } catch (error) {
-    console.log("Failed to delete movie:", error);
+    alert(error);
   }
 }
 
@@ -106,9 +94,8 @@ async function getMovies() {
   try {
   const response = await axios.get("http://localhost:3000/movie");
   movies.value = response.data;
-  console.log(movies.value);
   } catch (error) {
-    console.error("Failed to retrieve posters:", error);
+    alert(error);
   }
 }
 
@@ -118,44 +105,34 @@ async function saveMovieInfo(
   movieTitle: string,
   movieLink: string
 ) {
-  console.log("poster:", moviePoster, "movieImage:", movieImage, "title:", movieTitle, "movieLink:", movieLink);
-
   const formData = new FormData();
   formData.append("poster", moviePoster);
   formData.append("image", movieImage);
   formData.append("title", movieTitle);
   formData.append("link", movieLink);
 
-  console.log("formdata:", formData)
-
   try {
     const response = await axios.post(
       "http://localhost:3000/movie/savemovie",
       formData
     );
-    console.log("Movie saved successfully!", response.data);
 
     const { poster, title, link } = response.data;
 
-    console.log("response", response.data);
 
     savedMovie.value = {
-      poster: poster,
-      title: title,
-      link: link,
+      poster,
+      title,
+      link,
     };
-
-    console.log("savedMovie.value", savedMovie.value);
 
     location.reload();
   } catch (error) {
-    console.log("Failed to save movie:", error);
+    alert(error);
   }
 }
 
 async function deleteMovie(movie: IMovie) {
-  console.log("movie", movie.poster);
-
   const movieName = movie.poster;
   const movieId = movie._id;
 
@@ -165,13 +142,9 @@ async function deleteMovie(movie: IMovie) {
       { movieId: movieId, movieName: movieName }
     );
 
-    const { movie } = response.data;
-
-    console.log("response", response.data);
-
     location.reload();
   } catch (error) {
-    console.log("Failed to delete movie:", error);
+    alert(error);
   }
 }
 
@@ -192,9 +165,8 @@ async function getEvents() {
   try {
   const response = await axios.get("http://localhost:3000/event");
   events.value = response.data;
-  console.log(movies.value);
   } catch (error) {
-    console.error("Failed to retrieve posters:", error);
+    alert(error);
   }
 }
 
@@ -204,7 +176,6 @@ async function saveEventInfo(
   eventTitle: string,
   eventLink: string
 ) {
-  // console.log("poster:", moviePoster, "movieImage:", movieImage, "title:", movieTitle, "movieLink:", movieLink);
 
   const formData = new FormData();
   formData.append("poster", eventPoster);
@@ -212,35 +183,30 @@ async function saveEventInfo(
   formData.append("title", eventTitle);
   formData.append("link", eventLink);
 
-  // console.log("formdata:", formData)
 
   try {
     const response = await axios.post(
       "http://localhost:3000/event/saveevent",
       formData
     );
-    // console.log("Movie saved successfully!", response.data);
 
     const { poster, title, link } = response.data;
 
-    // console.log("response", response.data);
 
     savedEvent.value = {
-      poster: poster,
-      title: title,
-      link: link,
+      poster,
+      title,
+      link,
     };
 
-    // console.log("savedMovie.value", savedMovie.value);
 
     location.reload();
   } catch (error) {
-    // console.log("Failed to save movie:", error);
+    alert(error)
   }
 }
 
 async function deleteEvent(event: IEvent) {
-  console.log("movie", event.poster);
 
   const movieName = event.poster;
   const movieId = event._id;
@@ -252,11 +218,9 @@ async function deleteEvent(event: IEvent) {
     );
 
 
-    console.log("response", response.data);
-
     location.reload();
   } catch (error) {
-    console.log("Failed to delete event:", error);
+    alert(error);
   }
 }
 
@@ -275,7 +239,7 @@ onMounted(async () => {
         <h4>Ladda upp filmer och event</h4>
         <div class="entertainment-container">
           <div class="small-container">
-            <AdminPageMovieTrailer @movieTrailerInfo="saveMovieTrailerInfo"></AdminPageMovieTrailer>
+            <AdminPageTrailer @movieTrailerInfo="saveMovieTrailerInfo"></AdminPageTrailer>
             <AdminPageMoviesVue @movieInfo="saveMovieInfo"></AdminPageMoviesVue>
             <AdminPageEvents @eventInfo="saveEventInfo"></AdminPageEvents>
           </div>
@@ -291,7 +255,7 @@ onMounted(async () => {
               :alt="movie.title"
             />
             <h3>{{ movie.title }}</h3>
-            <button @click="() => deleteMovie(movie)">Radera film</button>
+            <button type="button" @click="() => deleteMovie(movie)">Radera film</button>
           </div>
         </div>
       </div>
@@ -305,7 +269,7 @@ onMounted(async () => {
               :alt="event.title"
             />
             <h3>{{ event.title }}</h3>
-            <button @click="() => deleteEvent(event)">Radera film</button>
+            <button type="button" @click="() => deleteEvent(event)">Radera film</button>
           </div>
         </div>
       </div>
@@ -319,7 +283,7 @@ onMounted(async () => {
               :alt="trailer.title"
             />
             <h3>{{ trailer.title }}</h3>
-            <button @click="() => deleteTrailer(trailer)">Radera film</button>
+            <button type="button" @click="() => deleteTrailer(trailer)">Radera film</button>
           </div>
         </div>
       </div>
