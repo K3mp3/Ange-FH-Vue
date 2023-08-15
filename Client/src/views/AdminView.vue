@@ -5,6 +5,91 @@ import axios from "axios";
 import { onMounted, ref } from "vue";
 import AdminPageMovieTrailer from "@/components/adminpage/AdminPageMovieTrailer.vue";
 
+
+// Trailer
+
+interface ITrailer {
+  _id: string;
+  title: string;
+  poster: string;
+  link: string;
+}
+
+const savedTrailer = ref<any>(null);
+const trailers = ref<ITrailer[]>([]);
+
+async function getTrailer() {
+  try {
+  const response = await axios.get("http://localhost:3000/trailer");
+  trailers.value = response.data;
+  console.log(trailers.value);
+  } catch (error) {
+    console.error("Failed to retrieve posters:", error);
+  }
+}
+
+async function saveMovieTrailerInfo(
+  moviePoster: File,
+  movieTitle: string,
+  movieLink: string
+) {
+  console.log("poster:", moviePoster, "title:", movieTitle, "movieLink:", movieLink);
+
+  const formData = new FormData();
+  formData.append("poster", moviePoster);
+  formData.append("title", movieTitle);
+  formData.append("link", movieLink);
+
+  console.log("formdata:", formData)
+
+  try {
+    const response = await axios.post(
+      "http://localhost:3000/trailer/savetrailer",
+      formData
+    );
+    console.log("Movie saved successfully!", response.data);
+
+    const { poster, title, link } = response.data;
+
+    console.log("response", response.data);
+
+    savedTrailer.value = {
+      poster: poster,
+      title: title,
+      link: link,
+    };
+
+    console.log("savedMovieTrailer.value", savedTrailer.value);
+  } catch (error) {
+    console.log("Failed to save movieTrailer:", error);
+  }
+}
+
+async function deleteTrailer(trailer: ITrailer) {
+  console.log("movie", trailer.poster);
+
+  const movieName = trailer.poster;
+  // eslint-disable-next-line no-underscore-dangle
+  const movieId = trailer._id;
+
+  try {
+    const response = await axios.post(
+      "http://localhost:3000/trailer/deletemovie",
+      // eslint-disable-next-line object-shorthand
+      { trailerId: movieId, movieName: movieName }
+    );
+
+    console.log("response", response.data);
+
+    location.reload();
+  } catch (error) {
+    console.log("Failed to delete movie:", error);
+  }
+}
+
+
+// Movies
+
 interface IMovie {
   _id: string;
   title: string;
@@ -61,53 +146,6 @@ async function saveMovieInfo(
     console.log("savedMovie.value", savedMovie.value);
   } catch (error) {
     console.log("Failed to save movie:", error);
-  }
-}
-
-async function getMovieTrailers() {
-  try {
-  const response = await axios.get("http://localhost:3000/movietrailer");
-  events.value = response.data;
-  console.log(movies.value);
-  } catch (error) {
-    console.error("Failed to retrieve posters:", error);
-  }
-}
-
-async function saveMovieTrailerInfo(
-  moviePoster: File,
-  movieTitle: string,
-  movieLink: string
-) {
-  console.log("poster:", moviePoster, "title:", movieTitle, "movieLink:", movieLink);
-
-  const formData = new FormData();
-  formData.append("poster", moviePoster);
-  formData.append("title", movieTitle);
-  formData.append("link", movieLink);
-
-  console.log("formdata:", formData)
-
-  try {
-    const response = await axios.post(
-      "http://localhost:3000/movietrailer/savemovietrailer",
-      formData
-    );
-    console.log("Movie saved successfully!", response.data);
-
-    const { poster, title, link } = response.data;
-
-    console.log("response", response.data);
-
-    savedMovie.value = {
-      poster: poster,
-      title: title,
-      link: link,
-    };
-
-    console.log("savedMovieTrailer.value", savedMovie.value);
-  } catch (error) {
-    console.log("Failed to save movieTrailer:", error);
   }
 }
 
@@ -207,7 +245,6 @@ async function deleteEvent(event: IEvent) {
       { eventId: movieId, eventName: movieName }
     );
 
-    const { event } = response.data;
 
     console.log("response", response.data);
 
@@ -219,6 +256,7 @@ async function deleteEvent(event: IEvent) {
 
 
 onMounted(async () => {
+  getTrailer();
   getMovies();
   getEvents();
 });
@@ -262,6 +300,20 @@ onMounted(async () => {
             />
             <h3>{{ event.title }}</h3>
             <button @click="() => deleteEvent(event)">Radera film</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="trailer-container">
+        <h1>Aktiv trailer</h1>
+        <div class="medium-container">
+          <div v-for="trailer in trailers" :key="trailer._id" class="trailer">
+            <img
+              :src="`http://localhost:3000/trailer/image/${trailer.poster}`"
+              :alt="trailer.title"
+            />
+            <h3>{{ trailer.title }}</h3>
+            <button @click="() => deleteTrailer(trailer)">Radera film</button>
           </div>
         </div>
       </div>

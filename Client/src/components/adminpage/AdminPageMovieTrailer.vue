@@ -3,7 +3,6 @@ import { ref } from "vue";
 
 // movies
 const moviePoster = ref();
-const movieImage = ref();
 const movieTitle = ref("");
 const movieLink = ref("");
 
@@ -23,7 +22,6 @@ const emits = defineEmits<{
   (
     e: "movieTrailerInfo",
     poster: File,
-    movieImage: File,
     title: string,
     link: string
   ): void;
@@ -36,7 +34,6 @@ function emitImage() {
   emits(
     "movieTrailerInfo",
     moviePoster.value,
-    movieImage.value,
     movieTitle.value,
     movieLink.value
   );
