@@ -58,7 +58,7 @@ router.get("/image/:name", (req, res) => {
   res.sendFile(imageName, { root: path.join("./trailerimages") });
 });
 
-router.post("/deletemovie", async (req, res) => {
+router.post("/deletetrailer", async (req, res) => {
   const { movieId, movieName } = req.body;
 
   console.log("movieId:", movieId, "movieName:", movieName);

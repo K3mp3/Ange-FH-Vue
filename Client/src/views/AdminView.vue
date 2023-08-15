@@ -74,7 +74,7 @@ async function deleteTrailer(trailer: ITrailer) {
 
   try {
     const response = await axios.post(
-      "http://localhost:3000/trailer/deletemovie",
+      "http://localhost:3000/trailer/deletetrailer",
       // eslint-disable-next-line object-shorthand
       { trailerId: movieId, movieName: movieName }
     );
