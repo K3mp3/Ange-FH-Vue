@@ -1,12 +1,8 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import 'vue3-carousel/dist/carousel.css'
 import { Carousel, Slide, Navigation } from 'vue3-carousel'
-import { gsap } from 'gsap';
-
-
-/*Trailer*/
 
 interface ITrailer {
   _id: string;
@@ -27,119 +23,20 @@ async function getTrailer() {
   }
 }
 
-
-interface IMovie {
-  _id: string;
-  title: string;
-  poster: string;
-  link: string;
-}
-
-const movies = ref<IMovie[]>([]);
-console.log("movies:", movies)
-
-const movieTrailerTitle = ref<HTMLElement | null>(null);
-const movieTrailerTicketBtn = ref<HTMLElement | null>(null);
-
-onMounted(async () => {
-  getTrailer();
-  
-  gsap.from(movieTrailerTitle.value, {
-    y: '-400%',
-    opacity: 0,
-    duration: 1,
-    ease: 'power2.out',
-  });
-
-  gsap.from(movieTrailerTicketBtn.value, {
-    x: '-400%',
-    opacity: 0,
-    duration: 1,
-    ease: 'power2.out',
-  });
-
-  try {
-    const response = await axios.get("http://localhost:3000/movie");
-    movies.value = response.data;
-    console.log(movies.value);
-  } catch (error) {
-    console.error("Failed to retrieve posters:", error);
-  }
-
-  window.addEventListener("resize", settings);
-
-  settings();
-});
-
-onMounted(async () => {
-  try {
-    const response = await axios.get("http://localhost:3000/movie");
-    movies.value = response.data;
-    console.log(movies.value);
-  } catch (error) {
-    console.error("Failed to retrieve posters:", error);
-  }
-
-  window.addEventListener("resize", settings);
-
-  settings();
-});
-
-const getFirstMovieTrailerLink = computed(() => {
-  const firstMovie = movies.value[0];
-  return firstMovie ? firstMovie.link : '';
-});
-
-const getFirstMovieTitle = computed(() => {
-  const firstTitle = movies.value[0];
-  return firstTitle ? firstTitle.title : "";
-})
-
-const breakpoints = {
-  320: {
-    itemsToShow: 1.5,
-    snapAlign: "start"
-  },
-  430: {
-    itemsToShow: 1.75,
-    snapAlign: "start"
-  },
-  540: {
-    itemsToShow: 2,
-    snapAlign: "start"
-  },
-  650: {
-    itemsToShow: 2.25,
-    snapAlign: "start"
-  },
-  760: {
-    itemsToShow: 2.5,
-    snapAlign: "start"
-  },
-  870: {
-    itemsToShow: 3,
-    snapAlign: "start"
-  },
-  980: {
-    itemsToShow: 4,
-    snapAlign: "start"
-  },
-  1090: {
-    itemsToShow: 5,
-    snapAlign: "start"
-  },
-  1200: {
-    itemsToShow: 6,
-    snapAlign: "start"
-  },
-}
-
 function settings() {
   return {
     itemsToShow: 1,
 		snapAlign: "center"
   }
 }
+
+onMounted(async () => {
+  getTrailer();
+
+  window.addEventListener("resize", settings);
+
+  settings();
+});
 </script>
 
 <template>
@@ -176,14 +73,9 @@ function settings() {
       color: white;
   }
 
-iframe {
-  width: 100%;
-  height: 300px;
-}
-
-.movie-information {
-  display: none;
-}
+  .carousel {
+    background-color: #ff7b0f;
+  }
 
 .buttons-container {
   display: flex;
@@ -213,64 +105,24 @@ iframe {
   border-radius: 40px;
 }
 
-h1 {
-  font-size: 1.6rem;
-  font-weight: 900;
-  margin-left: 10px;
-  color: #eeeeee;
-}
-
-span {
-  font-size: 1.6rem;
-  font-weight: 200;
-}
-
-.movies-container {
-  margin-top: 10px;
-  padding: 20px;
-}
-
-.carousel-container {
-  padding-left: 0px;
-  margin-top: 20px;
-}
-
 .carousel-items-container {
   display: flex;
   justify-content: end;
 }
 
 .carousel__item {
-  width: 100%;
-	color: white;
-	font-size: 20px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-  margin-top: 20px;
-  padding: 0;
-}
-
-.carousel__slide {
-  padding: 0;
+    width: 100%;
+    color: white;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
 }
 
 img {
   max-width: 100%;
-  padding: 0 10px;
-}
-
-@media screen and (min-width: 320px) {
-  .movies-container {
-    margin-top: 30px;
-    margin-left: 20px;
-    padding: 0px;
-    overflow-x: hidden;
-  }
-
-  .carousel-container {
-    margin-top: 20px;
-  }
+  padding: 0;
 }
 
 @media screen and (min-width: 430px) {
@@ -288,13 +140,6 @@ img {
     padding: 10px;
   }
 
-  h1 {
-    font-size: 1.6rem;
-  }
-
-  span {
-    font-size: 1.6rem;
-  }
 }
 
 @media screen and (min-width: 540px) {
@@ -310,14 +155,6 @@ img {
   .secondary-btn {
     width: 155px;
     padding: 11px;
-  }
-
-  h1 {
-    font-size: 1.7rem;
-  }
-
-  span {
-    font-size: 1.7rem;
   }
 }
 
@@ -335,14 +172,6 @@ img {
     width: 160px;
     padding: 11px;
   }
-
-  h1 {
-    font-size: 1.8rem;
-  }
-
-  span {
-    font-size: 1.8rem;
-  }
 }
 
 @media screen and (min-width: 760px) {
@@ -358,19 +187,6 @@ img {
   .secondary-btn {
     width: 165px;
     padding: 11px;
-  }
-
-  iframe {
-    width: 100%;
-    height: 350px;
-  }
-
-  h1 {
-    font-size: 1.9rem;
-  }
-
-  span {
-    font-size: 1.9rem;
   }
 }
 
@@ -389,51 +205,9 @@ img {
     width: 170px;
     padding: 11px;
   }
-
-  .movies-container {
-    padding-left: 40px;
-  }
-
-  h1 {
-    font-size: 2rem;
-  }
-
-  span {
-    font-size: 2rem;
-  }
 }
 
 @media screen and (min-width: 1200px) {
-  .movies-container {
-    padding-left: 50px;
-  }
-
-  iframe {
-    width: 100%;
-    height: 700px;
-  }
-  .movie-information {
-    width: 32vw;
-    height: 650px;
-    position: relative;
-    z-index: 1;
-    margin-top: -650px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 30px;
-  }
-
-  .hidden {
-    display: none;
-  }
-
-  h1 {
-    font-size: 2.5rem;
-    font-weight: 900;
-  }
-
   button {
     background-color: #ff7b0f;
     border: none;
@@ -443,16 +217,6 @@ img {
     font-size: 1.2rem;
     font-weight: 700;
     border-radius: 10px;
-  }
-}
-
-@media screen and (min-width: 1700px) {
-  .movies-container {
-    padding-left: 60px;
-  }
-
-  h1 {
-    font-size: 3rem;
   }
 }
 </style>
