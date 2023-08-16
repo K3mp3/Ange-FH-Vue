@@ -213,7 +213,7 @@ async function deleteEvent(event: IEvent) {
 
   try {
     const response = await axios.post(
-      "http://localhost:3000/movie/deleteevent",
+      "http://localhost:3000/event/deleteevent",
       { eventId: movieId, eventName: movieName }
     );
 
@@ -279,7 +279,7 @@ onMounted(async () => {
         <div class="medium-container">
           <div v-for="event in events" :key="event._id" class="movies">
             <img
-              :src="`http://localhost:3000/movie/image/${event.poster}`"
+              :src="`http://localhost:3000/event/image/${event.poster}`"
               :alt="event.title"
             />
             <h3>{{ event.title }}</h3>
