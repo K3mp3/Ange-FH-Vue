@@ -246,6 +246,20 @@ onMounted(async () => {
         </div>
     </div>
     <div class="large-container">
+      <div class="trailer-container">
+        <h1>Aktiv trailer</h1>
+        <div class="medium-container">
+          <div v-for="trailer in trailers" :key="trailer._id" class="trailer">
+            <img
+              :src="`http://localhost:3000/trailer/image/${trailer.poster}`"
+              :alt="trailer.title"
+            />
+            <h3>{{ trailer.title }}</h3>
+            <button type="button" @click="() => deleteTrailer(trailer)">Radera film</button>
+          </div>
+        </div>
+      </div>
+
       <div class="movies-container">
         <h1>Aktiva filmer</h1>
         <div class="medium-container">
@@ -270,20 +284,6 @@ onMounted(async () => {
             />
             <h3>{{ event.title }}</h3>
             <button type="button" @click="() => deleteEvent(event)">Radera film</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="trailer-container">
-        <h1>Aktiv trailer</h1>
-        <div class="medium-container">
-          <div v-for="trailer in trailers" :key="trailer._id" class="trailer">
-            <img
-              :src="`http://localhost:3000/trailer/image/${trailer.poster}`"
-              :alt="trailer.title"
-            />
-            <h3>{{ trailer.title }}</h3>
-            <button type="button" @click="() => deleteTrailer(trailer)">Radera film</button>
           </div>
         </div>
       </div>
