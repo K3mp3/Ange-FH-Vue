@@ -12,6 +12,7 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const moviesRouter = require('./routes/movie');
 const eventsRouter = require('./routes/event');
+const trailerRouter = require('./routes/trailer');
 
 
 const app = express();
@@ -51,5 +52,6 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/movie', moviesRouter);
 app.use('/event', eventsRouter);
+app.use('/trailer', trailerRouter);
 
 module.exports = app;

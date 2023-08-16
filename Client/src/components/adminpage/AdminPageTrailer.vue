@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-// movies
 const moviePoster = ref();
-const movieImage = ref();
 const movieTitle = ref("");
 const movieLink = ref("");
 
@@ -18,9 +16,8 @@ function posterInput(e: Event) {
 
 const emits = defineEmits<{
   (
-    e: "movieInfo",
+    e: "movieTrailerInfo",
     poster: File,
-    movieImage: File,
     title: string,
     link: string
   ): void;
@@ -29,9 +26,8 @@ const emits = defineEmits<{
 function emitImage() {
   // Emit the "movieInfo" event with the poster and title
   emits(
-    "movieInfo",
+    "movieTrailerInfo",
     moviePoster.value,
-    movieImage.value,
     movieTitle.value,
     movieLink.value
   );
@@ -40,7 +36,7 @@ function emitImage() {
 </script>
 <template>
       <form @submit.prevent="emitImage" enctype="multipart/form-data">
-        <label for="movie-poster-input" class="file-upload-label">Film poster</label>
+        <label for="movie-poster-input" class="file-upload-label">Film bakgrund</label>
         <div class="file-upload-container-movie">
           <input type="file" @change="posterInput" name="movie-poster-input" class="movie-upload file-upload" />
         </div>

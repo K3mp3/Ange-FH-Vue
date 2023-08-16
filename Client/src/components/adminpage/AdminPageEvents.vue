@@ -8,24 +8,10 @@ const eventLink = ref("");
 
 function posterInput(e: Event) {
   const inputElement = e.target as HTMLInputElement;
-
   const image = inputElement.files?.[0];
-  console.log(image);
 
   if (image) {
     eventPoster.value = image;
-    console.log("eventPoster", eventPoster.value);
-  }
-}
-
-function imageInput(e: Event) {
-  const inputElement = e.target as HTMLInputElement;
-
-  const image = inputElement.files?.[0];
-  console.log(image);
-
-  if (image) {
-    eventImage.value = image;
   }
 }
 
@@ -40,8 +26,6 @@ const emits = defineEmits<{
 }>();
 
 function emitImage() {
-  console.log("done-Event")
-
   // Emit the "movieInfo" event with the poster and title
   emits(
     "eventInfo",
@@ -61,18 +45,13 @@ function emitImage() {
             <input type="file" @change="posterInput" name="event-poster-input" class="event-upload file-upload" />
           </div>
 
-          <label for="event-image-input">Ladda up event bakgrund</label>
-          <div class="file-upload-container-event">
-            <input type="file" @change="imageInput" name="event-image-input" class="event-upload file-upload" />
-          </div>
-
           <label for="event-title-input">Event titel</label>
           <input type="text" v-model="eventTitle" name="event-title-input" class="input-text-event text-input" />
 
           <label for="event-link-input">Länk till event trailer</label>
           <input type="text" v-model="eventLink" name="event-link-input" class="input-text-event text-input" />
 
-          <button class="event-btn">Ladda upp event poster</button>
+          <button type="submit" class="event-btn">Ladda upp event poster</button>
         </form>
 
 </template>
