@@ -1,9 +1,32 @@
-<!-- eslint-disable no-alert -->
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import axios from 'axios';
 import 'vue3-carousel/dist/carousel.css'
 import { Carousel, Slide, Navigation } from 'vue3-carousel'
+import { gsap } from 'gsap';
+
+
+/*Trailer*/
+
+interface ITrailer {
+  _id: string;
+  title: string;
+  poster: string;
+  link: string;
+}
+
+const trailers = ref<ITrailer[]>([]);
+console.log("trailers:", trailers)
+
+async function getTrailer() {
+  try {
+  const response = await axios.get("http://localhost:3000/trailer");
+  trailers.value = response.data;
+  } catch (error) {
+    alert(error);
+  }
+}
+
 
 interface IMovie {
   _id: string;
@@ -13,26 +36,64 @@ interface IMovie {
 }
 
 const movies = ref<IMovie[]>([]);
+console.log("movies:", movies)
 
-function settings() {
-  return {
-    itemsToShow: 1,
-		snapAlign: "center"
-  }
-}
+const movieTrailerTitle = ref<HTMLElement | null>(null);
+const movieTrailerTicketBtn = ref<HTMLElement | null>(null);
 
 onMounted(async () => {
+  getTrailer();
+  
+  gsap.from(movieTrailerTitle.value, {
+    y: '-400%',
+    opacity: 0,
+    duration: 1,
+    ease: 'power2.out',
+  });
+
+  gsap.from(movieTrailerTicketBtn.value, {
+    x: '-400%',
+    opacity: 0,
+    duration: 1,
+    ease: 'power2.out',
+  });
+
   try {
     const response = await axios.get("http://localhost:3000/movie");
     movies.value = response.data;
+    console.log(movies.value);
   } catch (error) {
-    alert(error);
+    console.error("Failed to retrieve posters:", error);
   }
 
   window.addEventListener("resize", settings);
 
   settings();
 });
+
+onMounted(async () => {
+  try {
+    const response = await axios.get("http://localhost:3000/movie");
+    movies.value = response.data;
+    console.log(movies.value);
+  } catch (error) {
+    console.error("Failed to retrieve posters:", error);
+  }
+
+  window.addEventListener("resize", settings);
+
+  settings();
+});
+
+const getFirstMovieTrailerLink = computed(() => {
+  const firstMovie = movies.value[0];
+  return firstMovie ? firstMovie.link : '';
+});
+
+const getFirstMovieTitle = computed(() => {
+  const firstTitle = movies.value[0];
+  return firstTitle ? firstTitle.title : "";
+})
 
 const breakpoints = {
   320: {
@@ -72,19 +133,24 @@ const breakpoints = {
     snapAlign: "start"
   },
 }
+
+function settings() {
+  return {
+    itemsToShow: 1,
+		snapAlign: "center"
+  }
+}
 </script>
 
 <template>
-  <div class="movies-container">
-    <div class="carousel-container">
-      <h1>Kommande <span>filmer</span></h1>
+    <div class="movie-trailer-container">
       <div class="carousel-items-container">
-        <carousel :settings="settings" :breakpoints="breakpoints" class="carousel">
-        <slide v-for="slide in movies" :key="slide._id" class="slide">
+        <carousel :settings="settings" class="carousel">
+        <slide v-for="slide in trailers" :key="slide._id" class="slide">
           <div class="carousel__item">
             <img
-                :src="`http://localhost:3000/movie/image/${slide.poster}`"
-                alt="`${sl}`"
+                :src="`http://localhost:3000/trailer/image/${slide.poster}`"
+                alt="trailer"
               >
           </div>
         </slide>
@@ -94,14 +160,15 @@ const breakpoints = {
         </template>
       </carousel>
       </div>
+
+      <div class="buttons-container">
+        <button class="secondary-btn">Köp biljetter</button>
+        <button class="primary-btn">Se trailer</button>
+      </div>
     </div>
-  </div>
 </template>
 
 <style scoped>
-
-/* Keep this part when moving all the styling to its own files. 
-Remove the scoped part aswell when moving the style*/
 .carousel__prev, 
   .carousel__next, 
   .carousel__prev:hover, 
@@ -388,6 +455,4 @@ img {
     font-size: 3rem;
   }
 }
-
-/* Theater attribution: Image by <a href="https://www.freepik.com/free-photo/long-hair-artist-stage_11107899.htm#query=theater&position=14&from_view=search&track=sph">Freepik</a> */
 </style>
