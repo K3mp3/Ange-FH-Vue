@@ -73,10 +73,6 @@ onMounted(async () => {
       color: white;
   }
 
-  .carousel {
-    background-color: #ff7b0f;
-  }
-
 .buttons-container {
   display: flex;
   padding: 20px 30px;
@@ -208,6 +204,17 @@ img {
 }
 
 @media screen and (min-width: 1200px) {
+    .buttons-container {
+        display: flex;
+        justify-content: end;
+        position: relative;
+        z-index: 1;
+        margin: auto;
+        margin-top: -100px;
+        padding-left: 20px;
+        max-width: 1500px;
+    }
+
   button {
     background-color: #ff7b0f;
     border: none;
