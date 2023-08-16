@@ -147,7 +147,7 @@ function handleIframeClick() {
     <div class="carousel-container">
       <h1>Kommande <span>filmer</span></h1>
       <div class="carousel-items-container">
-        <carousel :settings="settings" :breakpoints="breakpoints" :wrap-around="true" class="carousel">
+        <carousel :settings="settings" :breakpoints="breakpoints" class="carousel">
         <slide v-for="slide in movies" :key="slide._id" class="slide">
           <div class="carousel__item">
             <img

@@ -122,7 +122,7 @@ function settings() {
     <div class="carousel-container">
       <h1>Kommande <span>Event</span></h1>
       <div class="carousel-items-container">
-        <carousel :settings="settings" :breakpoints="breakpoints" :wrap-around="true" class="carousel">
+        <carousel :settings="settings" :breakpoints="breakpoints" class="carousel">
         <slide v-for="slide in events" :key="slide._id">
           <div class="carousel__item">
             <img
