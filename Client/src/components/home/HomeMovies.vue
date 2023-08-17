@@ -109,43 +109,6 @@ Remove the scoped part aswell when moving the style*/
       color: white;
   }
 
-iframe {
-  width: 100%;
-  height: 300px;
-}
-
-.movie-information {
-  display: none;
-}
-
-.buttons-container {
-  display: flex;
-  padding: 20px 30px;
-  gap: 15px;
-}
-
-.primary-btn {
-  background-color: #ff7b0f;
-  border: none;
-  color: #eeeeee;
-  width: 135px;
-  padding: 9px;
-  font-size: 1rem;
-  font-weight: 100;
-  border-radius: 40px;
-}
-
-.secondary-btn {
-  background: transparent;
-  border: 1px solid #ff7b0f;
-  color: #eeeeee;
-  width: 135px;
-  padding: 9px;
-  font-size: 1rem;
-  font-weight: 100;
-  border-radius: 40px;
-}
-
 h1 {
   font-size: 1.6rem;
   font-weight: 900;
@@ -207,20 +170,6 @@ img {
 }
 
 @media screen and (min-width: 430px) {
-  .buttons-container {
-    gap: 20px;
-  }
-
-  .primary-btn {
-    width: 145px;
-    padding: 10px;
-  }
-
-  .secondary-btn {
-    width: 145px;
-    padding: 10px;
-  }
-
   h1 {
     font-size: 1.6rem;
   }
@@ -231,20 +180,6 @@ img {
 }
 
 @media screen and (min-width: 540px) {
-  .buttons-container {
-    gap: 20px;
-  }
-
-  .primary-btn {
-    width: 155px;
-    padding: 11px;
-  }
-
-  .secondary-btn {
-    width: 155px;
-    padding: 11px;
-  }
-
   h1 {
     font-size: 1.7rem;
   }
@@ -255,20 +190,6 @@ img {
 }
 
 @media screen and (min-width: 650px) {
-  .buttons-container {
-    gap: 25px;
-  }
-
-  .primary-btn {
-    width: 160px;
-    padding: 11px;
-  }
-
-  .secondary-btn {
-    width: 160px;
-    padding: 11px;
-  }
-
   h1 {
     font-size: 1.8rem;
   }
@@ -279,25 +200,6 @@ img {
 }
 
 @media screen and (min-width: 760px) {
-  .buttons-container {
-    gap: 30px;
-  }
-
-  .primary-btn {
-    width: 165px;
-    padding: 11px;
-  }
-
-  .secondary-btn {
-    width: 165px;
-    padding: 11px;
-  }
-
-  iframe {
-    width: 100%;
-    height: 350px;
-  }
-
   h1 {
     font-size: 1.9rem;
   }
@@ -308,21 +210,6 @@ img {
 }
 
 @media screen and (min-width: 870px) {
-  .buttons-container {
-    gap: 35px;
-    margin-left: 40px;
-  }
-
-  .primary-btn {
-    width: 170px;
-    padding: 11px;
-  }
-
-  .secondary-btn {
-    width: 170px;
-    padding: 11px;
-  }
-
   .movies-container {
     padding-left: 40px;
   }
@@ -339,27 +226,6 @@ img {
 @media screen and (min-width: 1200px) {
   .movies-container {
     padding-left: 50px;
-  }
-
-  iframe {
-    width: 100%;
-    height: 700px;
-  }
-  .movie-information {
-    width: 32vw;
-    height: 650px;
-    position: relative;
-    z-index: 1;
-    margin-top: -650px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 30px;
-  }
-
-  .hidden {
-    display: none;
   }
 
   h1 {

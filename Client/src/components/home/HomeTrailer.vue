@@ -1,3 +1,4 @@
+<!-- eslint-disable no-underscore-dangle -->
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
@@ -37,6 +38,15 @@ onMounted(async () => {
 
   settings();
 });
+
+function controlTrailerInfo(slide: ITrailer) {
+  localStorage.clear();
+
+  localStorage.setItem('trailerId', slide._id);
+  localStorage.setItem('trailerPoster', slide.poster);
+  
+  console.log("slide:", slide._id)
+}
 </script>
 
 <template>
@@ -44,6 +54,11 @@ onMounted(async () => {
       <div class="carousel-items-container">
         <carousel :settings="settings" class="carousel">
         <slide v-for="slide in trailers" :key="slide._id" class="slide">
+          <div class="buttons-container">
+            <button type="button" class="secondary-btn"><a href="http://folketshus-ange.internetbokningen.com/chap/bookforestall/">Köp biljetter</a></button>
+            <button type="button" class="primary-btn" @click="() => controlTrailerInfo(slide)">Se trailer</button>
+          </div>
+
           <div class="carousel__item">
             <img
                 :src="`http://localhost:3000/trailer/image/${slide.poster}`"
@@ -56,11 +71,6 @@ onMounted(async () => {
           <navigation />
         </template>
       </carousel>
-      </div>
-
-      <div class="buttons-container">
-        <button class="secondary-btn">Köp biljetter</button>
-        <button class="primary-btn">Se trailer</button>
       </div>
     </div>
 </template>
@@ -77,6 +87,11 @@ onMounted(async () => {
   display: flex;
   padding: 20px 30px;
   gap: 15px;
+}
+
+a {
+  color: #fff;
+  text-decoration: none;
 }
 
 .primary-btn {
@@ -99,6 +114,10 @@ onMounted(async () => {
   font-size: 1rem;
   font-weight: 100;
   border-radius: 40px;
+}
+
+button:hover {
+  cursor: pointer;
 }
 
 .carousel-items-container {
@@ -204,16 +223,21 @@ img {
 }
 
 @media screen and (min-width: 1200px) {
-    .buttons-container {
-        display: flex;
-        justify-content: end;
-        position: relative;
-        z-index: 1;
-        margin: auto;
-        margin-top: -100px;
-        padding-left: 20px;
-        max-width: 1500px;
-    }
+  .carousel__item {
+    max-height: 750px;
+    overflow: hidden;
+  }
+
+  .buttons-container {
+    width: 95%;
+    display: flex;
+    justify-content: end;
+    position: absolute;
+    z-index: 1;
+    margin: auto;
+    bottom: 40px;
+    right: 50px;
+  }
 
   button {
     background-color: #ff7b0f;
@@ -224,6 +248,11 @@ img {
     font-size: 1.2rem;
     font-weight: 700;
     border-radius: 10px;
+  }
+
+  img {
+    width: 100vw;
+    padding: 0;
   }
 }
 </style>
