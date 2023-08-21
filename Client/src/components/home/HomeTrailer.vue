@@ -5,6 +5,8 @@ import axios from 'axios';
 import 'vue3-carousel/dist/carousel.css'
 import { Carousel, Slide, Navigation } from 'vue3-carousel'
 
+let modifiedSlide = "";
+
 interface ITrailer {
   _id: string;
   title: string;
@@ -39,11 +41,8 @@ onMounted(async () => {
   settings();
 });
 
-function controlTrailerInfo(slide: ITrailer) {
-  localStorage.clear();
-
-  localStorage.setItem('trailerId', slide._id);
-  localStorage.setItem('trailerPoster', slide.poster);
+function showTrailer(slide: ITrailer) {
+  modifiedSlide = slide._id;
   
   console.log("slide:", slide._id)
 }
@@ -54,10 +53,14 @@ function controlTrailerInfo(slide: ITrailer) {
       <div class="carousel-items-container">
         <carousel :settings="settings" class="carousel">
         <slide v-for="slide in trailers" :key="slide._id" class="slide">
-          <div class="buttons-container">
-            <button type="button" class="secondary-btn"><a href="http://folketshus-ange.internetbokningen.com/chap/bookforestall/">Köp biljetter</a></button>
-            <button type="button" class="primary-btn" @click="() => controlTrailerInfo(slide)">Se trailer</button>
+          <div class="play-btn-container">
+            <button type="button" class="secondary-btn" @click="() => showTrailer(slide)">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class="link-img"><!--! Font Awesome Pro 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z" class="link-img-path"/></svg>
+            </button>
           </div>
+          <!-- <div class="buttons-container">
+            <button type="button" class="secondary-btn"><a href="http://folketshus-ange.internetbokningen.com/chap/bookforestall/">Köp biljetter</a></button>
+          </div> -->
 
           <div class="carousel__item">
             <img
@@ -76,12 +79,32 @@ function controlTrailerInfo(slide: ITrailer) {
 </template>
 
 <style scoped>
+.carousel__slide {
+  flex-direction: column;
+}
 .carousel__prev, 
   .carousel__next, 
   .carousel__prev:hover, 
   .carousel__next:hover {
       color: white;
   }
+
+.play-btn-container {
+  display: flex;
+  padding: 20px 30px;
+  gap: 15px;
+  position: absolute;
+}
+
+.link-img {
+  max-width: 25px;
+  margin-left: 2px;
+}
+
+.link-img-path {
+  max-width: 20px;
+  fill: #ff7b0f;
+}
 
 .buttons-container {
   display: flex;
@@ -108,9 +131,8 @@ a {
 .secondary-btn {
   background: transparent;
   border: 1px solid #ff7b0f;
-  color: #eeeeee;
-  width: 135px;
-  padding: 9px;
+  width: 60px;
+  height: 60px;
   font-size: 1rem;
   font-weight: 100;
   border-radius: 40px;
@@ -118,21 +140,6 @@ a {
 
 button:hover {
   cursor: pointer;
-}
-
-.carousel-items-container {
-  display: flex;
-  justify-content: end;
-}
-
-.carousel__item {
-    width: 100%;
-    color: white;
-    font-size: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0;
 }
 
 img {
