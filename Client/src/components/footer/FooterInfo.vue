@@ -99,7 +99,6 @@
         max-width: 25px;
     }
     .link-img-path {
-        
         fill: #ffffff;
     }
 

@@ -7,6 +7,8 @@ import { Carousel, Slide, Navigation } from 'vue3-carousel'
 
 let modifiedSlide = "";
 
+let trailerClosed = ref(true);
+
 interface ITrailer {
   _id: string;
   title: string;
@@ -43,8 +45,13 @@ onMounted(async () => {
 
 function showTrailer(slide: ITrailer) {
   modifiedSlide = slide._id;
+  trailerClosed.value = false;
   
   console.log("slide:", slide._id)
+}
+
+function closeIframeContainer() {
+  trailerClosed.value = true;
 }
 </script>
 
@@ -76,9 +83,15 @@ function showTrailer(slide: ITrailer) {
       </carousel>
       </div>
     </div>
+    <div class="iframe-container" @click="closeIframeContainer" :class="{ hide: trailerClosed}">
+
+    </div>
 </template>
 
 <style scoped>
+.hide {
+  display: none;
+}
 .carousel__slide {
   flex-direction: column;
 }
@@ -97,7 +110,7 @@ function showTrailer(slide: ITrailer) {
 }
 
 .link-img {
-  max-width: 25px;
+  max-width: 20px;
   margin-left: 2px;
 }
 
@@ -131,8 +144,8 @@ a {
 .secondary-btn {
   background: transparent;
   border: 1px solid #ff7b0f;
-  width: 60px;
-  height: 60px;
+  width: 55px;
+  height: 55px;
   font-size: 1rem;
   font-weight: 100;
   border-radius: 40px;
@@ -145,6 +158,16 @@ button:hover {
 img {
   max-width: 100%;
   padding: 0;
+}
+
+.iframe-container {
+  width: 100%;
+  height: 100vh;
+  margin: auto;
+  background-color: rgb(0, 0, 0, 0.6);
+  position: absolute;
+  z-index: 1;
+  top: 0;
 }
 
 @media screen and (min-width: 430px) {
