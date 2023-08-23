@@ -8,6 +8,7 @@ import { Carousel, Slide, Navigation } from 'vue3-carousel'
 let modifiedSlide = "";
 
 let trailerClosed = ref(true);
+let showChosenTrailer = ref("");
 
 interface ITrailer {
   _id: string;
@@ -47,11 +48,13 @@ function showTrailer(slide: ITrailer) {
   modifiedSlide = slide._id;
   trailerClosed.value = false;
   
-  console.log("slide:", slide._id)
+  console.log("url", slide.link);
+  showChosenTrailer.value = slide.link
 }
 
 function closeIframeContainer() {
   trailerClosed.value = true;
+  showChosenTrailer.value = "";
 }
 </script>
 
@@ -83,9 +86,10 @@ function closeIframeContainer() {
       </carousel>
       </div>
     </div>
-    <div class="iframe-container" @click="closeIframeContainer" :class="{ hide: trailerClosed}">
+    <div v-for="slide in trailers" :key="slide._id" class="iframe-container" @click="closeIframeContainer" :class="{ hide: trailerClosed }">
+    <iframe :src="showChosenTrailer" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+  </div>
 
-    </div>
 </template>
 
 <style scoped>
@@ -164,10 +168,19 @@ img {
   width: 100%;
   height: 100vh;
   margin: auto;
-  background-color: rgb(0, 0, 0, 0.6);
-  position: absolute;
+  background-color: rgb(0, 0, 0, 0.7);
+  position: fixed;
   z-index: 1;
   top: 0;
+}
+
+iframe {
+  width: 90%;
+  height: calc(90% * 0.56);
+   position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 @media screen and (min-width: 430px) {
@@ -250,6 +263,15 @@ img {
     width: 170px;
     padding: 11px;
   }
+
+  iframe {
+    width: 800px;
+    height: calc(800px * 0.56);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 }
 
 @media screen and (min-width: 1200px) {
@@ -283,6 +305,15 @@ img {
   img {
     width: 100vw;
     padding: 0;
+  }
+
+  iframe {
+    width: 1000px;
+    height: calc(1000px * 0.56);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 }
 </style>
