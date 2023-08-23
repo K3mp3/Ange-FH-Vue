@@ -45,12 +45,11 @@ onMounted(async () => {
 });
 
 function showTrailer(slide: ITrailer) {
-  modifiedSlide = slide._id;
   trailerClosed.value = false;
-  
-  console.log("url", slide.link);
-  showChosenTrailer.value = slide.link
-}
+  showChosenTrailer.value = `${slide.link}?rel=0&autoplay=1`;
+  console.log("url", showChosenTrailer.value);
+  // showChosenTrailer.value = slide.link
+} 
 
 function closeIframeContainer() {
   trailerClosed.value = true;
