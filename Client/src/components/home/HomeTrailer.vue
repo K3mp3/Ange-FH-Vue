@@ -5,10 +5,8 @@ import axios from 'axios';
 import 'vue3-carousel/dist/carousel.css'
 import { Carousel, Slide, Navigation } from 'vue3-carousel'
 
-let modifiedSlide = "";
-
-let trailerClosed = ref(true);
-let showChosenTrailer = ref("");
+const trailerClosed = ref(true);
+const showChosenTrailer = ref("");
 
 interface ITrailer {
   _id: string;
@@ -18,7 +16,6 @@ interface ITrailer {
 }
 
 const trailers = ref<ITrailer[]>([]);
-console.log("trailers:", trailers)
 
 async function getTrailer() {
   try {
@@ -46,9 +43,7 @@ onMounted(async () => {
 
 function showTrailer(slide: ITrailer) {
   trailerClosed.value = false;
-  showChosenTrailer.value = `${slide.link}?rel=0&autoplay=1`;
-  console.log("url", showChosenTrailer.value);
-  // showChosenTrailer.value = slide.link
+  showChosenTrailer.value = `${slide.link}?rel=1&autoplay=1`;
 } 
 
 function closeIframeContainer() {
@@ -120,7 +115,6 @@ function closeIframeContainer() {
 }
 
 .link-img-path {
-  max-width: 20px;
   fill: #ff7b0f;
 }
 
@@ -195,8 +189,13 @@ iframe {
   }
 
   .secondary-btn {
-    width: 145px;
-    padding: 10px;
+    width: 60px;
+    height: 60px;
+  }
+
+  .link-img {
+    max-width: 25px;
+    margin-left: 2px;
   }
 
 }
@@ -207,11 +206,6 @@ iframe {
   }
 
   .primary-btn {
-    width: 155px;
-    padding: 11px;
-  }
-
-  .secondary-btn {
     width: 155px;
     padding: 11px;
   }
@@ -228,8 +222,13 @@ iframe {
   }
 
   .secondary-btn {
-    width: 160px;
-    padding: 11px;
+    width: 65px;
+    height: 65px;
+  }
+
+  .link-img {
+    max-width: 30px;
+    margin-left: 2px;
   }
 }
 
@@ -243,10 +242,6 @@ iframe {
     padding: 11px;
   }
 
-  .secondary-btn {
-    width: 165px;
-    padding: 11px;
-  }
 }
 
 @media screen and (min-width: 870px) {
@@ -261,8 +256,13 @@ iframe {
   }
 
   .secondary-btn {
-    width: 170px;
-    padding: 11px;
+    width: 70px;
+    height: 70px;
+  }
+
+  .link-img {
+    max-width: 35px;
+    margin-left: 3px;
   }
 
   iframe {
@@ -301,6 +301,26 @@ iframe {
     font-size: 1.2rem;
     font-weight: 700;
     border-radius: 10px;
+  }
+
+  .secondary-btn {
+    width: 75px;
+    height: 75px;
+  }
+
+  .secondary-btn:hover {
+    transition: all 0.1s ease-in-out;
+    border: 1px solid #e7e7e7;
+  }
+
+  .secondary-btn:hover .link-img-path{
+    transition: all 0.1s ease-in-out;
+    fill: #e7e7e7;
+  }
+
+  .link-img {
+    max-width: 40px;
+    margin-left: 3px;
   }
 
   img {
