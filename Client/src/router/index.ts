@@ -1,8 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import TrailerViewVue from '@/views/TrailerView.vue';
 import HomeView from "../views/HomeView.vue";
-import CreateAccountView from "../views/CreateAccountView.vue";
 import AdminView from "../views/AdminView.vue";
 import Layout from "../views/Layout.vue";
+
 
 
 
@@ -23,6 +24,12 @@ const router = createRouter({
           path: '/',
           name: 'home',
           component: HomeView,
+          meta: {index: true}
+        },
+        {
+          path: '/trailer/:id',
+          name: 'trailer',
+          component: TrailerViewVue,
           meta: {index: true}
         },
         // {

@@ -99,7 +99,6 @@
         max-width: 25px;
     }
     .link-img-path {
-        max-width: 20px;
         fill: #ffffff;
     }
 

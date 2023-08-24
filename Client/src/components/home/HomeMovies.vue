@@ -1,9 +1,9 @@
+<!-- eslint-disable no-alert -->
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import 'vue3-carousel/dist/carousel.css'
 import { Carousel, Slide, Navigation } from 'vue3-carousel'
-import { gsap } from 'gsap';
 
 interface IMovie {
   _id: string;
@@ -12,67 +12,27 @@ interface IMovie {
   link: string;
 }
 
-interface IMovieBackground {
-  image: string;
+const movies = ref<IMovie[]>([]);
+
+function settings() {
+  return {
+    itemsToShow: 1,
+		snapAlign: "center"
+  }
 }
 
-const movies = ref<IMovie[]>([]);
-console.log("movies:", movies)
-
-const movieTrailerTitle = ref<HTMLElement | null>(null);
-const movieTrailerTicketBtn = ref<HTMLElement | null>(null);
-
 onMounted(async () => {
-  gsap.from(movieTrailerTitle.value, {
-    y: '-400%',
-    opacity: 0,
-    duration: 1,
-    ease: 'power2.out',
-  });
-
-  gsap.from(movieTrailerTicketBtn.value, {
-    x: '-400%',
-    opacity: 0,
-    duration: 1,
-    ease: 'power2.out',
-  });
-
   try {
     const response = await axios.get("http://localhost:3000/movie");
     movies.value = response.data;
-    console.log(movies.value);
   } catch (error) {
-    console.error("Failed to retrieve posters:", error);
+    alert(error);
   }
 
   window.addEventListener("resize", settings);
 
   settings();
 });
-
-onMounted(async () => {
-  try {
-    const response = await axios.get("http://localhost:3000/movie");
-    movies.value = response.data;
-    console.log(movies.value);
-  } catch (error) {
-    console.error("Failed to retrieve posters:", error);
-  }
-
-  window.addEventListener("resize", settings);
-
-  settings();
-});
-
-const getFirstMovieTrailerLink = computed(() => {
-  const firstMovie = movies.value[0];
-  return firstMovie ? firstMovie.link : '';
-});
-
-const getFirstMovieTitle = computed(() => {
-  const firstTitle = movies.value[0];
-  return firstTitle ? firstTitle.title : "";
-})
 
 const breakpoints = {
   320: {
@@ -112,37 +72,9 @@ const breakpoints = {
     snapAlign: "start"
   },
 }
-
-function settings() {
-  return {
-    itemsToShow: 1,
-		snapAlign: "center"
-  }
-}
-
-function test() {
-  console.log("iframe")
-  alert("hej");
-}
-
-function handleIframeClick() {
-  console.log("enter");
-}
 </script>
 
 <template>
-    <div class="movie-trailer-container">
-      <iframe :src="getFirstMovieTrailerLink" title="YouTube video player" frameborder="0"  allowfullscreen @click="test" @keydown.enter="handleIframeClick"></iframe>
-      <div class="movie-information">
-        <h1 ref="movieTrailerTitle">{{ getFirstMovieTitle }}</h1>
-        <button ref="movieTrailerTicketBtn">Köp biljetter</button>
-      </div>
-
-      <div class="buttons-container">
-        <button class="secondary-btn">Köp biljetter</button>
-        <button class="primary-btn">Se trailer</button>
-      </div>
-    </div>
   <div class="movies-container">
     <div class="carousel-container">
       <h1>Kommande <span>filmer</span></h1>
@@ -152,6 +84,7 @@ function handleIframeClick() {
           <div class="carousel__item">
             <img
                 :src="`http://localhost:3000/movie/image/${slide.poster}`"
+                alt="`${sl}`"
               >
           </div>
         </slide>
@@ -175,43 +108,6 @@ Remove the scoped part aswell when moving the style*/
   .carousel__next:hover {
       color: white;
   }
-
-iframe {
-  width: 100%;
-  height: 300px;
-}
-
-.movie-information {
-  display: none;
-}
-
-.buttons-container {
-  display: flex;
-  padding: 20px 30px;
-  gap: 15px;
-}
-
-.primary-btn {
-  background-color: #ff7b0f;
-  border: none;
-  color: #eeeeee;
-  width: 135px;
-  padding: 9px;
-  font-size: 1rem;
-  font-weight: 100;
-  border-radius: 40px;
-}
-
-.secondary-btn {
-  background: transparent;
-  border: 1px solid #ff7b0f;
-  color: #eeeeee;
-  width: 135px;
-  padding: 9px;
-  font-size: 1rem;
-  font-weight: 100;
-  border-radius: 40px;
-}
 
 h1 {
   font-size: 1.6rem;
@@ -274,20 +170,6 @@ img {
 }
 
 @media screen and (min-width: 430px) {
-  .buttons-container {
-    gap: 20px;
-  }
-
-  .primary-btn {
-    width: 145px;
-    padding: 10px;
-  }
-
-  .secondary-btn {
-    width: 145px;
-    padding: 10px;
-  }
-
   h1 {
     font-size: 1.6rem;
   }
@@ -298,20 +180,6 @@ img {
 }
 
 @media screen and (min-width: 540px) {
-  .buttons-container {
-    gap: 20px;
-  }
-
-  .primary-btn {
-    width: 155px;
-    padding: 11px;
-  }
-
-  .secondary-btn {
-    width: 155px;
-    padding: 11px;
-  }
-
   h1 {
     font-size: 1.7rem;
   }
@@ -322,20 +190,6 @@ img {
 }
 
 @media screen and (min-width: 650px) {
-  .buttons-container {
-    gap: 25px;
-  }
-
-  .primary-btn {
-    width: 160px;
-    padding: 11px;
-  }
-
-  .secondary-btn {
-    width: 160px;
-    padding: 11px;
-  }
-
   h1 {
     font-size: 1.8rem;
   }
@@ -346,25 +200,6 @@ img {
 }
 
 @media screen and (min-width: 760px) {
-  .buttons-container {
-    gap: 30px;
-  }
-
-  .primary-btn {
-    width: 165px;
-    padding: 11px;
-  }
-
-  .secondary-btn {
-    width: 165px;
-    padding: 11px;
-  }
-
-  iframe {
-    width: 100%;
-    height: 350px;
-  }
-
   h1 {
     font-size: 1.9rem;
   }
@@ -375,21 +210,6 @@ img {
 }
 
 @media screen and (min-width: 870px) {
-  .buttons-container {
-    gap: 35px;
-    margin-left: 40px;
-  }
-
-  .primary-btn {
-    width: 170px;
-    padding: 11px;
-  }
-
-  .secondary-btn {
-    width: 170px;
-    padding: 11px;
-  }
-
   .movies-container {
     padding-left: 40px;
   }
@@ -406,27 +226,6 @@ img {
 @media screen and (min-width: 1200px) {
   .movies-container {
     padding-left: 50px;
-  }
-
-  iframe {
-    width: 100%;
-    height: 700px;
-  }
-  .movie-information {
-    width: 32vw;
-    height: 650px;
-    position: relative;
-    z-index: 1;
-    margin-top: -650px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 30px;
-  }
-
-  .hidden {
-    display: none;
   }
 
   h1 {
