@@ -315,15 +315,16 @@ iframe {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    z-index: 2;
   }
 
   .fade-container {
     width: 100%;
-    height: 350px;
-    background: linear-gradient(-180deg,transparent 50%,rgba(22, 22, 22,.68) 85%,#161616);
+    height: 110px;
+    background: linear-gradient(-180deg,transparent 40%,rgba(22, 22, 22,.68) 80%,#161616);
     position: relative;
     z-index: 1;
-    margin-top: -350px;
+    margin-top: -110px;
   }
 }
 </style>
