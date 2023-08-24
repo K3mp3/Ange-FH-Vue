@@ -60,9 +60,6 @@
         display: flex;
     }
 
-    .logo-container {
-    }
-
     img {
         max-width: 8rem;
     }

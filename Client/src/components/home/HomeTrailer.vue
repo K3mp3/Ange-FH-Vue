@@ -85,10 +85,12 @@ function closeIframeContainer() {
       </carousel>
       </div>
     </div>
-    <div v-for="slide in trailers" :key="slide._id" class="iframe-container" @click="closeIframeContainer" :class="{ hide: trailerClosed }">
-    <iframe :src="showChosenTrailer" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-  </div>
+      <div v-for="slide in trailers" :key="slide._id" class="iframe-container" @click="closeIframeContainer" :class="{ hide: trailerClosed }">
+        <iframe :src="showChosenTrailer" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      </div>
+      <div class="fade-container">
 
+      </div>
 </template>
 
 <style scoped>
@@ -176,7 +178,7 @@ img {
 iframe {
   width: 90%;
   height: calc(90% * 0.56);
-   position: absolute;
+  position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -313,6 +315,15 @@ iframe {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+  }
+
+  .fade-container {
+    width: 100%;
+    height: 350px;
+    background: linear-gradient(-180deg,transparent 50%,rgba(22, 22, 22,.68) 85%,#161616);
+    position: relative;
+    z-index: 1;
+    margin-top: -350px;
   }
 }
 </style>

@@ -51,7 +51,7 @@
       margin: auto;
       padding: 20px;
       top: 0;
-      background-color: rgb(28, 28, 28, 0.9);
+      background-color: #161616;;
     }
 
     nav {
