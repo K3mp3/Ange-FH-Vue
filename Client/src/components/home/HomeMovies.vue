@@ -21,6 +21,10 @@ function settings() {
   }
 }
 
+function showMovie(slide: IMovie) {
+  console.log(slide._id);
+}
+
 onMounted(async () => {
   try {
     const response = await axios.get("http://localhost:3000/movie");
@@ -82,10 +86,13 @@ const breakpoints = {
         <carousel :settings="settings" :breakpoints="breakpoints" class="carousel">
         <slide v-for="slide in movies" :key="slide._id" class="slide">
           <div class="carousel__item">
-            <img
+            <div class="movie-poster-container" @click="() => showMovie(slide)">
+              <router-link :to="`/movie/${slide._id}`"><img
                 :src="`http://localhost:3000/movie/image/${slide.poster}`"
                 alt="`${sl}`"
-              >
+              ></router-link>
+              <h6>{{slide.title }}</h6>
+            </div>
           </div>
         </slide>
 
@@ -147,13 +154,24 @@ span {
   padding: 0;
 }
 
+.movie-poster-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  text-align: left;
+} 
+
+h6 {
+  margin-left: 15px;
+}
+
 .carousel__slide {
   padding: 0;
 }
 
 img {
   max-width: 100%;
-  padding: 0 10px;
+  padding: 0 15px;
 }
 
 @media screen and (min-width: 320px) {
