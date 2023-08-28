@@ -59,6 +59,31 @@ router.get("/image/:name", (req, res) => {
   res.sendFile(imageName, { root: path.join("./images") });
 });
 
+router.get("/movie/:id", async (req, res) => {
+  const movieId = req.params.id;
+  console.log("ID:", movieId);
+
+  try {
+    const movie = await MovieModel.findById(movieId);
+    console.log(movie);
+
+    const imagePath = path.join(__dirname, "./images", movie.poster);
+
+    const responseData = {
+      _id: movie._id,
+      poster: movie.poster,
+      title: movie.title,
+      link: movie.link,
+      imageData: imagePath,
+    };
+
+    res.status(200).json(responseData);
+  } catch (error) {
+    res.status(500).json({error: "Failed to retrieve movies"})
+  }
+  // res.sendFile(imageName, { root: path.join("./images") });
+});
+
 router.post("/deletemovie", async (req, res) => {
   const { movieId, movieName } = req.body;
 
