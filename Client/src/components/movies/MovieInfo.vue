@@ -16,10 +16,41 @@ interface IMovieHeader {
 }
 
 const movieHeader = ref<IMovieHeader[]>([]);
-
 const moviePoster = ref("")
 const movieTitle = ref("")
 const trailerPoster = ref("");
+const movieDescription = ref("");
+const screenSize = ref();
+
+let width = document.documentElement.clientWidth;
+
+function controlScreenSize() {
+    if (width > 320) {
+        console.log("width", width);
+        screenSize.value = false;
+    } else {
+        screenSize.value = true;
+    }
+}
+
+function updateScreenSize() {
+    width = document.documentElement.clientWidth;
+}
+
+function init() {
+    console.log("hej");
+
+    window.addEventListener("resize", updateScreenSize);
+    window.addEventListener("resize", controlScreenSize);
+
+    updateScreenSize()
+
+    if (width < 910) {
+        screenSize.value = true;
+    }
+}
+
+init(); 
 
 async function getMovieHeader() {
     try {
@@ -41,10 +72,11 @@ async function getMovieHeader() {
 
 async function getMovie() {
     try {
-        const response = await axios.get(`http://localhost:3000/movie/movie/${id.value}`)
-        moviePoster.value = response.data.poster
-        movieTitle.value = response.data.title
-        console.log(movieTitle.value)
+        const response = await axios.get(`http://localhost:3000/movie/movie/${id.value}`);
+        moviePoster.value = response.data.poster;
+        movieTitle.value = response.data.title;
+        movieDescription.value = response.data.description;
+        console.log(movieDescription.value);
     } catch (error) {
         alert(error);
     }
@@ -55,14 +87,10 @@ onMounted(async () => {
     getMovieHeader();
     
 })
-
-// const selectedMovie = computed(() => {
-//     return movieHeader.value.find(movie => movie.title === movieTitle.value);
-// });
 </script>
 
 <template>
-        <div class="trailer-container">
+        <div class="trailer-container" :class="{hide: screenSize === true}">
             <img :src="`http://localhost:3000/trailer/image/${trailerPoster}`" alt="trailer">
         </div>
         
@@ -73,8 +101,13 @@ onMounted(async () => {
             <div class="movie-title-parent-container">
                 <div class="movie-title-container">
                     <h2>{{movieTitle}}</h2>
+                    <button type="submit" class="buy-ticket-btn">Köp biljetter</button>
                 </div>
             </div>
+        </div>
+
+        <div class="movie-description-container">
+            <p>{{ movieDescription }}</p>
         </div>
 </template>
 
@@ -83,7 +116,22 @@ onMounted(async () => {
         color: #fff;
         font-size: 1.3rem;
         font-weight: 700;
+        margin-bottom: 15px;
     }
+
+    p {
+        color: #fff;
+    }
+
+    img {
+        max-width: 100%;
+        max-height: 100%;
+    }
+
+    .hide {
+        display: none;
+    }
+
     .trailer-container {
         max-width: 100%;
         margin-bottom: 40px;
@@ -97,23 +145,36 @@ onMounted(async () => {
 
     .movie-container {
         min-width: 100px;
-        position: relative;
         z-index: 1;
-        margin-top: -80px;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
     }
 
     .movie-title-parent-container {
         display: flex;
         justify-content: center;
-        align-items: end;
         padding: 0 10px;
     }
 
-    img {
-        max-width: 100%;
+    .movie-title-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: end;
+        align-items: end;
+        padding-bottom: 4px;
+    }
+
+    .buy-ticket-btn {
+        background: transparent;
+        border: 1px solid #FF7B0F;
+        color: #eeeeee;
+        font-size: 0.9rem;
+        font-weight: 300;
+        width: 100%;
+        padding: 5px 0;
+        border-radius: 20px;
+    }
+
+    .movie-description-container {
+        padding: 30px;
     }
 
     @media screen and (min-width: 330px) {
