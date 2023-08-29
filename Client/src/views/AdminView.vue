@@ -83,6 +83,7 @@ async function deleteTrailer(trailer: ITrailer) {
 interface IMovie {
   _id: string;
   title: string;
+  description: string;
   poster: string;
   link: string;
 }
@@ -103,13 +104,17 @@ async function saveMovieInfo(
   moviePoster: File,
   movieImage: File,
   movieTitle: string,
+  movieDescription: string,
   movieLink: string
 ) {
   const formData = new FormData();
   formData.append("poster", moviePoster);
   formData.append("image", movieImage);
   formData.append("title", movieTitle);
+  formData.append("description", movieDescription);
   formData.append("link", movieLink);
+
+  console.log(formData);
 
   try {
     const response = await axios.post(
@@ -117,12 +122,13 @@ async function saveMovieInfo(
       formData
     );
 
-    const { poster, title, link } = response.data;
+    const { poster, title, description, link } = response.data;
 
 
     savedMovie.value = {
       poster,
       title,
+      description,
       link,
     };
 

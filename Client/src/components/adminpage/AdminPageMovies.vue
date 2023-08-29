@@ -1,10 +1,13 @@
+<!-- eslint-disable vue/no-export-in-script-setup -->
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref } from 'vue';
+
 
 // movies
 const moviePoster = ref();
 const movieImage = ref();
 const movieTitle = ref("");
+const movieDescription = ref("");
 const movieLink = ref("");
 
 function posterInput(e: Event) {
@@ -22,17 +25,20 @@ const emits = defineEmits<{
     poster: File,
     movieImage: File,
     title: string,
+    movieDescription: string,
     link: string
   ): void;
 }>();
 
 function emitImage() {
   // Emit the "movieInfo" event with the poster and title
+  console.log(movieDescription.value)
   emits(
     "movieInfo",
     moviePoster.value,
     movieImage.value,
     movieTitle.value,
+    movieDescription.value,
     movieLink.value
   );
 }
@@ -40,28 +46,52 @@ function emitImage() {
 </script>
 <template>
       <form @submit.prevent="emitImage" enctype="multipart/form-data">
-        <label for="movie-poster-input" class="file-upload-label">Film poster</label>
-        <div class="file-upload-container-movie">
-          <input type="file" @change="posterInput" name="movie-poster-input" class="movie-upload file-upload" />
+        <div class="left-form">
+          <label for="movie-poster-input" class="file-upload-label">Film poster</label>
+          <div class="file-upload-container-movie">
+            <input type="file" @change="posterInput" name="movie-poster-input" class="movie-upload file-upload" />
+          </div>
+
+          <label for="movie-title-input">Film titel</label>
+          <input type="text" v-model="movieTitle" name="movie-title-input" class="input-text-movie text-input" />
+
+          <label for="movie-link-input">Länk till film trailer</label>
+          <input type="text" v-model="movieLink" name="movie-link-input" class="input-text-movie text-input" />
+
+          <button type="submit" class="movie-btn">Ladda upp film poster</button>
         </div>
-
-        <label for="movie-title-input">Film titel</label>
-        <input type="text" v-model="movieTitle" name="movie-title-input" class="input-text-movie text-input" />
-
-        <label for="movie-link-input">Länk till film trailer</label>
-        <input type="text" v-model="movieLink" name="movie-link-input" class="input-text-movie text-input" />
-
-        <button type="submit" class="movie-btn">Ladda upp film poster</button>
+        <div class="right-form">
+          <label for="text-editor">Film beskrivning</label>
+          <textarea rows="10" cols="20" name="text-editor" class="textarea" v-model="movieDescription"></textarea>
+        </div>
       </form>
 </template>
 
 <style scoped>
 form {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: row;
   color: #fff;
+  gap: 10px;
 }
+
+.left-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.right-form {
+  width: 244px;
+}
+
+.textarea {
+    width: 244px;
+    height: 324px;
+    color: #fff;
+    background: transparent;
+    border: 1px solid #FF7B0F;
+    margin-top: 4px;
+  }
 
 label {
   margin-bottom: 4px;
