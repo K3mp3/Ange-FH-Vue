@@ -144,11 +144,12 @@ onMounted(async () => {
     }
 
     .movie-container {
-        min-width: 100px;
+        width: 100%;
         z-index: 1;
     }
 
     .movie-title-parent-container {
+        width: 100%;
         display: flex;
         justify-content: center;
         padding: 0 10px;
@@ -180,6 +181,173 @@ onMounted(async () => {
     @media screen and (min-width: 330px) {
         h2 {
             font-size: 1.4rem;
+        }
+
+        .movie-parent-container {
+            max-width: 350px;
+            margin: auto;
+        }
+
+        .movie-container {
+            width: 140px;
+        }
+
+        .movie-description-container {
+            max-width: 350px;
+            margin: auto;
+        }
+    }
+
+    @media screen and (min-width: 400px) {
+        h2 {
+            font-size: 1.6rem;
+        }
+        .movie-parent-container {
+            max-width: 420px;
+            margin: auto;
+        }
+
+        .movie-container {
+            width: 160px;
+        }
+
+        .movie-title-container {
+            max-width: 100%;
+        }
+
+        .movie-description-container {
+            max-width: 420px;
+            margin: auto;
+        }
+    }
+
+    @media screen and (min-width: 540px) {
+        h2 {
+            font-size: 1.8rem;
+        }
+        .movie-parent-container {
+            max-width: 560px;
+            margin: auto;
+        }
+        .movie-container {
+            width: 180px;
+        }
+
+        .movie-title-container {
+            width: 100%;
+            align-items: start;
+        }
+
+        .buy-ticket-btn {
+            max-width: 220px;
+            height: 30px;
+        }
+
+        .movie-description-container {
+            max-width: 560px;
+            margin: auto;
+            margin-top: 10px;
+        }
+    }
+
+    @media screen and (min-width: 650px) {
+        h2 {
+            font-size: 2rem;
+        }
+        .movie-parent-container {
+            max-width: 670px;
+            margin: auto;
+            margin-top: -100px;
+            gap: 20px;
+        }
+        .movie-container {
+            width: 200px;
+        }
+
+        .movie-title-container {
+            width: 100%;
+            align-items: start;
+        }
+
+        .buy-ticket-btn {
+            max-width: 220px;
+            height: 31px;
+        }
+
+        .movie-description-container {
+            max-width: 670px;
+            margin: auto;
+            margin-top: 20px;
+        }
+    }
+
+    @media screen and (min-width: 760px) {
+        h2 {
+            font-size: 2.1rem;
+        }
+        .movie-parent-container {
+            max-width: 780px;
+            margin: auto;
+            margin-top: -110px;
+        }
+        .movie-container {
+            width: 220px;
+        }
+
+        .movie-title-container {
+            width: 100%;
+            align-items: start;
+        }
+
+        .movie-description-container {
+            max-width: 780px;
+            margin: auto;
+            margin-top: 30px;
+        }
+    }
+
+    @media screen and (min-width: 870px) {
+        .movie-container {
+            width: 240px;
+        }
+    }
+
+    @media screen and (min-width: 980px) {
+        .movie-parent-container {
+            margin-top: -140px;
+        }
+        .movie-container {
+            width: 260px;
+        }
+    }
+
+    @media screen and (min-width: 1090px) {
+        .movie-parent-container {
+            margin-top: -150px;
+        }
+        .movie-container {
+            width: 280px;
+        }
+        .movie-description-container {
+            margin-top: 40px;
+        }
+    }
+
+    @media screen and (min-width: 1200px) {
+        img {
+            width: 100%;
+        }
+        .trailer-container {
+            width: 100%;
+            max-height: 750px;
+            overflow: hidden;
+        }
+        .movie-parent-container {
+            margin-top: -160px;
+            gap: 30px;
+        }
+        .movie-container {
+            width: 310px;
         }
     }
 </style>    
