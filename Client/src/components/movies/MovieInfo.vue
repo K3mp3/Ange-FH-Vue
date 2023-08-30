@@ -101,7 +101,7 @@ onMounted(async () => {
             <div class="movie-title-parent-container">
                 <div class="movie-title-container">
                     <h2>{{movieTitle}}</h2>
-                    <button type="submit" class="buy-ticket-btn">Köp biljetter</button>
+                    <button type="submit" class="buy-ticket-btn"><a href="http://folketshus-ange.internetbokningen.com/chap/bookforestall/">Köp biljetter</a></button>
                 </div>
             </div>
         </div>
@@ -119,8 +119,12 @@ onMounted(async () => {
         margin-bottom: 15px;
     }
 
-    p {
+    p, a {
         color: #fff;
+    }
+
+    a {
+        text-decoration: none;
     }
 
     img {
@@ -172,6 +176,12 @@ onMounted(async () => {
         width: 100%;
         padding: 5px 0;
         border-radius: 20px;
+    }
+
+    .buy-ticket-btn:hover {
+        transition: all 0.1s ease-in-out;
+        border: 1px solid #eeeeee;
+        cursor: pointer;
     }
 
     .movie-description-container {
@@ -328,6 +338,9 @@ onMounted(async () => {
         .movie-container {
             width: 280px;
         }
+        .buy-ticket-btn {
+            height: 35px;
+        }
         .movie-description-container {
             margin-top: 40px;
         }
@@ -345,6 +358,10 @@ onMounted(async () => {
         .movie-parent-container {
             margin-top: -160px;
             gap: 30px;
+        }
+
+        .buy-ticket-btn {
+            height: 40px;
         }
         .movie-container {
             width: 310px;
