@@ -38,8 +38,6 @@ function updateScreenSize() {
 }
 
 function init() {
-    console.log("hej");
-
     window.addEventListener("resize", updateScreenSize);
     window.addEventListener("resize", controlScreenSize);
 
@@ -50,7 +48,10 @@ function init() {
     }
 }
 
-init(); 
+onMounted( async() => {
+    init(); 
+    controlScreenSize();
+})
 
 async function getMovieHeader() {
     try {
