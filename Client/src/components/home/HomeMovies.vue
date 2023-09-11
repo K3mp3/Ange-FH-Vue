@@ -1,3 +1,4 @@
+<!-- eslint-disable no-underscore-dangle -->
 <!-- eslint-disable no-alert -->
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
@@ -19,10 +20,6 @@ function settings() {
     itemsToShow: 1,
 		snapAlign: "start"
   }
-}
-
-function showMovie(slide: IMovie) {
-  console.log(slide._id);
 }
 
 onMounted(async () => {
@@ -64,6 +61,10 @@ const breakpoints = {
     snapAlign: "center"
   },
 }
+
+function showClickedMovie(slide: IMovie) {
+  window.location.href = `/movie/${slide._id}`
+}
 </script>
 
 <template>
@@ -74,12 +75,13 @@ const breakpoints = {
         <carousel :settings="settings" :breakpoints="breakpoints" class="carousel">
         <slide v-for="slide in movies" :key="slide._id" class="slide">
           <div class="carousel__item">
-            <div class="movie-poster-container" @click="() => showMovie(slide)">
-              <router-link :to="`/movie/${slide._id}`"><img
-                :src="`http://localhost:3000/movie/image/${slide.poster}`"
-                alt="`${sl}`"
-              ></router-link>
-              <h6>{{slide.title }}</h6>
+            <!-- <router-link :to="`/movie/${slide._id}`"> -->
+            <div class="movie-poster-container">
+              <img :src="`http://localhost:3000/movie/image/${slide.poster}`" alt="`${sl}`" @click="() => showClickedMovie(slide)">
+              <div class="movie-bottom-container">
+                <h6>{{slide.title }}</h6>
+                <button type="button" class="see-movie-btn" @click="() => showClickedMovie(slide)">Se nu</button>
+              </div>
             </div>
           </div>
         </slide>
@@ -108,6 +110,7 @@ h1 {
   font-size: 1.6rem;
   font-weight: 900;
   margin-left: 15px;
+  margin-bottom: 20px;
   color: #eeeeee;
 }
 
@@ -144,10 +147,32 @@ span {
   flex-direction: column;
   gap: 15px;
   text-align: left;
-} 
+}
+
+.movie-poster-container:hover {
+  cursor: pointer;
+}
 
 h6 {
   margin-left: 15px;
+}
+
+.see-movie-btn {
+  background: transparent;
+  border: 1px solid #FF7B0F;
+  color: #eeeeee;
+  font-size: 0.9rem;
+  font-weight: 300;
+  width: calc(100% - 30px);
+  margin-left: 15px;
+  padding: 5px 0;
+  border-radius: 20px;
+}
+
+.see-movie-btn:hover {
+  transition: all 0.1s ease-in-out;
+  border: 1px solid #eeeeee;
+  cursor: pointer;
 }
 
 .carousel__slide {
@@ -208,6 +233,17 @@ img {
   span {
     font-size: 1.9rem;
   }
+
+  .movie-bottom-container {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .see-movie-btn {
+    width: 50%;
+    margin-right: 15px;
+  }
 }
 
 @media screen and (min-width: 860px) {
@@ -229,23 +265,13 @@ img {
 
   h1 {
     font-size: 2.1rem;
+    margin-bottom: 30px;
   }
 
   span {
     font-size: 2.1rem;
   }
 
-
-  button {
-    background-color: #ff7b0f;
-    border: none;
-    color: #eeeeee;
-    width: 210px;
-    height: 50px;
-    font-size: 1.2rem;
-    font-weight: 700;
-    border-radius: 10px;
-  }
 }
 
 @media screen and (min-width: 1700px) {
