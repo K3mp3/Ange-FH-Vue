@@ -1,7 +1,7 @@
 <!-- eslint-disable no-plusplus -->
 <script setup lang="ts">
 import axios from 'axios';
-import { computed, onMounted, ref  } from 'vue';
+import { onMounted, ref  } from 'vue';
 import { useRoute } from 'vue-router';
 
 const route = useRoute(); // Get the current route object
@@ -20,38 +20,6 @@ const moviePoster = ref("")
 const movieTitle = ref("")
 const trailerPoster = ref("");
 const movieDescription = ref("");
-const screenSize = ref();
-
-let width = document.documentElement.clientWidth;
-
-function controlScreenSize() {
-    if (width > 320) {
-        console.log("width", width);
-        screenSize.value = false;
-    } else {
-        screenSize.value = true;
-    }
-}
-
-function updateScreenSize() {
-    width = document.documentElement.clientWidth;
-}
-
-function init() {
-    window.addEventListener("resize", updateScreenSize);
-    window.addEventListener("resize", controlScreenSize);
-
-    updateScreenSize()
-
-    if (width < 910) {
-        screenSize.value = true;
-    }
-}
-
-onMounted( async() => {
-    init(); 
-    controlScreenSize();
-})
 
 async function getMovieHeader() {
     try {
@@ -83,26 +51,26 @@ async function getMovie() {
     }
 }
 
-onMounted(async () => {
+onMounted(() => {
     getMovie();
     getMovieHeader();
-    
 })
 </script>
 
 <template>
-        <div class="trailer-container" :class="{hide: screenSize === true}">
+        <div class="trailer-container">
             <img :src="`http://localhost:3000/trailer/image/${trailerPoster}`" alt="trailer">
-        </div>
-        
-        <div class="movie-parent-container">
-            <div class="movie-container">
-                <img :src="`http://localhost:3000/movie/image/${moviePoster}`" alt="trailer">
-            </div>
-            <div class="movie-title-parent-container">
-                <div class="movie-title-container">
-                    <h2>{{movieTitle}}</h2>
-                    <button type="submit" class="buy-ticket-btn"><a href="http://folketshus-ange.internetbokningen.com/chap/bookforestall/">Köp biljetter</a></button>
+            <div class="blurred-background">
+                <div class="movie-parent-container">
+                    <div class="movie-container">
+                        <img :src="`http://localhost:3000/movie/image/${moviePoster}`" alt="trailer" class="movie-poster">
+                    </div>
+                    <div class="movie-title-parent-container">
+                        <div class="movie-title-container">
+                            <h2>{{movieTitle}}</h2>
+                            <button type="submit" class="buy-ticket-btn"><a href="http://folketshus-ange.internetbokningen.com/chap/bookforestall/">Köp biljetter</a></button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -118,6 +86,7 @@ onMounted(async () => {
         font-size: 1.3rem;
         font-weight: 700;
         margin-bottom: 15px;
+        margin: auto;
     }
 
     p, a {
@@ -128,29 +97,42 @@ onMounted(async () => {
         text-decoration: none;
     }
 
-    img {
-        max-width: 100%;
-        max-height: 100%;
-    }
-
     .hide {
         display: none;
     }
 
     .trailer-container {
-        max-width: 100%;
-        margin-bottom: 40px;
+        height: 70vh;
+        overflow-x: hidden;
+    }
+
+    .blurred-background {
+        width: 100%;
+        height: 70vh;
+        background-color: rgba(0, 0, 0, 0.61);
+        backdrop-filter: blur(3px);
+        position: absolute;
+        z-index: 1;
+        top: 0;
+        margin-top: 89px;
+        display: flex;
+        justify-content: end;
     }
 
     .movie-parent-container {
+        width: 100%;
         display: flex;
-        flex-direction: row;
-        padding: 0 30px;
+        flex-direction: row; 
+        align-items: end;
     }
 
     .movie-container {
         width: 100%;
-        z-index: 1;
+        padding: 20px 20px 0 20px;
+    }
+
+    .movie-poster {
+        width: 100%;
     }
 
     .movie-title-parent-container {
@@ -163,8 +145,9 @@ onMounted(async () => {
     .movie-title-container {
         display: flex;
         flex-direction: column;
-        justify-content: end;
-        align-items: end;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
         padding-bottom: 4px;
     }
 
