@@ -59,7 +59,7 @@ onMounted(() => {
 
 <template>
         <div class="trailer-container">
-            <img :src="`http://localhost:3000/trailer/image/${trailerPoster}`" alt="trailer">
+            <img :src="`http://localhost:3000/trailer/image/${trailerPoster}`" alt="trailer" class="trailer-img">
             <div class="blurred-background">
                 <div class="movie-parent-container">
                     <div class="movie-container">
@@ -83,15 +83,17 @@ onMounted(() => {
 <style scoped>
     h2 {
         color: #fff;
-        font-size: 1.3rem;
+        font-size: 1.4rem;
         font-weight: 700;
         margin-bottom: 15px;
         margin: auto;
+        margin-left: 5px;
     }
 
     p, a {
         color: #fff;
     }
+
 
     a {
         text-decoration: none;
@@ -152,203 +154,84 @@ onMounted(() => {
     }
 
     .buy-ticket-btn {
-        background: transparent;
+        transition: all 0.2s ease-in-out;
+        background: #FF7B0F;
         border: 1px solid #FF7B0F;
         color: #eeeeee;
         font-size: 0.9rem;
         font-weight: 300;
-        width: 100%;
-        padding: 5px 0;
+        width: calc(100% - 10px);
+        padding: 6px 0;
         border-radius: 20px;
     }
 
     .buy-ticket-btn:hover {
-        transition: all 0.1s ease-in-out;
-        border: 1px solid #eeeeee;
+        transition: all 0.2s ease-in-out;
+        background: transparent;
+        border: 1px solid #FF7B0F;
         cursor: pointer;
     }
 
     .movie-description-container {
-        padding: 30px;
+        padding: 20px;
     }
 
-    @media screen and (min-width: 330px) {
+    @media screen and (min-width: 310px) {
         h2 {
-            font-size: 1.4rem;
-        }
-
-        .movie-parent-container {
-            max-width: 350px;
-            margin: auto;
-        }
-
-        .movie-container {
-            width: 140px;
-        }
-
-        .movie-description-container {
-            max-width: 350px;
-            margin: auto;
+            font-size: 1.5rem;
         }
     }
 
-    @media screen and (min-width: 400px) {
+    @media screen and (min-width: 420px) {
         h2 {
             font-size: 1.6rem;
         }
-        .movie-parent-container {
-            max-width: 420px;
-            margin: auto;
-        }
 
-        .movie-container {
-            width: 160px;
-        }
-
-        .movie-title-container {
-            max-width: 100%;
+        .buy-ticket-btn {
+            padding: 8px 0;
         }
 
         .movie-description-container {
-            max-width: 420px;
-            margin: auto;
+            margin-top: 20px;
         }
     }
 
-    @media screen and (min-width: 540px) {
+    @media screen and (min-width: 530px) {
         h2 {
-            font-size: 1.8rem;
-        }
-        .movie-parent-container {
-            max-width: 560px;
-            margin: auto;
-        }
-        .movie-container {
-            width: 180px;
+            font-size: 1.7rem;
         }
 
-        .movie-title-container {
-            width: 100%;
-            align-items: start;
+        .trailer-img {
+            min-width: 100%;
+            min-height: 70vh;
+        }
+
+        .blurred-background {
+            align-items: end;
+            justify-content: center;
+            overflow-y: hidden;
+            overflow-x: hidden;
+        }
+
+        .movie-parent-container {
+            max-width: 530px;
         }
 
         .buy-ticket-btn {
-            max-width: 220px;
-            height: 30px;
+            font-size: 1rem;
+            padding: 10px 0;
         }
 
         .movie-description-container {
-            max-width: 560px;
-            margin: auto;
-            margin-top: 10px;
-        }
-    }
-
-    @media screen and (min-width: 650px) {
-        h2 {
-            font-size: 2rem;
-        }
-        .movie-parent-container {
-            max-width: 670px;
-            margin: auto;
-            margin-top: -100px;
-            gap: 20px;
-        }
-        .movie-container {
-            width: 200px;
-        }
-
-        .movie-title-container {
-            width: 100%;
-            align-items: start;
-        }
-
-        .buy-ticket-btn {
-            max-width: 220px;
-            height: 31px;
-        }
-
-        .movie-description-container {
-            max-width: 670px;
+            max-width: 530px;
             margin: auto;
             margin-top: 20px;
         }
     }
 
-    @media screen and (min-width: 760px) {
+    @media screen and (min-width: 1080px) {
         h2 {
-            font-size: 2.1rem;
-        }
-        .movie-parent-container {
-            max-width: 780px;
-            margin: auto;
-            margin-top: -110px;
-        }
-        .movie-container {
-            width: 220px;
-        }
-
-        .movie-title-container {
-            width: 100%;
-            align-items: start;
-        }
-
-        .movie-description-container {
-            max-width: 780px;
-            margin: auto;
-            margin-top: 30px;
-        }
-    }
-
-    @media screen and (min-width: 870px) {
-        .movie-container {
-            width: 240px;
-        }
-    }
-
-    @media screen and (min-width: 980px) {
-        .movie-parent-container {
-            margin-top: -140px;
-        }
-        .movie-container {
-            width: 260px;
-        }
-    }
-
-    @media screen and (min-width: 1090px) {
-        .movie-parent-container {
-            margin-top: -150px;
-        }
-        .movie-container {
-            width: 280px;
-        }
-        .buy-ticket-btn {
-            height: 35px;
-        }
-        .movie-description-container {
-            margin-top: 40px;
-        }
-    }
-
-    @media screen and (min-width: 1200px) {
-        img {
-            width: 100%;
-        }
-        .trailer-container {
-            width: 100%;
-            max-height: 750px;
-            overflow: hidden;
-        }
-        .movie-parent-container {
-            margin-top: -160px;
-            gap: 30px;
-        }
-
-        .buy-ticket-btn {
-            height: 40px;
-        }
-        .movie-container {
-            width: 310px;
+            font-size: 1.8rem;
         }
     }
 </style>    
