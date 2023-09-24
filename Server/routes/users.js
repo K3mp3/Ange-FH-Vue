@@ -13,10 +13,10 @@ router.get('/', async (req, res, next) => {
 
 
 router.post("/createuser", async(req, res) => {
-  const { username, email } = req.body;
+  const { email } = req.body;
   console.log("body", req.body);
   try {
-    const foundUser = await UserModel.findOne({ username: username, email: email });
+    const foundUser = await UserModel.findOne({ email: email });
     console.log("foundUser", foundUser) 
 
     if(foundUser) {
@@ -26,7 +26,6 @@ router.post("/createuser", async(req, res) => {
       const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
 
       let newUser = await UserModel.create({
-        username: req.body.username,
         password: hashedPassword,
         email: req.body.email
       });
@@ -42,16 +41,16 @@ router.post("/createuser", async(req, res) => {
 
 
 router.post("/loginuser", async(req, res) => {
-  const { username, password, email } = req.body;
+  const { password, email } = req.body;
   console.log("body", req.body)
 
   try {
-    const foundUser = await UserModel.findOne({ username: username, email: email });
+    const foundUser = await UserModel.findOne({ email: email });
     console.log("foundUser", foundUser);
     const match = await bcrypt.compare(password, foundUser.password);
     console.log("match", match);
     if (match) {
-      res.status(201).json({ username: foundUser.username });
+      res.status(201).json({ email: foundUser.email });
       console.log("ja")
     } else {
       res.json("Wrong username or password!");
