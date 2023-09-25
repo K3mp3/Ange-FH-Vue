@@ -13,6 +13,7 @@ const usersRouter = require('./routes/users');
 const moviesRouter = require('./routes/movie');
 const eventsRouter = require('./routes/event');
 const trailerRouter = require('./routes/trailer');
+const bodyParser = require('body-parser');
 
 
 const app = express();
@@ -41,6 +42,7 @@ async function init() {
 init();
 
 app.use(cors());
+app.use(bodyParser.json());
 
 app.use(logger('dev'));
 app.use(express.json());

@@ -1,20 +1,23 @@
-var express = require('express');
-var router = express.Router();
-const { ObjectId } = require('mongodb');
+/* eslint-disable object-shorthand */
+const express = require('express');
+const router = express.Router();
 const bcrypt = require("bcrypt"); 
+const nodeMailer = require("nodemailer");
 
 const UserModel = require ("../models/user_model");
 
 /* GET users listing. */
-router.get('/', async (req, res, next) => {
+router.get('/', async (req, res) => {
   const allUsers = await UserModel.find();
   res.status(200).json(allUsers);
 });
 
-
 router.post("/createuser", async(req, res) => {
+  const magicToken = Math.random().toString(36).substring(2, 7);
+
   const { email } = req.body;
   console.log("body", req.body);
+  console.log("token:", magicToken);
   try {
     const foundUser = await UserModel.findOne({ email: email });
     console.log("foundUser", foundUser) 
@@ -25,9 +28,10 @@ router.post("/createuser", async(req, res) => {
       const saltRounds = 10;
       const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
 
-      let newUser = await UserModel.create({
+      const newUser = await UserModel.create({
         password: hashedPassword,
-        email: req.body.email
+        email: req.body.email,
+        magicToken: magicToken,
       });
 
       console.log("newUser", newUser);
@@ -42,23 +46,16 @@ router.post("/createuser", async(req, res) => {
 
 router.post("/loginuser", async(req, res) => {
   const { password, email } = req.body;
-  console.log("body", req.body)
-
+  generateUniqueToken();
   try {
     const foundUser = await UserModel.findOne({ email: email });
-    console.log("foundUser", foundUser);
     const match = await bcrypt.compare(password, foundUser.password);
     console.log("match", match);
-    if (match) {
       res.status(201).json({ email: foundUser.email });
-      console.log("ja")
-    } else {
-      res.json("Wrong username or password!");
-      console.log("nej")
-    }
+      console.log("Login succeeded");
   } catch (error) {
-    res.json("Wrong username or password!");
-    console.log("nej 2")
+    res.status(401).json("Wrong email or password!");
+    console.log("An error occurred during login");
   }
 })
 

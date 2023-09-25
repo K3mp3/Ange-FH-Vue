@@ -1,9 +1,9 @@
-const { ObjectId } = require("mongodb");
 const { default: mongoose } = require("mongoose");
 
 const storedUser = mongoose.Schema({
     password: String,
-    email: String
+    email: String,
+    magicToken: String,
 });
 
 module.exports = mongoose.model("storedUser", storedUser);
