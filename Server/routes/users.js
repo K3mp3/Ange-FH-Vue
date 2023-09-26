@@ -46,15 +46,49 @@ router.post("/createuser", async(req, res) => {
 
 router.post("/loginuser", async(req, res) => {
   const { password, email } = req.body;
-  generateUniqueToken();
   try {
     const foundUser = await UserModel.findOne({ email: email });
+    console.log(foundUser.magicToken);
     const match = await bcrypt.compare(password, foundUser.password);
     console.log("match", match);
-      res.status(201).json({ email: foundUser.email });
-      console.log("Login succeeded");
+
+    if (match) {
+      const userMagicToken = foundUser.magicToken;
+      const userEmail = foundUser.email;
+
+      const transporter = nodeMailer.createTransport({
+        service: "Gmail",
+        auth: {
+          user: "k3mp314@gmail.com",
+          pass: "vuzs xrnz zxrd mujz "
+        }
+      })
+
+      const mailOptions = {
+        from: "k3mp314@gmail.com",
+        to: userEmail,
+        subject: "Magic Token",
+        text: `Your Magic Token: ${userMagicToken}`
+      }
+
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.log("Error sending email:", error);
+          res.status(500).json("Error sending email");
+        } else {
+          console.log("Email sent:", info.response);
+          res.status(201).json({ email: userEmail});
+          console.log("Login succeeded!");
+        }
+      });
+    } else {
+      res.status(401).json("Wrong email or password");
+      console.log("Login failed");
+    }
+      // res.status(201).json({ email: foundUser.email });
+      // console.log("Login succeeded");
   } catch (error) {
-    res.status(401).json("Wrong email or password!");
+    res.status(500).json("Wrong email or password!");
     console.log("An error occurred during login");
   }
 })
