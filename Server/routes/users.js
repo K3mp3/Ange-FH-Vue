@@ -48,12 +48,16 @@ router.post("/loginuser", async(req, res) => {
   const { password, email } = req.body;
   try {
     const foundUser = await UserModel.findOne({ email: email });
-    console.log(foundUser.magicToken);
     const match = await bcrypt.compare(password, foundUser.password);
     console.log("match", match);
 
     if (match) {
-      const userMagicToken = foundUser.magicToken;
+      const newMagicToken = Math.random().toString(36).substring(2, 7);
+
+      foundUser.magicToken = newMagicToken;
+      await foundUser.save();
+      console.log(foundUser.magicToken);
+
       const userEmail = foundUser.email;
 
       const transporter = nodeMailer.createTransport({
@@ -68,7 +72,7 @@ router.post("/loginuser", async(req, res) => {
         from: "k3mp314@gmail.com",
         to: userEmail,
         subject: "Magic Token",
-        text: `Your Magic Token: ${userMagicToken}`
+        text: `Your Magic Token: ${newMagicToken}`
       }
 
       transporter.sendMail(mailOptions, (error, info) => {
