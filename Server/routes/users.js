@@ -77,12 +77,10 @@ router.post("/loginuser", async(req, res) => {
         }
       });
     } else {
-      res.status(401).json("Wrong email or password");
+      res.status(401);
     }
-      // res.status(201).json({ email: foundUser.email });
-      // console.log("Login succeeded");
   } catch (error) {
-    res.status(500).json("Wrong email or password!");
+    res.status(500);
   }
 })
 
