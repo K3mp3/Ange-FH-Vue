@@ -17,11 +17,8 @@ router.post("/createuser", async(req, res) => {
   const magicToken = Math.random().toString(36).substring(2, 7);
 
   const { email } = req.body;
-  console.log("body", req.body);
-  console.log("token:", magicToken);
   try {
     const foundUser = await UserModel.findOne({ email: email });
-    console.log("foundUser", foundUser) 
 
     if(foundUser) {
       res.status(201).json("It seems that you allready have an account here.")
@@ -35,12 +32,10 @@ router.post("/createuser", async(req, res) => {
         magicToken: magicToken,
       });
 
-      console.log("newUser", newUser);
       res.status(201).json(newUser);
     }
   } catch (error) {
     res.json("Wrong username or password!");
-    console.log("nej 2")
   }
 })
 
@@ -50,14 +45,12 @@ router.post("/loginuser", async(req, res) => {
   try {
     const foundUser = await UserModel.findOne({ email: email });
     const match = await bcrypt.compare(password, foundUser.password);
-    console.log("match", match);
 
     if (match) {
       const newMagicToken = Math.random().toString(36).substring(2, 7);
 
       foundUser.magicToken = newMagicToken;
       await foundUser.save();
-      console.log(foundUser.magicToken);
 
       const userEmail = foundUser.email;
 
@@ -76,25 +69,20 @@ router.post("/loginuser", async(req, res) => {
         text: `Your Magic Token: ${newMagicToken}`
       }
 
-      transporter.sendMail(mailOptions, (error, info) => {
+      transporter.sendMail(mailOptions, (error) => {
         if (error) {
-          console.log("Error sending email:", error);
           res.status(500).json("Error sending email");
         } else {
-          console.log("Email sent:", info.response);
           res.status(201).json({ email: userEmail});
-          console.log("Login succeeded!");
         }
       });
     } else {
       res.status(401).json("Wrong email or password");
-      console.log("Login failed");
     }
       // res.status(201).json({ email: foundUser.email });
       // console.log("Login succeeded");
   } catch (error) {
     res.status(500).json("Wrong email or password!");
-    console.log("An error occurred during login");
   }
 })
 
