@@ -35,7 +35,7 @@ router.post("/createuser", async(req, res) => {
       res.status(201).json(newUser);
     }
   } catch (error) {
-    res.json("Wrong username or password!");
+    res.json(error);
   }
 })
 
