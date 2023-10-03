@@ -14,29 +14,46 @@ router.get('/', async (req, res) => {
 });
 
 router.post("/createuser", async(req, res) => {
-  const magicToken = Math.random().toString(36).substring(2, 7);
+  let magicToken; 
 
-  const { email } = req.body;
-  try {
-    const foundUser = await UserModel.findOne({ email: email });
+  // eslint-disable-next-line consistent-return
+  async function generateUniqueToken() {
+    magicToken = Math.random().toString(36).substring(2, 7);
+    const foundToken = await UserModel.findOne({ magicToken: magicToken });
+    console.log("foundToken:", foundToken);
 
-    if(foundUser) {
-      res.status(201).json("It seems that you allready have an account here.")
-    } else {
-      const saltRounds = 10;
-      const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
-
-      const newUser = await UserModel.create({
-        password: hashedPassword,
-        email: req.body.email,
-        magicToken: magicToken,
-      });
-
-      res.status(201).json(newUser);
-    }
-  } catch (error) {
-    res.json(error);
+    if (foundToken) {
+      console.log("found");
+      generateUniqueToken();
+      return false;
+    } 
   }
+
+  generateUniqueToken();
+
+  console.log("checkToken:", generateUniqueToken());
+
+    const { email } = req.body;
+    try {
+      const foundUser = await UserModel.findOne({ email: email });
+
+      if(foundUser) {
+        res.status(201).json("It seems that you allready have an account here.")
+      } else {
+        const saltRounds = 10;
+        const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
+
+        const newUser = await UserModel.create({
+          password: hashedPassword,
+          email: req.body.email,
+          magicToken: magicToken,
+        });
+
+        res.status(201).json(newUser);
+      }
+    } catch (error) {
+      res.json(error);
+    }
 })
 
 
@@ -45,6 +62,7 @@ router.post("/loginuser", async(req, res) => {
   try {
     const foundUser = await UserModel.findOne({ email: email });
     const match = await bcrypt.compare(password, foundUser.password);
+    const magicTokenTimeout = 60 * 60 * 1000; // 60 minutes in milliseconds
 
     if (match) {
       const newMagicToken = Math.random().toString(36).substring(2, 7);
