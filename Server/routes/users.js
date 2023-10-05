@@ -7,6 +7,11 @@ const nodeMailer = require("nodemailer");
 
 const UserModel = require ("../models/user_model");
 
+let magicToken = ""; 
+let isFoundToken = false;
+
+  // eslint-disable-next-line consistent-return
+
 /* GET users listing. */
 router.get('/', async (req, res) => {
   const allUsers = await UserModel.find();
@@ -14,9 +19,6 @@ router.get('/', async (req, res) => {
 });
 
 router.post("/createuser", async(req, res) => {
-  let magicToken; 
-
-  // eslint-disable-next-line consistent-return
   async function generateUniqueToken() {
     magicToken = Math.random().toString(36).substring(2, 7);
     const foundToken = await UserModel.findOne({ magicToken: magicToken });
@@ -24,35 +26,39 @@ router.post("/createuser", async(req, res) => {
 
     if (foundToken) {
       console.log("found");
-      generateUniqueToken();
+      isFoundToken = true;
+      console.log(isFoundToken);
+      generateUniqueToken()
+      return;
     } 
-  }
+      console.log("Kör ändå")
 
-  generateUniqueToken();
+      const { email } = req.body;
+      try {
+        const foundUser = await UserModel.findOne({ email: email });
 
-  console.log("checkToken:", generateUniqueToken());
+        if(foundUser) {
+          res.status(201).json("It seems that you allready have an account here.");
+          console.log("It seems that you allready have an account here.");
+        } else {
+          console.log("Skapa användare ändå");
+          const saltRounds = 10;
+          const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
 
-    const { email } = req.body;
-    try {
-      const foundUser = await UserModel.findOne({ email: email });
+          const newUser = await UserModel.create({
+            password: hashedPassword,
+            email: req.body.email,
+            magicToken: magicToken,
+          });
 
-      if(foundUser) {
-        res.status(201).json("It seems that you allready have an account here.")
-      } else {
-        const saltRounds = 10;
-        const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
-
-        const newUser = await UserModel.create({
-          password: hashedPassword,
-          email: req.body.email,
-          magicToken: magicToken,
-        });
-
-        res.status(201).json(newUser);
+          res.status(201).json(newUser);
+        }
+      } catch (error) {
+        res.json(error);
       }
-    } catch (error) {
-      res.json(error);
     }
+
+    generateUniqueToken();
 })
 
 
@@ -77,7 +83,7 @@ router.post("/loginuser", async(req, res) => {
   try {
     const foundUser = await UserModel.findOne({ email: email });
     const match = await bcrypt.compare(password, foundUser.password);
-    const magicTokenTimeout = 60 * 60 * 1000; // 60 minutes in milliseconds
+    const magicTokenTimeout = 10 * 10 * 100; // 60 minutes in milliseconds
 
     if (match) {
       foundUser.magicToken = magicToken;
@@ -105,6 +111,23 @@ router.post("/loginuser", async(req, res) => {
           res.status(500).json("Error sending email");
         } else {
           res.status(201).json({ email: userEmail});
+
+          setTimeout(async () => {
+            async function generateUniqueTokenTimer() {
+              magicToken = Math.random().toString(36).substring(2, 7);
+              const foundToken = await UserModel.findOne({ magicToken: magicToken });
+              console.log("foundToken:", foundToken);
+          
+              if (foundToken) {
+                console.log("found");
+                generateUniqueTokenTimer();
+              } 
+            }
+            generateUniqueTokenTimer();
+
+            foundUser.magicToken = magicToken;
+            await foundUser.save();
+          }, magicTokenTimeout);
         }
       });
     } else {
