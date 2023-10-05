@@ -25,7 +25,6 @@ router.post("/createuser", async(req, res) => {
     if (foundToken) {
       console.log("found");
       generateUniqueToken();
-      return false;
     } 
   }
 
@@ -58,6 +57,22 @@ router.post("/createuser", async(req, res) => {
 
 
 router.post("/loginuser", async(req, res) => {
+  let magicToken; 
+
+  // eslint-disable-next-line consistent-return
+  async function generateUniqueToken() {
+    magicToken = Math.random().toString(36).substring(2, 7);
+    const foundToken = await UserModel.findOne({ magicToken: magicToken });
+    console.log("foundToken:", foundToken);
+
+    if (foundToken) {
+      console.log("found");
+      generateUniqueToken();
+    } 
+  }
+
+  generateUniqueToken();
+
   const { password, email } = req.body;
   try {
     const foundUser = await UserModel.findOne({ email: email });
@@ -65,9 +80,7 @@ router.post("/loginuser", async(req, res) => {
     const magicTokenTimeout = 60 * 60 * 1000; // 60 minutes in milliseconds
 
     if (match) {
-      const newMagicToken = Math.random().toString(36).substring(2, 7);
-
-      foundUser.magicToken = newMagicToken;
+      foundUser.magicToken = magicToken;
       await foundUser.save();
 
       const userEmail = foundUser.email;
@@ -84,7 +97,7 @@ router.post("/loginuser", async(req, res) => {
         from: "k3mp314@gmail.com",
         to: userEmail,
         subject: "Magic Token",
-        text: `Your Magic Token: ${newMagicToken}`
+        text: `Your Magic Token: ${magicToken}`
       }
 
       transporter.sendMail(mailOptions, (error) => {
