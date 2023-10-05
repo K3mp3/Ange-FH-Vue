@@ -22,16 +22,12 @@ router.post("/createuser", async(req, res) => {
   async function generateUniqueToken() {
     magicToken = Math.random().toString(36).substring(2, 7);
     const foundToken = await UserModel.findOne({ magicToken: magicToken });
-    console.log("foundToken:", foundToken);
 
     if (foundToken) {
-      console.log("found");
       isFoundToken = true;
-      console.log(isFoundToken);
       generateUniqueToken()
       return;
     } 
-      console.log("Kör ändå")
 
       const { email } = req.body;
       try {
@@ -39,9 +35,7 @@ router.post("/createuser", async(req, res) => {
 
         if(foundUser) {
           res.status(201).json("It seems that you allready have an account here.");
-          console.log("It seems that you allready have an account here.");
         } else {
-          console.log("Skapa användare ändå");
           const saltRounds = 10;
           const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
 
