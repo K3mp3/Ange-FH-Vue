@@ -8,11 +8,7 @@ const nodeMailer = require("nodemailer");
 const UserModel = require ("../models/user_model");
 
 let magicToken = ""; 
-let isFoundToken = false;
 
-  // eslint-disable-next-line consistent-return
-
-/* GET users listing. */
 router.get('/', async (req, res) => {
   const allUsers = await UserModel.find();
   res.status(200).json(allUsers);
@@ -24,7 +20,6 @@ router.post("/createuser", async(req, res) => {
     const foundToken = await UserModel.findOne({ magicToken: magicToken });
 
     if (foundToken) {
-      isFoundToken = true;
       generateUniqueToken()
       return;
     } 
