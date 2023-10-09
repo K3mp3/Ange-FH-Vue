@@ -8,6 +8,7 @@ const nodeMailer = require("nodemailer");
 const UserModel = require ("../models/user_model");
 
 let magicToken = ""; 
+let foundToken = "";
 
 router.get('/', async (req, res) => {
   const allUsers = await UserModel.find();
@@ -17,7 +18,7 @@ router.get('/', async (req, res) => {
 router.post("/createuser", async(req, res) => {
   async function generateUniqueToken() {
     magicToken = Math.random().toString(36).substring(2, 7);
-    const foundToken = await UserModel.findOne({ magicToken: magicToken });
+    foundToken = await UserModel.findOne({ magicToken: magicToken });
 
     if (foundToken) {
       generateUniqueToken()
@@ -52,79 +53,74 @@ router.post("/createuser", async(req, res) => {
 
 
 router.post("/loginuser", async(req, res) => {
-  let magicToken; 
-
-  // eslint-disable-next-line consistent-return
-  async function generateUniqueToken() {
+  async function signInUser() {
     magicToken = Math.random().toString(36).substring(2, 7);
-    const foundToken = await UserModel.findOne({ magicToken: magicToken });
-    console.log("foundToken:", foundToken);
+    foundToken = await UserModel.findOne({ magicToken: magicToken});
 
     if (foundToken) {
-      console.log("found");
-      generateUniqueToken();
-    } 
-  }
-
-  generateUniqueToken();
-
-  const { password, email } = req.body;
-  try {
-    const foundUser = await UserModel.findOne({ email: email });
-    const match = await bcrypt.compare(password, foundUser.password);
-    const magicTokenTimeout = 10 * 10 * 100; // 60 minutes in milliseconds
-
-    if (match) {
-      foundUser.magicToken = magicToken;
-      await foundUser.save();
-
-      const userEmail = foundUser.email;
-
-      const transporter = nodeMailer.createTransport({
-        service: "Gmail",
-        auth: {
-          user: "k3mp314@gmail.com",
-          pass: "vuzs xrnz zxrd mujz "
-        }
-      })
-
-      const mailOptions = {
-        from: "k3mp314@gmail.com",
-        to: userEmail,
-        subject: "Magic Token",
-        text: `Your Magic Token: ${magicToken}`
-      }
-
-      transporter.sendMail(mailOptions, (error) => {
-        if (error) {
-          res.status(500).json("Error sending email");
-        } else {
-          res.status(201).json({ email: userEmail});
-
-          setTimeout(async () => {
-            async function generateUniqueTokenTimer() {
-              magicToken = Math.random().toString(36).substring(2, 7);
-              const foundToken = await UserModel.findOne({ magicToken: magicToken });
-              console.log("foundToken:", foundToken);
-          
-              if (foundToken) {
-                console.log("found");
-                generateUniqueTokenTimer();
-              } 
-            }
-            generateUniqueTokenTimer();
-
-            foundUser.magicToken = magicToken;
-            await foundUser.save();
-          }, magicTokenTimeout);
-        }
-      });
-    } else {
-      res.status(401);
+      signInUser();
+      return; 
     }
-  } catch (error) {
-    res.status(500);
+
+    const { password, email } = req.body;   
+    try {
+      const foundUser = await UserModel.findOne({ email: email });
+      const match = await bcrypt.compare(password, foundUser.password);
+      const magicTokenTimeout = 60 * 60 * 1000; // 60 minutes in milliseconds
+  
+      if (match) {
+        foundUser.magicToken = magicToken;
+        await foundUser.save();
+  
+        const userEmail = foundUser.email;
+  
+        const transporter = nodeMailer.createTransport({
+          service: "Gmail",
+          auth: {
+            user: "k3mp314@gmail.com",
+            pass: "vuzs xrnz zxrd mujz "
+          }
+        })
+  
+        const mailOptions = {
+          from: "k3mp314@gmail.com",
+          to: userEmail,
+          subject: "Magic Token",
+          text: `Your Magic Token: ${magicToken}`
+        }
+  
+        transporter.sendMail(mailOptions, (error) => {
+          if (error) {
+            res.status(500).json("Error sending email");
+          } else {
+            res.status(201).json({ email: userEmail});
+  
+            setTimeout(async () => {
+              async function generateUniqueTokenTimer() {
+                magicToken = Math.random().toString(36).substring(2, 7);
+                foundToken = await UserModel.findOne({ magicToken: magicToken });
+                console.log("foundToken:", foundToken);
+            
+                if (foundToken) {
+                  console.log("found");
+                  generateUniqueTokenTimer();
+                } 
+              }
+              generateUniqueTokenTimer();
+  
+              foundUser.magicToken = magicToken;
+              await foundUser.save();
+            }, magicTokenTimeout);
+          }
+        });
+      } else {
+        res.status(401);
+      }
+    } catch (error) {
+      res.status(500);
+    }
   }
+  signInUser();
 })
 
 module.exports = router;
