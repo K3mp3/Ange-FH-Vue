@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import TrailerPage from '../components/trailer/TrailerPage.vue';
+import MovieInfo from '../components/movies/MovieInfo.vue';
 </script>
 
 <template>
   <main>
-      <TrailerPage></TrailerPage>
+      <MovieInfo></MovieInfo>
   </main>
 </template>
 

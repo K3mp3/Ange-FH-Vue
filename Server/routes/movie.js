@@ -31,16 +31,18 @@ router.get("/", async (req, res) => {
 router.post("/savemovie", upload.single("poster"), async (req, res) => {
   const { title } = req.body;
   const poster = req.file.filename; // Hämta filnamnet för den sparade bilden
+  const description = req.body.description;
   const link = req.body.link;
 
   console.log("link:", link);
-
+  console.log("description:", description);
   console.log(poster);
 
   try {
     const newMovie = await MovieModel.create({
       poster: poster,
       title: title,
+      description: description,
       link: link,
     });
 
@@ -57,6 +59,32 @@ router.get("/image/:name", (req, res) => {
   const imageName = req.params.name;
   console.log("NAME:", imageName);
   res.sendFile(imageName, { root: path.join("./images") });
+});
+
+router.get("/movie/:id", async (req, res) => {
+  const movieId = req.params.id;
+  console.log("ID:", movieId);
+
+  try {
+    const movie = await MovieModel.findById(movieId);
+    console.log(movie);
+
+    const imagePath = path.join(__dirname, "./images", movie.poster);
+
+    const responseData = {
+      _id: movie._id,
+      poster: movie.poster,
+      title: movie.title,
+      description: movie.description,
+      link: movie.link,
+      imageData: imagePath,
+    };
+
+    res.status(200).json(responseData);
+  } catch (error) {
+    res.status(500).json({error: "Failed to retrieve movies"})
+  }
+  // res.sendFile(imageName, { root: path.join("./images") });
 });
 
 router.post("/deletemovie", async (req, res) => {

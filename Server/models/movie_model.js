@@ -4,6 +4,7 @@ const storedMovieInfo = mongoose.Schema({
   poster: String,
   image: String,
   title: String,
+  description: String,
   link: String,
 });
 

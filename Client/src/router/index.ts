@@ -1,10 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import TrailerViewVue from '@/views/TrailerView.vue';
+import MovieViewVue from '@/views/MovieView.vue';
 import HomeView from "../views/HomeView.vue";
 import AdminView from "../views/AdminView.vue";
 import Layout from "../views/Layout.vue";
-
-
 
 
 const router = createRouter({
@@ -27,9 +25,9 @@ const router = createRouter({
           meta: {index: true}
         },
         {
-          path: '/trailer/:id',
-          name: 'trailer',
-          component: TrailerViewVue,
+          path: '/movie/:id',
+          name: 'movie',
+          component: MovieViewVue,
           meta: {index: true}
         },
         // {
