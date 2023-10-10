@@ -31,8 +31,10 @@
         </div>
 
         <div class="small-container">
-            <h2>Hjälp till</h2>
-            <router-link to="help-us" class="footer-link">Kontakta oss</router-link>
+            <div class="text-container">
+                <h2>Hjälp till</h2>
+                <router-link to="help-us" class="footer-link">Kontakta oss</router-link>
+            </div>
         </div>
        </div>
 
@@ -40,6 +42,13 @@
             <div class="text-container">
                 <h2>Om oss</h2>
                 <router-link to="about-us" class="footer-link">Kontakta oss</router-link>
+            </div>
+        </div>
+
+        <div class="small-container">
+            <div class="text-container">
+                <h2>Admin</h2>
+                <router-link to="sign-in" class="footer-link">Logga in</router-link>
             </div>
         </div>
 
@@ -58,7 +67,7 @@
     </div>
 </template>
 
-<style scoped>
+<style scoped setup lang="scss">
     .footer-container {
         margin-top: 20px;
         padding: 20px 30px;
@@ -74,6 +83,12 @@
         display: flex;
         flex-direction: column;
         gap: 20px;
+
+        .text-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
     }
 
     h2 {
