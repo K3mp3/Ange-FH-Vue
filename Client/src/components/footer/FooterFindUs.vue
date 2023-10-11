@@ -25,13 +25,13 @@
     h2 {
         color: #fff;
         font-weight: 600;
-        margin-top: 30px;
     }
 
     iframe {
         width: 100%;
         height: 167px;
         border-radius: 15px;
+        margin-top: 15px;
     }
 
     p {

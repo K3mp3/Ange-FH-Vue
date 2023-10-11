@@ -23,7 +23,6 @@
     h2 {
         color: #fff;
         font-weight: 600;
-        margin-top: 30px;
     }
 
     .footer-link {
@@ -43,6 +42,14 @@
         color: #fff;
         line-height: 1.75rem;
         margin-bottom: 100px;
+    }
+}
+
+@media (min-width: 860px) {
+    .info-container {
+        h2 {
+            margin-top: 30px;
+        }
     }
 }
 
