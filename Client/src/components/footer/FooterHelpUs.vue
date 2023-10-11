@@ -5,11 +5,7 @@
     <div class="info-container">
         <h2>Hjälp till</h2>
         <router-link to="help-us" class="footer-link">Bli volontär</router-link>
-    
-
     </div>
-    
-
 </template>
 
 <style scoped lang="scss">
@@ -22,26 +18,13 @@
     h2 {
         color: #fff;
         font-weight: 600;
-        margin-top: 30px;
+        margin-top: 10px;
+        font-size: 1.5rem;
     }
 
     .footer-link {
         color: #fff;
-    }
-
-    span {
-        display: flex;
-        gap: 10px;
-    }
-
-    a {
-        color: #fff;
-    }
-
-    p {
-        color: #fff;
-        line-height: 1.75rem;
-        margin-bottom: 100px;
+        font-size: 0.9rem;
     }
 }
 </style>
