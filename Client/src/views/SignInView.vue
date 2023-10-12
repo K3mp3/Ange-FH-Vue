@@ -1,11 +1,10 @@
 <script setup lang="ts">
-  // import AccountParent from '../components/SignInForm/AccountParent.vue';
+  import SignInParent from "../components/signin/SignInParent";
 </script>
 
 <template>
   <main>
-    <!-- <AccountParent></AccountParent> -->
-    <p>Hello</p>
+    <SignInParent></SignInParent>
   </main>
 </template>
 
