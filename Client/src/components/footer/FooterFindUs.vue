@@ -25,6 +25,8 @@
     h2 {
         color: #fff;
         font-weight: 600;
+        margin-top: 20px;
+        font-size: 1.5rem;
     }
 
     iframe {
@@ -37,22 +39,15 @@
     p {
         color: #fff;
         line-height: 1.75rem;
+        margin-bottom: 100px;
     }
 }
 
 @media screen and (min-width: 310px) {
     .info-container {
         iframe {
+            max-width: 250px;
             height: 183px;
-        }
-    }
-}
-
-@media screen and (min-width: 420px) {
-    .info-container {
-        iframe {
-            max-width: 360px;
-            height: 262px;
         }
     }
 }
@@ -61,7 +56,7 @@
     .info-container {
         display: flex;
         justify-content: end;
-       
+        align-items: end;
 
         h2 {
             margin-top: 10px;

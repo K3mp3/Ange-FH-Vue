@@ -17,11 +17,11 @@
 
             <div class="center-container component-container">
                 <FooterAboutUs></FooterAboutUs>
-                <!-- <FooterAdmin></FooterAdmin> -->
+                <FooterAdmin></FooterAdmin>
             </div>
 
             <div class="right-container component-container">
-                <!-- <FooterFindUs></FooterFindUs> -->
+                <FooterFindUs></FooterFindUs>
             </div>
         </div>
     </div>
@@ -38,8 +38,7 @@
         .component-container {
             display: flex;
             flex-direction: column;
-            padding: 15px;
-            margin: 40px 0;
+            
         }
 
         .left-container {
@@ -49,7 +48,6 @@
 
         .right-container {
             order: 3;
-            height: 50px;
             background-color: rgb(0, 255, 34);
         }
 
@@ -68,7 +66,7 @@
             max-width: 1450px;
             gap: 40px;
             margin: auto;
-            margin-bottom: 100px;
+            margin-bottom: 50px;
 
 
             .left-container {
@@ -80,7 +78,7 @@
                 order: 3;
                 width: 100%;
                 margin: 0;
-                margin-top: -39px;
+                margin-top: -221px;
             }
 
             .right-container {
