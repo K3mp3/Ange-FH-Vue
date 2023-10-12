@@ -57,14 +57,14 @@
 @media screen and (min-width: 1200px) {
     .info-container {
         display: flex;
-        align-items: end;
+        justify-content: end;
+        align-items: center;
         
         .content-container {
             width: 25%;
             display: flex;
             flex-direction: column;
             gap: 10px;
-            margin-right: 75px;
         }
 
         h2 {
