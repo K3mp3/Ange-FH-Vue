@@ -3,6 +3,7 @@ import MovieViewVue from '@/views/MovieView.vue';
 import HomeView from "../views/HomeView.vue";
 import AdminView from "../views/AdminView.vue";
 import Layout from "../views/Layout.vue";
+import SignInViewVue from '@/views/SignInView.vue';
 
 
 const router = createRouter({
@@ -28,7 +29,11 @@ const router = createRouter({
           path: '/movie/:id',
           name: 'movie',
           component: MovieViewVue,
-          meta: {index: true}
+        },
+        {
+          path: '/sign-in',
+          name: 'sign in',
+          component: SignInViewVue,
         },
         // {
         //   path: '/createaccountview',

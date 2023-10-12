@@ -103,10 +103,10 @@ function closeIframeContainer() {
   }
 
 .play-btn-container {
-  display: flex;
-  padding: 20px 30px;
-  gap: 15px;
   position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .link-img {
@@ -116,12 +116,6 @@ function closeIframeContainer() {
 
 .link-img-path {
   fill: #ff7b0f;
-}
-
-.buttons-container {
-  display: flex;
-  padding: 20px 30px;
-  gap: 15px;
 }
 
 a {
@@ -281,16 +275,7 @@ iframe {
     overflow: hidden;
   }
 
-  .buttons-container {
-    width: 95%;
-    display: flex;
-    justify-content: end;
-    position: absolute;
-    z-index: 1;
-    margin: auto;
-    bottom: 40px;
-    right: 50px;
-  }
+  
 
   button {
     background-color: #ff7b0f;
