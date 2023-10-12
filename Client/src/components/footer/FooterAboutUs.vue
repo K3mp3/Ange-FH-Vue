@@ -24,7 +24,7 @@
     h2 {
         color: #fff;
         font-weight: 600;
-        margin-top: 10px;
+        margin-top: 20px;
         font-size: 1.5rem;
     }
 
