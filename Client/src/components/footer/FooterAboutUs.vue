@@ -48,14 +48,14 @@
 @media screen and (min-width: 1200px) {
     .info-container {
         display: flex;
-        justify-content: end;
-        align-items: center;
+        align-items: end;
         
         .content-container {
             width: 25%;
             display: flex;
             flex-direction: column;
             gap: 10px;
+            margin-right: 75px;
         }
 
         h2 {

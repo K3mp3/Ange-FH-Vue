@@ -87,12 +87,12 @@
 @media screen and (min-width: 1200px) {
     .info-container {
         display: flex;
-        justify-content: end;
-        align-items: center;
+        align-items: start;
         
         .content-container {
             display: flex;
             gap: 10px;
+            margin-left: 75px;
         }
 
         h2 {
