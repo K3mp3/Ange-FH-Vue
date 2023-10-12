@@ -16,8 +16,8 @@
             </div>
 
             <div class="center-container component-container">
-                <!-- <FooterAboutUs></FooterAboutUs>
-                <FooterAdmin></FooterAdmin> -->
+                <FooterAboutUs></FooterAboutUs>
+                <!-- <FooterAdmin></FooterAdmin> -->
             </div>
 
             <div class="right-container component-container">
