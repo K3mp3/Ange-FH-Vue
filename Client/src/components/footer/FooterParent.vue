@@ -38,22 +38,18 @@
         .component-container {
             display: flex;
             flex-direction: column;
-            
         }
 
         .left-container {
-            background-color: aqua;
             order: 1;
         }
 
         .right-container {
             order: 3;
-            background-color: rgb(0, 255, 34);
         }
 
         .center-container {
             order: 2;
-            background-color: rgb(234, 0, 255);
         }
     }
 
@@ -78,7 +74,7 @@
                 order: 3;
                 width: 100%;
                 margin: 0;
-                margin-top: -221px;
+                margin-top: -245px;
             }
 
             .right-container {
@@ -89,6 +85,9 @@
     }
 
     @media (min-width: 1200px) {
+        hr {
+            margin-bottom: 20px;
+        }
         .footer-container {
             display: flex;
             grid-template-areas:
@@ -106,7 +105,7 @@
             .center-container {
                 order: 3;
                 width: 100%;
-                margin: 40px 0;
+                margin-top: 0px;
             }
 
             .right-container {

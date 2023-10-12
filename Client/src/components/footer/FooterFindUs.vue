@@ -55,11 +55,22 @@
 @media screen and (min-width: 860px) {
     .info-container {
         display: flex;
-        justify-content: end;
-        align-items: end;
+        align-items: center;
 
         h2 {
-            margin-top: 10px;
+            margin-top: 20px;
+        }
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .info-container {
+        display: flex;
+        justify-content: end;
+        align-items: center;
+
+        h2 {
+            margin-top: 0px;
         }
     }
 }
