@@ -4,11 +4,11 @@ import { defineStore } from "pinia";
 import { ref } from "vue";
 
 export const useSignInStore = defineStore("signInUser", () => {
-    const singedIn = ref(false);
+    const signedIn = ref(false);
 
     function signInUser() {
-        const singedIn = ref(true);
+        const signedIn = ref(true);
     }
 
-    return { singedIn, signInUser };
+    return { signedIn, signInUser };
 })

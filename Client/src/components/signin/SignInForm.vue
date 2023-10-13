@@ -1,9 +1,9 @@
 <script setup lang="ts">
+    import { useSignInStore } from "@/stores/signIn";
     import { computed, ref } from "vue";
-    import { signInUser } from "../../services/userService.ts";
-    import { useSignInStore } from "../../stores/signIn";
+    import { signInUser } from "@/services/userService";
 
-    const signedIn = computed(() => useSignInStore().singedIn)
+    const signedIn = computed(() => useSignInStore().signedIn)
     const email = ref("");
     const password = ref("");
     const isSignedIn = ref(false);

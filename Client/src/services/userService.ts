@@ -1,7 +1,7 @@
 /* eslint-disable consistent-return */
+import type { IUser } from "@/models/IUser";
 import { useSignInStore } from "@/stores/signIn";
 import axios from "axios";
-import type { IUser } from "@/models/IUser";
 
 const BASE_URL = "http://localhost:3000";
 
@@ -21,7 +21,7 @@ export async function signInUser(user: IUser) {
 
     try {
         const response = await axios.post<IUser>(`${BASE_URL}/users/loginuser`, user);  
-        userStore.singedIn = true;
+        userStore.signedIn = true;
         userStore.signInUser();
         
         return response.data;
