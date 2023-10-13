@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import SignInParent from "../components/signin/SignInParent";
+  import SignInParent from "../components/signin/SignInParent.vue";
 </script>
 
 <template>

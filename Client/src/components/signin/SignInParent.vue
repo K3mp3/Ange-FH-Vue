@@ -1,16 +1,12 @@
 <script setup lang="ts">
     import { computed, onMounted, ref } from "vue";
-    // import AccountSignInForm from "./AccountSignInForm.vue";
-    // import AccountCreateForm from "./AccountCreateForm.vue";
-    // import { useFormStore } from "@/stores/store";
-    // import AccountWriteToken from "./AccountWriteToken.vue";
-    // import { useSignInStore } from "@/stores/signIn";
+    import SignInForm from "./SignInForm.vue";
+    import { useSignInStore } from "../../stores/signIn";
 
     const screenSize = ref();
     const showRegisterForm = ref(false);
     const hideSignIn = ref(true);
-    // const formIsOpen = computed(() => useFormStore().formIsOpen);
-    // const signedIn = computed(() => useSignInStore().singedIn)
+    const signedIn = computed(() => useSignInStore().singedIn)
 
     let width = document.documentElement.clientWidth;
     
@@ -49,21 +45,14 @@
         init();
         controlScreenSize();
         updateScreenSize();
-        // console.log(signedIn.value)
+        console.log(signedIn.value)
     })
 
 </script>
 
 <template>
     <div class="account-form-parent-container" :class="{ changeWidth: screenSize === true, Test: formIsOpen === true }">
-        <AccountCreateForm v-if="screenSize"></AccountCreateForm>
-        <AccountCreateForm v-if="showRegisterForm"></AccountCreateForm>
-        <AccountSignInForm v-if="hideSignIn" @createaccount="showCreateAccountForm"></AccountSignInForm>
-    </div>
-    <div class="background-container" v-if="signedIn">
-        <AccountWriteToken>
-        
-        </AccountWriteToken>
+        <SignInForm v-if="hideSignIn" @createaccount="showCreateAccountForm"></SignInForm>
     </div>
 </template>
 
@@ -84,18 +73,6 @@
 
     .changeWidth {
         max-width: 900px;
-    }
-
-    .background-container {
-        width: 100vw;
-        height: 100vh;
-        position: absolute;
-        background-color: rgb(0, 0, 0, 0.8);
-        backdrop-filter: blur(3px);
-        top: 0;
-        left: 0;
-        display: flex;
-        justify-content: center;
     }
 
     @media (min-width: 505px) {
