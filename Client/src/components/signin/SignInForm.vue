@@ -8,12 +8,6 @@
     const password = ref("");
     const isSignedIn = ref(false);
 
-    const emits = defineEmits<{ (e: "createaccount", clickedRegister: boolean): void }>();
-
-    function registerUser() {
-        emits ("createaccount", true);
-    }
-
     const newUser = computed(() => {
         return {
             email: email.value,
@@ -38,7 +32,6 @@
     <div class="form-parent-container">
         <div class="form-container">
             <h3>Logga in</h3>
-            <p>Har du inget konto? Skapa ett <button type="button" @click="registerUser" class="register-btn">här</button></p> 
             <form @submit.prevent="handleSignIn">
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="email" placeholder="Exempel@mail.se" class="text-input" v-model="email">
@@ -77,31 +70,6 @@
                 background-clip: text;
                 -webkit-background-clip: text;
                 -webkit-text-fill-color: transparent;
-            }
-
-            p {
-                display: flex;
-                flex-direction: column;
-                color: #F1F1F1;
-                font-family: Verdana;
-                line-height: 1.5rem;
-
-                .register-btn {
-                    background: transparent;
-                    border: none;
-                    color: #ff7b0f;
-                    text-align: left;
-                    font-family: Verdana;
-                    font-size: 1rem;
-                    padding: 0;
-                    width: 28px;
-
-                    &:hover {
-                        transition: all 0.2s ease-in-out;
-                        color: #F1F1F1;
-                        cursor: pointer;
-                    }
-                }
             }
 
             form {

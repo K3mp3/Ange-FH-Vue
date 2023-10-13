@@ -16,8 +16,4 @@
         display: flex;
         justify-content: center;
     }
-
-    p {
-      color: white;
-    }
 </style>
