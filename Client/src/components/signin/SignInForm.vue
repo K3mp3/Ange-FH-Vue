@@ -1,3 +1,4 @@
+<!-- eslint-disable arrow-body-style -->
 <script setup lang="ts">
     import { useSignInStore } from "@/stores/signIn";
     import { computed, ref } from "vue";
@@ -21,6 +22,7 @@
             console.log(signedIn.value);
             if (signedIn.value) {
                 isSignedIn.value = true;
+                // window.location.href = "/admin";
             }
         } catch (error) {
             console.log("Error handling users:", error); 
