@@ -123,4 +123,15 @@ router.post("/loginuser", async(req, res) => {
   signInUser();
 })
 
+
+router.post("checktoken", async(req, res) => {
+  const {token, email} = req.body;
+
+  try {
+    const foundUser = await UserModel.findOne({email: email});
+  } catch (error) {
+    console.log(error);
+  }
+})
+
 module.exports = router;

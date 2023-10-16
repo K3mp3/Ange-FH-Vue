@@ -3,6 +3,7 @@
     import { useSignInStore } from "@/stores/signIn";
     import { computed, ref } from "vue";
     import { signInUser } from "@/services/userService";
+import { useUserEmail } from "@/stores/email";
 
     const signedIn = computed(() => useSignInStore().signedIn)
     const email = ref("");
@@ -23,6 +24,8 @@
             if (signedIn.value) {
                 isSignedIn.value = true;
                 // window.location.href = "/admin";
+                const userEmailStore = useUserEmail();
+                userEmailStore.saveEmail(email.value);
             }
         } catch (error) {
             console.log("Error handling users:", error); 

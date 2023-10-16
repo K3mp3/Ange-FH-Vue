@@ -3,13 +3,15 @@
 
     const token = ref();
 
-    async function loginUser() {
-        console.log(token.value)
+    async function handleSignIn() {
+        console.log(token.value);
+
+        
     }
 </script>
 
 <template>
-    <form @submit.prevent="loginUser" class="token-container">
+    <form @submit.prevent="handleSignIn" class="token-container">
         <label for="token-input">Kod</label>
         <input type="text" class="text-input" name="token-input" v-model="token">
         <button type="submit">Logga in</button>
