@@ -124,11 +124,20 @@ router.post("/loginuser", async(req, res) => {
 })
 
 
-router.post("checktoken", async(req, res) => {
+router.post("/checktoken", async(req, res) => {
   const {token, email} = req.body;
 
   try {
     const foundUser = await UserModel.findOne({email: email});
+    console.log("foundUser Token:", foundUser.magicToken)
+    console.log(token);
+
+    if (token === foundUser.magicToken) {
+      res.status()
+    } else {
+      console.log("nej");
+    }
+
   } catch (error) {
     console.log(error);
   }

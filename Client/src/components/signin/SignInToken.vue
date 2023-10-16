@@ -1,12 +1,25 @@
+<!-- eslint-disable arrow-body-style -->
 <script setup lang="ts">
-    import { ref } from 'vue';
+    import { checkToken } from '@/services/userService';
+    import { useUserEmail } from '@/stores/email';
+    import { computed, ref } from 'vue';
 
+    const userEmail = computed(() => useUserEmail().userEmail);
     const token = ref();
+
+    const user = computed(() => {
+        return {
+            email: userEmail.value,
+            token: token.value,
+        }
+    })
 
     async function handleSignIn() {
         console.log(token.value);
-
+        console.log("userEmail:", userEmail.value)
         
+        const response = await checkToken(user.value);
+        console.log("response:", response)    
     }
 </script>
 
