@@ -17,6 +17,7 @@
 </script>
 
 <template>
+    <div class="color-background"></div>
     <div class="account-form-parent-container" :class="{ changeWidth: screenSize === true }">
         <SignInForm v-if="hideSignIn"></SignInForm>
     </div>
@@ -29,7 +30,8 @@
     .account-form-parent-container {
         width: 100%;
         width: 550px;
-        background-color: #1F1F1F;
+        background-color: rgba(0, 0, 0, 0.4);
+        backdrop-filter: blur(3px);
         margin: auto;
         box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
         display: flex;

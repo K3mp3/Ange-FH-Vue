@@ -34,12 +34,16 @@ export async function signInUser(user: IUser) {
 
 export async function checkToken(user: IUserToken) {
     try {
-        console.log(user);
         const response = await axios.post<IUserToken>(`${BASE_URL}/users/checktoken`, user);  
-        
+
+        if (response.status === 201) {
+            console.log("ja");
+        } else if (response.status === 401) {
+            console.log("nej");
+        }
         return response.data;
 
     } catch (error) {
-        console.log("error");
+        return error;
     }
 }

@@ -133,13 +133,13 @@ router.post("/checktoken", async(req, res) => {
     console.log(token);
 
     if (token === foundUser.magicToken) {
-      res.status()
+      res.status(201).json({ message: "Authentication successful" });
     } else {
-      console.log("nej");
+      res.status(401).json({ message: "Unauthorized" });
     }
 
   } catch (error) {
-    console.log(error);
+    res.status(500);
   }
 })
 
