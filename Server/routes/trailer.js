@@ -1,9 +1,10 @@
-var express = require("express");
-var router = express.Router();
+const express = require("express");
+
+const router = express.Router();
 const multer = require("multer");
+const fs = require("fs"); // Import the fs module
 const path = require("path");
 const TrailerModel = require("../models/trailer_model");
-const fs = require("fs"); // Import the fs module
 
 const fileStorageEngine = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -18,12 +19,9 @@ const upload = multer({ storage: fileStorageEngine });
 
 router.get("/", async (req, res) => {
   try {
-    let trailer = await TrailerModel.find();
-
+    const trailer = await TrailerModel.find();
     res.status(200).json(trailer);
-    console.log(trailer);
   } catch (error) {
-    console.log("Error retrieving movies:", error);
     res.status(500).json({ error: "Failed to retrieve movies" });
   }
 });

@@ -1,3 +1,4 @@
+/* eslint-disable no-else-return */
 /* eslint-disable consistent-return */
 import type { IUser } from "@/models/IUser";
 import type { IUserToken } from "@/models/IUserToken";
