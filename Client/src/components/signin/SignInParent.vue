@@ -9,7 +9,6 @@
 
     const screenSize = ref();
     const hideSignIn = ref(true);
-    const backgroundImage = ref("");
 
     interface ITrailer {
         _id: string;
@@ -26,7 +25,6 @@
         });
         try {
         const response = await axios.get("http://localhost:3000/trailer");
-        console.log(response.data[0].poster);
         trailers.value = response.data;
         } catch (error) {
             alert(error);
@@ -37,7 +35,7 @@
 <template>
       <div class="sign-in-background"  v-if="trailers.length > 0">
         <img :src="`http://localhost:3000/trailer/image/${trailers[0].poster}`" alt="movie poster">
-      </div>
+    </div>
     <div class="account-form-parent-container" :class="{ changeWidth: screenSize === true }">
         <SignInForm v-if="hideSignIn"></SignInForm>
     </div>
@@ -55,7 +53,17 @@
         margin: 0;
 
         img {
+            min-width: 100vw;
             height: 100vh;
+            margin: auto;
+        }
+
+        .dark-background-bottom {
+            bottom: 0;
+            width: 100vw;
+            height: 55px;
+            position: absolute;
+            background-color: #000000;
         }
     }
     .account-form-parent-container {
