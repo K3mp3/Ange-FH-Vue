@@ -37,12 +37,13 @@ export async function checkToken(user: IUserToken) {
         const response = await axios.post<IUserToken>(`${BASE_URL}/users/checktoken`, user);  
 
         if (response.status === 201) {
-            console.log("ja");
-        } else if (response.status === 401) {
-            console.log("nej");
+            return true;
+        } 
+        if (response.status === 401) {
+            return false;
+        } else {
+            return false;
         }
-        return response.data;
-
     } catch (error) {
         return error;
     }

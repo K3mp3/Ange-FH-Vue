@@ -19,7 +19,14 @@
         console.log("userEmail:", userEmail.value)
         
         const response = await checkToken(user.value);
-        console.log("response:", response)    
+        console.log("response:", response)   
+        
+        if (response === true) {
+            console.log("true:", response);
+        } else {
+            console.log("false:", response);
+            
+        }
     }
 </script>
 
