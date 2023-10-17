@@ -23,7 +23,6 @@
             console.log(signedIn.value);
             if (signedIn.value) {
                 isSignedIn.value = true;
-                // window.location.href = "/admin";
                 const userEmailStore = useUserEmail();
                 userEmailStore.saveEmail(email.value);
             }

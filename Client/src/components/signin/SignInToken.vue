@@ -23,9 +23,9 @@
         
         if (response === true) {
             console.log("true:", response);
+            window.location.href = "/admin";
         } else {
-            console.log("false:", response);
-            
+            console.log("false:", response); 
         }
     }
 </script>
