@@ -12,7 +12,7 @@
     main {
         width: 100vw;
         height: 100vh;
-        background-color: #1B1B1B;
+        background-color: #161616;
         display: flex;
         justify-content: center;
     }
