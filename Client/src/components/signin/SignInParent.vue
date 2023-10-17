@@ -1,13 +1,19 @@
 <script setup lang="ts">
-    import { computed, ref } from "vue";
+    import { computed, ref, onMounted } from "vue";
     import SignInForm from "./SignInForm.vue";
     import { useSignInStore } from "../../stores/signIn";
-import SignInToken from "./SignInToken.vue";
+    import SignInToken from "./SignInToken.vue";
 
     const signedIn = computed(() => useSignInStore().signedIn)
 
     const screenSize = ref();
     const hideSignIn = ref(true);
+
+    onMounted(() => {
+        window.scrollTo({
+            top: 88,
+        });
+    })
 </script>
 
 <template>

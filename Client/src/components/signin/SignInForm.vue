@@ -3,7 +3,7 @@
     import { useSignInStore } from "@/stores/signIn";
     import { computed, ref } from "vue";
     import { signInUser } from "@/services/userService";
-import { useUserEmail } from "@/stores/email";
+    import { useUserEmail } from "@/stores/email";
 
     const signedIn = computed(() => useSignInStore().signedIn)
     const email = ref("");
