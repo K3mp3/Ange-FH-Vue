@@ -2,6 +2,7 @@
 <script setup lang="ts">
     import { useSignInStore } from "@/stores/signIn";
     import { computed, ref } from "vue";
+    import gsap from "gsap"; 
     import { signInUser } from "@/services/userService";
     import { useUserEmail } from "@/stores/email";
 
@@ -9,6 +10,7 @@
     const email = ref("");
     const password = ref("");
     const isSignedIn = ref(false);
+    const wrongSignIn = ref(false);
 
     const newUser = computed(() => {
         return {
@@ -22,7 +24,9 @@
             const response = await signInUser(newUser.value);
             
             if (!response) {
-                console.log("false");
+                wrongSignIn.value = true;
+            } else {
+                wrongSignIn.value = false;
             }
 
             console.log(signedIn.value);
@@ -39,14 +43,17 @@
 
 <template>
     <div class="form-parent-container">
+        <div class="wrong-sign-in-container" v-if="wrongSignIn">
+            <p>Wrong email or password, please try again!</p>
+        </div>
         <div class="form-container">
             <h3>Logga in</h3>
             <form @submit.prevent="handleSignIn">
                 <label for="email">Email:</label>
-                <input type="email" id="email" name="email" placeholder="Exempel@mail.se" class="text-input" v-model="email">
+                <input type="email" id="email" name="email" placeholder="Exempel@mail.se" ref="textInput" :class="wrongSignIn ? 'wrong-sign-in' : 'text-input'" v-model="email">
                 
                 <label for="password">Lösenord:</label>
-                <input type="password"  name="password" placeholder="Lösenord"  class="text-input" v-model="password">
+                <input type="password"  name="password" placeholder="Lösenord" ref="textInput" :class="wrongSignIn ? 'wrong-sign-in' : 'text-input'" v-model="password">
                 <button type="submit" class="sign-in-btn">Skicka magic link</button>
             </form> 
         </div>
@@ -61,6 +68,19 @@
         display: flex;
         justify-content: center;
         padding: 20px;
+
+        .wrong-sign-in-container {
+            width: calc(100% - 40px);
+            height: 100px;
+            background-color: #e60f0f;
+            position: absolute;
+            margin-top: 100px;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            color: #eee;
+            border-radius: 10px;
+        }
 
         .form-container {
             max-width: 260px;
@@ -87,6 +107,18 @@
                 display: flex;
                 flex-direction: column;
                 gap: 10px;
+            }
+
+            .wrong-sign-in {
+                background: transparent;
+                width: 100%;
+                padding: 12px 10px;
+                display: inline-block;
+                border: none;
+                border-bottom: 1px solid #e60f0f;
+                box-sizing: border-box;
+                color: #F1F1F1;
+                margin-bottom: 30px;
             }
 
             .text-input {
