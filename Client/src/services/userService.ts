@@ -23,13 +23,14 @@ export async function signInUser(user: IUser) {
 
     try {
         const response = await axios.post<IUser>(`${BASE_URL}/users/loginuser`, user);  
+        console.log(response.data)
         userStore.signedIn = true;
         userStore.signInUser();
         
         return response.data;
 
     } catch (error) {
-        console.log("error");
+        return false;
     }
 }
 

@@ -20,6 +20,11 @@
     async function handleSignIn() {
         try {
             const response = await signInUser(newUser.value);
+            
+            if (!response) {
+                console.log("false");
+            }
+
             console.log(signedIn.value);
             if (signedIn.value) {
                 isSignedIn.value = true;
