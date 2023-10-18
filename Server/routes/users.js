@@ -65,8 +65,30 @@ router.post("/loginuser", async(req, res) => {
     const { password, email } = req.body;   
     try {
       const foundUser = await UserModel.findOne({ email: email });
+      console.log("foundUser:", foundUser);
+
+      if (!foundUser) {
+        console.log("null foundUser");
+        res.status(401).json({ message: "Email or password is wrong" });
+        return;
+      }
+
       const match = await bcrypt.compare(password, foundUser.password);
+      console.log(match);
+
+      if (!match) {
+        console.log("null match");
+        res.status(401).json({ message: "Email or password is wrong" });
+        return;
+      }
+
       const magicTokenTimeout = 60 * 60 * 1000; // 60 minutes in milliseconds
+
+      if (!foundUser) {
+        console.log("null");
+        res.status(401).json({ message: "Email or password is wrong" });
+        return;
+      }
   
       if (match) {
         foundUser.magicToken = magicToken;
