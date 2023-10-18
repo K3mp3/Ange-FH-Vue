@@ -6,9 +6,7 @@ import AdminPageEvents from "@/components/adminpage/AdminPageEvents.vue";
 import axios from "axios";
 import { onMounted, ref } from "vue";
 import AdminPageTrailer from "@/components/adminpage/AdminPageTrailer.vue";
-
-
-// Trailer
+import { useShowNav } from "@/stores/showNav";
 
 interface ITrailer {
   _id: string;
@@ -19,6 +17,8 @@ interface ITrailer {
 
 const savedTrailer = ref<any>(null);
 const trailers = ref<ITrailer[]>([]);
+
+const showNavStore = useShowNav();
 
 async function getTrailer() {
   try {
@@ -235,6 +235,8 @@ onMounted(async () => {
   getTrailer();
   getMovies();
   getEvents();
+
+  showNavStore.hideNav(false);
 });
 </script>
 
