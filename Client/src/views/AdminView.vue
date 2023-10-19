@@ -4,9 +4,12 @@
 import AdminPageMoviesVue from "@/components/adminpage/AdminPageMovies.vue";
 import AdminPageEvents from "@/components/adminpage/AdminPageEvents.vue";
 import axios from "axios";
-import { onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import AdminPageTrailer from "@/components/adminpage/AdminPageTrailer.vue";
 import { useShowNav } from "@/stores/showNav";
+import { useSignInStore } from "@/stores/signIn";
+import { isSignedIn } from "@/services/userService";
+import { useUserEmail } from "@/stores/email";
 
 interface ITrailer {
   _id: string;
@@ -232,6 +235,11 @@ async function deleteEvent(event: IEvent) {
 
 
 onMounted(async () => {
+  const userEmail = computed(() => useUserEmail().userEmail);
+  console.log("userEmail:", userEmail.value)
+  const response = await isSignedIn(true);
+  console.log(response);
+
   getTrailer();
   getMovies();
   getEvents();

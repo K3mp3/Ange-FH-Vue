@@ -25,6 +25,8 @@
             
             if (!response) {
                 wrongSignIn.value = true;
+                const input: HTMLInputElement | null = document.querySelector(".textinput");
+                console.log(input)
             } else {
                 wrongSignIn.value = false;
             }
@@ -34,6 +36,8 @@
                 isSignedIn.value = true;
                 const userEmailStore = useUserEmail();
                 userEmailStore.saveEmail(email.value);
+
+                
             }
         } catch (error) {
             console.log("Error handling users:", error); 

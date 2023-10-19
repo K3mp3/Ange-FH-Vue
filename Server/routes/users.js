@@ -10,11 +10,6 @@ const UserModel = require ("../models/user_model");
 let magicToken = ""; 
 let foundToken = "";
 
-router.get('/', async (req, res) => {
-  const allUsers = await UserModel.find();
-  res.status(200).json(allUsers);
-});
-
 router.post("/createuser", async(req, res) => {
   async function generateUniqueToken() {
     magicToken = Math.random().toString(36).substring(2, 7);
@@ -39,6 +34,7 @@ router.post("/createuser", async(req, res) => {
             password: hashedPassword,
             email: req.body.email,
             magicToken: magicToken,
+            isSignedIn: false,
           });
 
           res.status(201).json(newUser);
@@ -155,6 +151,8 @@ router.post("/checktoken", async(req, res) => {
     console.log(token);
 
     if (token === foundUser.magicToken) {
+      foundUser.isSignedIn = true;
+      await foundUser.save();
       res.status(201).json({ message: "Authentication successful" });
     } else {
       res.status(401).json({ message: "Unauthorized" });
@@ -163,6 +161,27 @@ router.post("/checktoken", async(req, res) => {
   } catch (error) {
     res.status(500);
   }
+})
+
+
+router.post("/issignedin", async(req, res) => {
+  let isUserSignedIn = false;
+  console.log("isUserSignedIn:", isUserSignedIn);
+  const {signedIn} = req.body;
+  console.log("isSignedIn:", signedIn);
+
+  isUserSignedIn = signedIn;
+  console.log("isUserSignedIn:", isUserSignedIn);
+})
+
+router.post("/isusersignedin", async(req, res) => {
+  let isUserSignedIn = false;
+  console.log("isUserSignedIn:", isUserSignedIn);
+  const {signedIn} = req.body;
+  console.log("isSignedIn:", signedIn);
+
+  isUserSignedIn = signedIn;
+  console.log("isUserSignedIn:", isUserSignedIn);
 })
 
 module.exports = router;

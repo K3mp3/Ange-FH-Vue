@@ -24,8 +24,7 @@ export async function signInUser(user: IUser) {
     try {
         const response = await axios.post<IUser>(`${BASE_URL}/users/loginuser`, user);  
         console.log(response.data)
-        userStore.signedIn = true;
-        userStore.signInUser();
+        userStore.signInUser(true);
         
         return response.data;
 
@@ -46,6 +45,26 @@ export async function checkToken(user: IUserToken) {
         } else {
             return false;
         }
+    } catch (error) {
+        return error;
+    }
+}
+
+export async function isSignedIn(signedIn: boolean) {
+    console.log(signedIn);
+        
+    try {
+        const response = await axios.post<boolean>(
+            `${BASE_URL}/users/issignedin`,
+            { signedIn }, // Send the boolean value as an object property
+            {
+              headers: {
+                'Content-Type': 'application/json', // Set the content type to JSON
+              },
+            }
+          );
+        console.log(response);
+        return response;
     } catch (error) {
         return error;
     }

@@ -1,11 +1,13 @@
 <!-- eslint-disable arrow-body-style -->
 <script setup lang="ts">
-    import { checkToken } from '@/services/userService';
+    import { checkToken, isSignedIn } from '@/services/userService';
     import { useUserEmail } from '@/stores/email';
     import { computed, ref } from 'vue';
+    import { useRouter } from 'vue-router';
 
     const userEmail = computed(() => useUserEmail().userEmail);
     const token = ref();
+    const router = useRouter(); // Access the Vue Router instance
 
     const user = computed(() => {
         return {
@@ -15,15 +17,15 @@
     })
 
     async function handleSignIn() {
-        console.log(token.value);
-        console.log("userEmail:", userEmail.value)
+        // console.log(token.value);
+        // console.log("userEmail:", userEmail.value)
         
         const response = await checkToken(user.value);
-        console.log("response:", response)   
+        // console.log("response:", response)   
         
         if (response === true) {
             console.log("true:", response);
-            window.location.href = "/admin";
+            router.push({ name: 'admin page' });
         } else {
             console.log("false:", response); 
         }
