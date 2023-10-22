@@ -8,8 +8,7 @@ import { computed, onMounted, ref } from "vue";
 import AdminPageTrailer from "@/components/adminpage/AdminPageTrailer.vue";
 import { useShowNav } from "@/stores/showNav";
 import { useSignInStore } from "@/stores/signIn";
-import { isSignedIn } from "@/services/userService";
-import { useUserEmail } from "@/stores/email";
+import { useRouter } from 'vue-router';
 
 interface ITrailer {
   _id: string;
@@ -233,12 +232,16 @@ async function deleteEvent(event: IEvent) {
   }
 }
 
+const router = useRouter();
+
 
 onMounted(async () => {
-  const userEmail = computed(() => useUserEmail().userEmail);
-  console.log("userEmail:", userEmail.value)
-  const response = await isSignedIn(true);
-  console.log(response);
+  const signedIn = computed(() => useSignInStore().signedIn)
+  console.log("signedIn:", signedIn.value)
+
+  if (!signedIn.value) {
+    router.push({ name: 'home' });
+  }
 
   getTrailer();
   getMovies();

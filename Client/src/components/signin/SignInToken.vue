@@ -1,13 +1,13 @@
 <!-- eslint-disable arrow-body-style -->
 <script setup lang="ts">
-    import { checkToken, isSignedIn } from '@/services/userService';
+    import { checkToken } from '@/services/userService';
     import { useUserEmail } from '@/stores/email';
     import { computed, ref } from 'vue';
     import { useRouter } from 'vue-router';
 
     const userEmail = computed(() => useUserEmail().userEmail);
     const token = ref();
-    const router = useRouter(); // Access the Vue Router instance
+    const router = useRouter();
 
     const user = computed(() => {
         return {
