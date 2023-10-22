@@ -17,14 +17,9 @@
     })
 
     async function handleSignIn() {
-        // console.log(token.value);
-        // console.log("userEmail:", userEmail.value)
-        
         const response = await checkToken(user.value);
-        // console.log("response:", response)   
         
         if (response === true) {
-            console.log("true:", response);
             router.push({ name: 'admin page' });
         } else {
             console.log("false:", response); 
