@@ -9,6 +9,7 @@ import AdminPageTrailer from "@/components/adminpage/AdminPageTrailer.vue";
 import { useShowNav } from "@/stores/showNav";
 import { useSignInStore } from "@/stores/signIn";
 import { useRouter } from 'vue-router';
+import AdminParent from "@/components/adminpage/AdminParent.vue";
 
 interface ITrailer {
   _id: string;
@@ -252,7 +253,8 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div>
+  <AdminParent></AdminParent>
+  <!-- <div>
     <div class="entertainment-parent-container">
         <h1>Välkommen</h1>
         <h4>Ladda upp filmer och event</h4>
@@ -307,7 +309,7 @@ onMounted(async () => {
         </div>
       </div>
       </div>
-    </div>
+    </div> -->
 </template>
 <style scoped>
 /* scroll-snap-type: y
