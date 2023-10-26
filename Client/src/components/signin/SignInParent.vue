@@ -70,7 +70,7 @@
         width: 100%;
         width: 550px;
         background-color: rgba(22, 22, 22, 0.6);
-        backdrop-filter: blur(5px);
+        backdrop-filter: blur(4px);
         margin: auto;
         box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
         display: flex;
