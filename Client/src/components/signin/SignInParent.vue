@@ -33,9 +33,7 @@
 </script>
 
 <template>
-      <div class="sign-in-background"  v-if="trailers.length > 0">
-        <img :src="`http://localhost:3000/trailer/image/${trailers[0].poster}`" alt="movie poster">
-    </div>
+    
     <div class="account-form-parent-container" :class="{ changeWidth: screenSize === true }">
         <SignInForm v-if="hideSignIn"></SignInForm>
     </div>
@@ -51,6 +49,8 @@
         left: 0;
         overflow-x: hidden;
         margin: 0;
+        background-color: rgba(22, 22, 22, 0.6);
+        backdrop-filter: blur(4px);
 
         img {
             min-width: 100vw;
@@ -69,8 +69,7 @@
     .account-form-parent-container {
         width: 100%;
         width: 550px;
-        background-color: rgba(22, 22, 22, 0.6);
-        backdrop-filter: blur(4px);
+        background-color: rgba(22, 22, 22);
         margin: auto;
         box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
         display: flex;

@@ -1,9 +1,19 @@
 <script setup lang="ts">
+    import { useSignInPopUp } from '@/stores/signInPopUp';
+    import { useRouter } from 'vue-router';
+
+    const router = useRouter();
 
     function showSignInForm() {
+        const signInPopUpStore = useSignInPopUp();
+
         window.scrollTo({
             top: 0,
         });
+
+        signInPopUpStore.showSignInForm(true);
+
+        router.push({ name: 'admin page' });
     }
 </script>
 
