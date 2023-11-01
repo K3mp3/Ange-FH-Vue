@@ -13,7 +13,7 @@
 
         signInPopUpStore.showSignInForm(true);
 
-        router.push({ name: 'admin page' });
+        router.push({ name: 'sign in' });
     }
 </script>
 

@@ -3,14 +3,13 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
-export const useSignInPopUp = defineStore("signInPopUp", () => {
+export const useSignInPopUp = defineStore('signinpopup', () => {
     const clickedSignIn = ref(false);
-
+  
     function showSignInForm(isSignedInClicked: boolean) {
-        console.log("isSignedInClicked:", isSignedInClicked);
-        clickedSignIn.value = isSignedInClicked;
-        console.log(clickedSignIn.value);
+      console.log("signInStore:", isSignedInClicked);
+      clickedSignIn.value = isSignedInClicked;
     }
-
+  
     return { clickedSignIn, showSignInForm };
-})
+  })

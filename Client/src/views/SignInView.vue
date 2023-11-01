@@ -1,5 +1,13 @@
 <script setup lang="ts">
+  import { useRouter } from 'vue-router';
+  import { onMounted } from "vue";
   import SignInParent from "../components/signin/SignInParent.vue";
+
+  const router = useRouter();
+
+  onMounted(() => {
+    router.push({ name: 'home' });
+  })
 </script>
 
 <template>
