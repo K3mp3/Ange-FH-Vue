@@ -71,6 +71,7 @@
         position: fixed;
         top: 0;
         visibility: visible;
+        z-index: 1;
 
         .nav-admin-links {
             height: 100%;
@@ -131,6 +132,7 @@
         position: fixed;
         top: 0;
         visibility: visible;
+        z-index: 1;
     }
 
     .hide {
@@ -139,12 +141,13 @@
 
     .hamburger-btn {
         transition: all 0.3s ease-in-out;
-        margin-right: 30px;
+        margin-right: 20px;
         background: transparent;
         border: none;
         position: fixed;   
         z-index: 1;
         top: 0;
+        bottom: 0;
         right: 0;
         margin-top: 10px;
     }
@@ -155,7 +158,7 @@
         background: transparent;
         border: none;
         position: fixed;
-        z-index: 1;
+        z-index: 2;
         padding: 0;
         transform: rotate(40deg);
     }
@@ -165,7 +168,7 @@
         background: transparent;
         border: none;
         position: fixed;
-        z-index: 1;
+        z-index: 2;
         padding: 0;
         transform: rotate(-40deg);
     }

@@ -17,9 +17,9 @@
 
 <template>
   <div>
-      <div class="nav-view" v-if="showNav">
+      <!-- <div class="nav-view" v-if="showNav">
         <NavView></NavView>
-      </div>
+      </div> -->
     <main>
       <router-view></router-view>
     </main>

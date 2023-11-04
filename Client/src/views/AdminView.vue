@@ -240,9 +240,9 @@ onMounted(async () => {
   const signedIn = computed(() => useSignInStore().signedIn)
   console.log("signedIn:", signedIn.value)
 
-  if (!signedIn.value) {
-    router.push({ name: 'home' });
-  }
+  // if (!signedIn.value) {
+  //   router.push({ name: 'home' });
+  // }
 
   getTrailer();
   getMovies();
