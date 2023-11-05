@@ -58,7 +58,7 @@
                 
                 <label for="password">Lösenord:</label>
                 <input type="password"  name="password" placeholder="Lösenord" ref="textInput" :class="wrongSignIn ? 'wrong-sign-in' : 'text-input'" v-model="password">
-                <button type="submit" class="sign-in-btn">Skicka magic link</button>
+                <button type="submit" class="sign-in-btn">Skicka kod</button>
             </form> 
         </div>
     </div>
