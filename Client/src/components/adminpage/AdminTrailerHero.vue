@@ -19,8 +19,8 @@
     }
 
     const carouselSettings = ref({
-        itemsToShow: 1,
-        snapAlign: 'start',
+        itemsToShow: 1.5,
+        snapAlign: 'center',
     });
 
     onMounted(() => {
@@ -50,9 +50,30 @@
     
 </template>
   
-
-  
 <style scoped lang="scss">
+    .title-container {
+        height: 50px;
+        background-color: #151e357f;
+    }
+
+    .text-container {
+        z-index: 1;
+        position: absolute;
+        width: 100vw;
+        min-height: 50px;
+        display: flex;
+        justify-content: center;
+        margin-top: -50px;
+        background-image: linear-gradient(to bottom, rgba(255,0,0,0), rgba(23, 23, 23,1));
+    
+        h1 {
+            font-size: 1.1rem;
+            color: #fff;
+            font-weight: 700;
+            margin-top: 20px;
+        }
+    }
+
   .carousel-container {
     width: 100%; /* Adjust the width as needed */
     overflow: hidden;
@@ -91,21 +112,6 @@
         object-fit: cover;
     }
 
-    .text-container {
-        z-index: 1;
-        position: absolute;
-        width: 100vw;
-        min-height: 40px;
-        display: flex;
-        justify-content: center;
-        margin-top: -40px;
-        background-image: linear-gradient(to bottom, rgba(255,0,0,0), rgba(9, 15, 32,1));
-    }
-
-    h1 {
-        font-size: 1.4rem;
-        color: #fff;
-        font-weight: 700;
-    }
+    
   }
 </style>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import AdminSidebar from './AdminSidebar.vue';
+    import AdminNav from './AdminNav.vue';
     import AdminTrailerForm from './AdminTrailerForm.vue';
     import AdminTrailerHero from './AdminTrailerHero.vue';
 
@@ -7,7 +7,7 @@
 
 <template>
     <nav>
-        <!-- <AdminSidebar></AdminSidebar> -->
+        <AdminNav></AdminNav>
     </nav>
     <header>
         <AdminTrailerHero></AdminTrailerHero>
@@ -23,7 +23,7 @@
     }
 
     main {
-        background-color: aqua;
+        background-color: #171717;
         padding: 20px 30px;
     }
 </style>
