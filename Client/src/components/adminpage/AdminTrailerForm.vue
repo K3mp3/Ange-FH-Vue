@@ -4,7 +4,7 @@
     const isUploadFormActive = ref(false)
 
     function showUploadForm() {
-        isUploadFormActive.value = true;
+        isUploadFormActive.value = !isUploadFormActive.value;
     }
 </script>
 
@@ -13,8 +13,8 @@
     <div class="upload-form" v-if="isUploadFormActive">
         <div class="top-div">
             <h3>Trailer form</h3>
-            <button type="button">
-
+            <button type="button" class="remove-btn" @click="showUploadForm">
+                <FontAwesome :icon="['fas', 'x']" style="color: #eee;" />
             </button>
         </div>
         <hr>
@@ -36,11 +36,11 @@ button {
 }
 
 .upload-form {
-    position: absolute;
+    position: fixed;
     z-index: 1;
     width: 100vw;
     height: 100vh;
-    background-color: aqua;
+    background-color: rgba(23, 23, 23);
     top: 0;
     left: 0;
     padding: 10px 10px;
@@ -48,11 +48,24 @@ button {
     .top-div {
         display: flex;
         flex-direction: row;
+        align-items: center;
         justify-content: space-between;
+        padding: 0 5px;
+
+        h3 {
+            font-size: 1rem;
+            color: #eee;
+            font-weight: 600;
+        }
 
         button {
             width: auto;
+            background: transparent;
         }
+    }
+
+    hr {
+        color: #505050;
     }
 }
 </style>
