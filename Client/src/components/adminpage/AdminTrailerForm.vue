@@ -14,10 +14,9 @@
         <div class="top-div">
             <h3>Trailer form</h3>
             <button type="button" class="remove-btn" @click="showUploadForm">
-                <FontAwesome :icon="['fas', 'x']" style="color: #eee;" />
+                <FontAwesome :icon="['fas', 'x']" class="close-icon" :class="{ 'close-icon-active': isUploadFormActive }" v-if="isUploadFormActive"/>
             </button>
         </div>
-        <hr>
     </div>
 </template>
 
@@ -61,6 +60,21 @@ button {
         button {
             width: auto;
             background: transparent;
+            border: 1px solid #6B6B6B;
+            padding: 0 11px;
+            border-radius: 8px;
+
+            .close-icon {
+                color: #F1F1F1;
+            }
+        }
+
+        button:active {
+            border: 1.5px solid #FF7B0F;
+
+            .close-icon-active {
+                color: #FF7B0F;
+            }
         }
     }
 
