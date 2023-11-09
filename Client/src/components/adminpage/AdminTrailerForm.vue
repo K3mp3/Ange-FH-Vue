@@ -17,10 +17,33 @@
                 <FontAwesome :icon="['fas', 'x']" class="close-icon" :class="{ 'close-icon-active': isUploadFormActive }" v-if="isUploadFormActive"/>
             </button>
         </div>
+        <form>
+            <h5>Upload a trailer poster</h5>
+            <p>Trailer Image</p>
+            <input type="file" @change="posterInput" name="movie-poster-input" class="movie-upload file-upload" />
+        </form>
     </div>
 </template>
 
 <style setup lang="scss">
+/* Text */
+h3, h5, p {
+    color: #eee;
+    font-size: 1rem;
+}
+
+h3 {
+    font-size: 1.2rem;
+    color: #eee;
+    font-weight: 600;
+}
+
+h5 {
+    font-family: Verdana;
+    margin-bottom: 5px;
+}
+
+
 button {
     background-color: #EEEEEE;
     border: none;
@@ -42,7 +65,7 @@ button {
     background-color: rgba(23, 23, 23);
     top: 0;
     left: 0;
-    padding: 10px 10px;
+    padding: 10px;
 
     .top-div {
         display: flex;
@@ -50,12 +73,6 @@ button {
         align-items: center;
         justify-content: space-between;
         padding: 0 5px;
-
-        h3 {
-            font-size: 1rem;
-            color: #eee;
-            font-weight: 600;
-        }
 
         button {
             width: auto;
@@ -66,6 +83,7 @@ button {
 
             .close-icon {
                 color: #F1F1F1;
+                height: 19.2px;
             }
         }
 
@@ -75,11 +93,33 @@ button {
             .close-icon-active {
                 color: #FF7B0F;
             }
-        }
-    }
+        } 
+    } 
 
-    hr {
-        color: #505050;
+    form {
+        padding: 10px;
+        margin-top: 15px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+
+        input {
+            color: #F1F1F1;
+        }
+
+        .file-upload{
+            max-width: 204px;
+            cursor: pointer;
+        }
+
+        input.movie-upload::file-selector-button {
+            background-color: #F1F1F1;
+            border: none;
+            width: 99px;
+            height: 33px;
+            border-radius: 15px;
+            color: #171717;
+        }
     }
 }
 </style>
