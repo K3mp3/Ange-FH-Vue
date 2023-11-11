@@ -21,6 +21,8 @@
             <h5>Upload a trailer poster</h5>
             <p>Trailer Image</p>
             <input type="file" @change="posterInput" name="movie-poster-input" class="movie-upload file-upload" />
+            <label for="trailerlink">Link to movie trailer </label>
+            <input type="text" id="trailerlink" name="trailerlink" placeholder="Paste the embeded link here" ref="textInput" class="text-input">
         </form>
     </div>
 </template>
@@ -33,8 +35,8 @@ h3, h5, p {
 }
 
 h3 {
-    font-size: 1.2rem;
-    color: #eee;
+    font-size: 1.3rem;
+    color: #FF7B0F;
     font-weight: 600;
 }
 
@@ -77,23 +79,23 @@ button {
         button {
             width: auto;
             background: transparent;
-            border: 1px solid #6B6B6B;
+            border: none;
             padding: 0 11px;
             border-radius: 8px;
 
             .close-icon {
-                color: #F1F1F1;
+                color: #FF7B0F;
                 height: 19.2px;
             }
         }
 
-        button:active {
+        /* button:active {
             border: 1.5px solid #FF7B0F;
 
             .close-icon-active {
                 color: #FF7B0F;
             }
-        } 
+        }  */
     } 
 
     form {
@@ -102,6 +104,11 @@ button {
         display: flex;
         flex-direction: column;
         gap: 15px;
+
+        label {
+            color: #F1F1F1;
+            font-family: Verdana;
+        }
 
         input {
             color: #F1F1F1;
@@ -119,6 +126,21 @@ button {
             height: 33px;
             border-radius: 15px;
             color: #171717;
+        }
+
+        .text-input {
+            background: transparent;
+            width: 100%;
+            height: 40px;
+            padding: 10px;
+            border: 0.5px solid #6B6B6B;
+            border-radius: 10px;
+            outline: none; /* Remove the default focus outline */
+        }
+
+        .text-input:active,
+        .text-input:focus {
+            border: 0.5px solid #FF7B0F;
         }
     }
 }
