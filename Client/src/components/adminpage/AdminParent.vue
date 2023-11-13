@@ -13,7 +13,7 @@
         <AdminTrailerHero></AdminTrailerHero>
     </header>
     <main>
-        <AdminTrailerForm></AdminTrailerForm>
+        <RouterLink class="router-link" to="/admin/trailerform"><FontAwesome :icon="['fas', 'upload']" style="color: #171717;" /> Upload trailer poster</RouterLink>
     </main>
 </template>
 
@@ -25,5 +25,21 @@
     main {
         background-color: #171717;
         padding: 20px 30px;
+    }
+
+    .router-link {
+        background-color: #EEEEEE;
+        border: none;
+        width: 100%;
+        height: 33px;
+        border-radius: 15px;
+        color: rgb(23, 23, 23);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+        font-family: Verdana;
+        padding: 10px;
     }
 </style>

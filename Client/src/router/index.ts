@@ -3,7 +3,8 @@ import MovieViewVue from '@/views/MovieView.vue';
 import HomeView from "../views/HomeView.vue";
 import AdminView from "../views/AdminView.vue";
 import Layout from "../views/Layout.vue";
-import SignInViewVue from '@/views/SignInView.vue';
+import SignInViewVue from '../views/SignInView.vue';
+import AdminTrailerFormVue from '../components/adminpage/AdminTrailerForm.vue';
 
 
 const router = createRouter({
@@ -18,6 +19,11 @@ const router = createRouter({
           path: "/admin",
           name: "admin page",
           component: AdminView,
+        },
+        {
+          path: "/admin/trailerform",
+          name: "admin page trailer form",
+          component: AdminTrailerFormVue,
         },
         {
           path: '/',
