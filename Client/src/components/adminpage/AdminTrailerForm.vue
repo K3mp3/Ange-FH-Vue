@@ -9,7 +9,7 @@ import { ref } from 'vue';
     const genre = ref("")
     const age = ref("")
     const date = ref("")
-    const time = ref("")
+    const time = ref()
     const isSubmitDisabled = ref(true);
 
     function posterInput(e: Event) {
