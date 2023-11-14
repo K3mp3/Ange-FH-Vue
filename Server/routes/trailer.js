@@ -27,19 +27,25 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/savetrailer", upload.single("poster"), async (req, res) => {
-  const { title } = req.body;
   const poster = req.file.filename; // Hämta filnamnet för den sparade bilden
-  const link = req.body.link;
+  const {link} = req.body;
+  const { title } = req.body;
+  const { genre } = req.body;
+  const { age } = req.body;
+  const { date } = req.body;
+  const { time } = req.body;
 
-  console.log("link:", link);
-
-  console.log(poster);
+  console.log(poster, link, title, genre, age, date, time);
 
   try {
     const newMovie = await TrailerModel.create({
-      poster: poster,
-      title: title,
-      link: link,
+      poster,
+      link,
+      title,
+      genre,
+      age,
+      date,
+      time
     });
 
     console.log("newMovie", newMovie);
