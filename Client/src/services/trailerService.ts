@@ -14,7 +14,10 @@ export default async function getTrailers() {
 export  async function saveTrailer(trailer: FormData) {
     try {
         console.log(trailer)
+        const response = await axios.post<FormData>(`${BASE_URL}/trailer/savetrailer`, trailer)
+        console.log(response.data)
+        return response.data;
     } catch (error) {
-        console.log(error)
+        return false;
     }
 }
