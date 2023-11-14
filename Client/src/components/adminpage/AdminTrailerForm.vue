@@ -1,40 +1,50 @@
 <script setup lang="ts">
-    import { ref, reactive, watchEffect   } from 'vue';
+    import { saveTrailer } from '@/services/trailerService';
+import axios from 'axios';
+import { ref } from 'vue';
 
     const trailerPoster = ref();
     const trailerLink = ref("");
     const trailerTitle = ref("");
-    const genre = ref()
-    const age = ref()
-    const date = ref()
-    const time = ref()
+    const genre = ref("")
+    const age = ref("")
+    const date = ref("")
+    const time = ref("")
     const isSubmitDisabled = ref(true);
 
-    const formData = reactive({
-        trailerLink: '',
-        trailerTitle: '',
-        genre: '',
-        age: '',
-        date: '',
-        time: '',
-    });
-
     function posterInput(e: Event) {
-        const inputElement = e.target as HTMLInputElement;
-        const image = inputElement.files?.[0];
+        const inputElement = e.target as HTMLInputElement
+        const image = inputElement.files?.[0]
 
         if (image) {
             trailerPoster.value = image;
         }
     }
 
-    function submitForm() {
-        console.log('Form submitted with data:', formData);
+    function checkInputs() {
+        if (trailerPoster.value && trailerLink.value && trailerTitle.value && genre.value && age.value && date.value && time.value) {
+            console.log("hej")
+            isSubmitDisabled.value = false;
+        }
+        else {
+            isSubmitDisabled.value = true;
+        }
     }
 
-    watchEffect(() => {
-        isSubmitDisabled.value = Object.values(formData).some(value => !value);
-    });
+    async function submitForm() {
+        const trailerData = new FormData();
+        trailerData.append("poster", trailerPoster.value);
+        trailerData.append("link", trailerLink.value);
+        trailerData.append("title", trailerTitle.value);
+        trailerData.append("genre", genre.value);
+        trailerData.append("age", age.value);
+        trailerData.append("date", date.value);
+        trailerData.append("time", time.value);
+
+        const response = await saveTrailer(trailerData)
+
+        console.log(response);
+    }
 
 </script>
 
@@ -47,42 +57,42 @@
         <form @submit.prevent="submitForm">
             <div class="input-container">
                 <label for="movie-poster-input">Trailer Image</label>
-                <input type="file" @change="posterInput" name="movie-poster-input" class="movie-upload file-upload" >
+                <input type="file" @change="posterInput" @input="checkInputs" name="movie-poster-input" class="movie-upload file-upload" >
             </div>
 
             <div class="input-container">
                 <label for="trailerlink">Link to movie trailer </label>
-                <input type="text" v-model="formData.trailerLink" id="trailerlink" name="trailerlink" placeholder="Paste the embeded link here" ref="textInput" class="text-input">
+                <input type="text" v-model="trailerLink" @change="checkInputs" id="trailerlink" name="trailerlink" placeholder="Paste the embeded link here" ref="textInput" class="text-input">
             </div>            
             
             <div class="input-container">
                 <label for="movietitle">Movie title </label>
-                <input type="text" v-model="formData.trailerTitle" id="movietitle" name="movietitle" placeholder="Avengers Endgame" ref="textInput" class="text-input">
+                <input type="text" v-model="trailerTitle" @change="checkInputs" id="movietitle" name="movietitle" placeholder="Avengers Endgame" ref="textInput" class="text-input">
             </div>          
 
             <div class="input-container">
                 <label for="genre">Genre </label>
-                <input type="text" v-model="formData.genre" id="genre" name="genre" placeholder="Action" ref="textInput" class="text-input">
+                <input type="text" v-model="genre" @change="checkInputs" id="genre" name="genre" placeholder="Action" ref="textInput" class="text-input">
             </div>           
 
             <div class="input-container">
                 <label for="age">Minimum age </label>
-                <input type="number" v-model="formData.age" id="age" name="age" placeholder="13" ref="textInput" class="text-input">
+                <input type="number" v-model="age" @change="checkInputs" id="age" name="age" placeholder="13" ref="textInput" class="text-input">
             </div>
 
             <div class="input-container">
                 <label for="date">Premiere date </label>
-                <input type="date" v-model="formData.date" id="date" name="date" ref="textInput" class="text-input">
+                <input type="date" v-model="date" @change="checkInputs" id="date" name="date" ref="textInput" class="text-input">
             </div>
 
             <div class="input-container">
                 <label for="time">Premiere time </label>
-                <input type="time" v-model="formData.time" id="time" name="time" ref="textInput" class="text-input last-input">
+                <input type="time" v-model="time" @change="checkInputs" id="time" name="time" ref="textInput" class="text-input last-input">
             </div>
 
-            <button type="submit" :disabled="isSubmitDisabled">                
-                <FontAwesome class="fontawesome-icon" :icon="['fas', 'upload']" />
-                <p>Upload poster</p>
+            <button type="submit" :disabled="isSubmitDisabled" @click="checkInputs">                
+                <FontAwesome  :class="{ 'fontawesome-icon': !isSubmitDisabled, 'disabled': isSubmitDisabled }" :icon="['fas', 'upload']" />
+                Upload poster
             </button>
         </form>
     </div>
@@ -221,15 +231,17 @@ input {
             border-radius: 15px;
             border: none;
             display: flex;
-            gap: 10px;
+            gap: 5px;
             padding: 10px;
             align-items: center;
             justify-content: center;
             background-color: #ff7b0f;
             font-family: Verdana;
+            color: #F1F1F1;
 
             &:disabled {
-                background-color: #ff7b0f77;
+                background-color: #ff7b0faf;
+                color: #c4c4c4;
             }
         }
     }

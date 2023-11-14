@@ -10,3 +10,11 @@ export default async function getTrailers() {
         return error;
     }
 }
+
+export  async function saveTrailer(trailer: FormData) {
+    try {
+        console.log(trailer)
+    } catch (error) {
+        console.log(error)
+    }
+}
