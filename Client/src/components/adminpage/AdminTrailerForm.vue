@@ -164,12 +164,6 @@ input {
         justify-content: space-between;
         padding: 0 5px;
 
-        button {
-            
-
-            
-        }
-
         /* button:active {
             border: 1.5px solid #FF7B0F;
 

@@ -1,7 +1,7 @@
 <script setup lang="ts">
     import AdminNav from './AdminNav.vue';
-    import AdminTrailerForm from './AdminTrailerForm.vue';
     import AdminTrailerHero from './AdminTrailerHero.vue';
+import AdminTrailers from './AdminTrailers.vue';
 
 </script>
 
@@ -14,6 +14,7 @@
     </header>
     <main>
         <RouterLink class="router-link" to="/admin/trailerform"><FontAwesome :icon="['fas', 'upload']" style="color: #171717;" /> Upload trailer poster</RouterLink>
+        <AdminTrailers></AdminTrailers>
     </main>
 </template>
 
@@ -24,13 +25,17 @@
 
     main {
         background-color: #171717;
-        padding: 20px 30px;
+        padding: 40px 15px;
+        display: flex;
+        flex-direction: column;
+        gap: 50px;
+        align-items: center;
     }
 
     .router-link {
         background-color: #EEEEEE;
         border: none;
-        width: 100%;
+        width: calc(100% - 45px);
         height: 33px;
         border-radius: 15px;
         color: rgb(23, 23, 23);
@@ -40,6 +45,7 @@
         gap: 10px;
         text-decoration: none;
         font-family: Verdana;
+        font-size: 0.9rem;
         padding: 10px;
     }
 </style>
