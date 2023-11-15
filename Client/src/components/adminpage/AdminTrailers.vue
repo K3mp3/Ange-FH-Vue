@@ -12,7 +12,7 @@
         const response = await getTrailers();
         trailers.value = response;
 
-        console.log(trailers.value[0].date)
+        console.log(trailers.value)
         } catch (error) {
             alert(error);
         }
@@ -31,10 +31,48 @@
         return formattedDate;
     };
 
-    const carouselSettings = ref({
-        itemsToShow: 1.5,
+    const formatDuration = (duration: string | number): string => {
+    // If duration is a string, parse it into hours and minutes
+    if (typeof duration === 'string') {
+      const [hoursStr, minutesStr] = duration.split(':');
+      const hours = parseInt(hoursStr, 10);
+      const minutes = parseInt(minutesStr, 10);
+
+      // Check if parsing is successful
+      if (Number.isNaN(hours) || Number.isNaN(minutes)) {
+        return 'Invalid Duration';
+      }
+
+      return `${hours}h ${minutes}min`;
+    }
+
+    // If duration is a number, assume it's already in minutes
+    const hours = Math.floor(duration / 60);
+    const minutes = duration % 60;
+
+    const formattedDuration = `${hours}h ${minutes}min`;
+
+    return formattedDuration;
+  };
+
+  function settings() {
+  return {
+    itemsToShow: 1,
+      snapAlign: 'center',
+  }
+}
+
+    const breakpoints = {
+        700: {
+        itemsToShow: 3.5,
         snapAlign: 'center',
-    });
+      },
+      // 1024 and up
+      1024: {
+        itemsToShow: 5,
+        snapAlign: 'start',
+      },
+    }
 
     onMounted(() => {
         getTrailer();
@@ -43,7 +81,7 @@
 
 <template>
     <div class="carousel-container">
-      <Carousel :settings="carouselSettings">
+      <Carousel :settings="settings" :breakpoints="breakpoints">
         <Slide v-for="slide in trailers" :key="slide._id">
             <div class="image-container">
                 <img
@@ -56,6 +94,7 @@
                 <ul>
                     <li>{{ slide.genre }}</li>
                     <li>{{ slide.age }}</li>
+                    <li v-if="slide.duration">{{ formatDuration(slide.duration) }}</li>
                 </ul>
                 <ul>
                     <li class="white-li">{{ formatReleaseDate(slide.date) }}</li>
@@ -72,8 +111,7 @@
           <navigation />
         </template>
       </Carousel>
-    </div>
-    
+    </div> 
 </template>
   
 <style scoped lang="scss">
@@ -84,42 +122,19 @@
         font-size: 1.2rem;
     }
 
-    .title-container {
-        height: 50px;
-        background-color: #151e357f;
-    }
-
-    .text-container {
-        z-index: 1;
-        position: absolute;
-        width: 100vw;
-        min-height: 50px;
-        display: flex;
-        justify-content: center;
-        margin-top: -50px;
-        background-image: linear-gradient(to bottom, rgba(255,0,0,0), rgba(23, 23, 23,1));
-
-        h1 {
-            font-size: 1.1rem;
-            color: #F1F1F1;
-            font-weight: 700;
-            margin-top: 20px;
-        }
-    }
-
   .carousel-container {
-    width: 100%; /* Adjust the width as needed */
+    width: 100%;
     overflow: hidden;
 
     .carousel__item {
-        height: 40vw;
         width: 100%;
-        background-color: blue;
-        color: var(--vc-clr-white);
-        font-size: 20px;    
-        display: flex;
+        color: #F1F1F1;
+        font-size: 20px;
         justify-content: center;
         align-items: center;
+        margin-top: 20px;
+        margin: auto;
+        padding: 0;
     }
     
     .carousel__slide {
@@ -129,7 +144,7 @@
     .carousel__prev,
     .carousel__next {
         box-sizing: content-box;
-        border: 5px solid white;
+        border: 5px solid #F1F1F1
     }
 
     .image-container {
@@ -140,7 +155,7 @@
 
         img {
             width: 100%;
-            height: 40vw;
+            height: 100%;
             object-fit: cover;
             border-radius: 8px;
         }

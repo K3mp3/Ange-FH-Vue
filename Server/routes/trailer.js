@@ -32,10 +32,9 @@ router.post("/savetrailer", upload.single("poster"), async (req, res) => {
   const { title } = req.body;
   const { genre } = req.body;
   const { age } = req.body;
+  const { duration } = req.body;
   const { date } = req.body;
   const { time } = req.body;
-
-  console.log(poster, link, title, genre, age, date, time);
 
   try {
     const newMovie = await TrailerModel.create({
@@ -44,15 +43,13 @@ router.post("/savetrailer", upload.single("poster"), async (req, res) => {
       title,
       genre,
       age,
+      duration,
       date,
       time
     });
 
-    console.log("newMovie", newMovie);
-
     res.status(201).json(newMovie);
   } catch (error) {
-    console.log("Error saving movie:", error);
     res.status(500).json({ error: "Failed to save movie" });
   }
 });

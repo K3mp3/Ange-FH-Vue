@@ -6,6 +6,7 @@ const storedMovieTrailerInfo = mongoose.Schema({
   title: String,
   genre: String,
   age: Number,
+  duration: String,
   date: Date,
   time: String, 
 });

@@ -8,6 +8,7 @@ import { ref } from 'vue';
     const trailerTitle = ref("");
     const genre = ref("")
     const age = ref("")
+    const duration = ref()
     const date = ref("")
     const time = ref()
     const isSubmitDisabled = ref(true);
@@ -38,6 +39,7 @@ import { ref } from 'vue';
         trailerData.append("title", trailerTitle.value);
         trailerData.append("genre", genre.value);
         trailerData.append("age", age.value);
+        trailerData.append("duration", duration.value);
         trailerData.append("date", date.value);
         trailerData.append("time", time.value);
 
@@ -78,6 +80,11 @@ import { ref } from 'vue';
             <div class="input-container">
                 <label for="age">Minimum age </label>
                 <input type="number" v-model="age" @change="checkInputs" id="age" name="age" placeholder="13" ref="textInput" class="text-input">
+            </div>
+
+            <div class="input-container">
+                <label for="duration">Duration </label>
+                <input type="time" v-model="duration" @change="checkInputs" id="duration" name="duration" placeholder="13" ref="textInput" class="text-input">
             </div>
 
             <div class="input-container">
