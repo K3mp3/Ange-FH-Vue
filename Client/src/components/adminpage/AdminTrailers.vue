@@ -4,8 +4,16 @@
     import { onMounted, ref } from 'vue';
     import 'vue3-carousel/dist/carousel.css'
     import { Carousel, Slide, Navigation  } from 'vue3-carousel'
+    import gsap from 'gsap';
 
     const trailers = ref<ITrailer[]>([]);
+    const scrollContainer = ref<HTMLElement | null>(null);
+
+    const scroll = (amount: number) => {
+        if (scrollContainer.value) {
+            gsap.to(scrollContainer.value, { scrollLeft: scrollContainer.value.scrollLeft + amount, duration: 0.4 });
+        }
+    };
 
     async function getTrailer() {
         try {
@@ -63,55 +71,97 @@
 }
 
     const breakpoints = {
-        700: {
-        itemsToShow: 3.5,
-        snapAlign: 'center',
-      },
-      // 1024 and up
-      1024: {
-        itemsToShow: 5,
-        snapAlign: 'start',
-      },
+        330: {
+            itemsToShow: 1.25,
+            snapAlign: 'center',
+        },
+        430: {
+            itemsToShow: 1.5,
+            snapAlign: 'center',
+        },
+        515: {
+            itemsToShow: 1.75,
+            snapAlign: 'center',
+        },
+        600: {
+            itemsToShow: 2,
+            snapAlign: 'center',
+        },
     }
 
     onMounted(() => {
         getTrailer();
+        scrollContainer.value = document.querySelector('.media-container');
+        scroll(0);
     })
 </script>
 
 <template>
-    <div class="carousel-container">
+    <!-- <div class="carousel-container">
       <Carousel :settings="settings" :breakpoints="breakpoints">
         <Slide v-for="slide in trailers" :key="slide._id">
-            <div class="image-container">
-                <img
-                    :src="`http://localhost:3000/trailer/image/${slide.poster}`"
-                    :alt="slide.title"
-                />
-            </div>
-            <div class="trailer-info">
-                <h2>{{ slide.title }}</h2>
-                <ul>
-                    <li>{{ slide.genre }}</li>
-                    <li>{{ slide.age }}</li>
-                    <li v-if="slide.duration">{{ formatDuration(slide.duration) }}</li>
-                </ul>
-                <ul>
-                    <li class="white-li">{{ formatReleaseDate(slide.date) }}</li>
-                    <li class="white-li">|</li>
-                    <li class="white-li">{{ slide.time }}</li>
-                </ul>
-                <button type="submit">                
-                <FontAwesome  class="fontawesome-icon" :icon="['fas', 'trash']" />
-                    Delete
-                </button>
+            <div class="slide-container">
+                <div class="image-container">
+                    <img
+                        :src="`http://localhost:3000/trailer/image/${slide.poster}`"
+                        :alt="slide.title"
+                    />
+                </div>
+                <div class="trailer-info">
+                    <h2>{{ slide.title }}</h2>
+                    <ul>
+                        <li>{{ slide.genre }}</li>
+                        <li>{{ slide.age }}</li>
+                        <li v-if="slide.duration">{{ formatDuration(slide.duration) }}</li>
+                    </ul>
+                    <ul>
+                        <li class="white-li">{{ formatReleaseDate(slide.date) }}</li>
+                        <li class="white-li">|</li>
+                        <li class="white-li">{{ slide.time }}</li>
+                    </ul>
+                    <button type="submit">                
+                    <FontAwesome  class="fontawesome-icon" :icon="['fas', 'trash']" />
+                        Delete
+                    </button>
+                </div>
             </div>
         </Slide>
         <template #addons>
           <navigation />
         </template>
       </Carousel>
-    </div> 
+    </div>  -->
+    <div class="scroll-buttons">
+        <button type="button" @click="scroll(-249)">Scroll Left</button>
+        <button type="button" @click="scroll(249)">Scroll Right</button>
+    </div>
+    <div class="media-container">
+        <div v-for="index in trailers" :key="index._id" class="slide-container">
+            <div class="image-container">
+                <img
+                    :src="`http://localhost:3000/trailer/image/${index.poster}`"
+                    :alt="index.title"
+                />
+            </div>
+            <div class="trailer-info">
+                <h2>{{ index.title }}</h2>
+                <ul>
+                    <li>{{ index.genre }}</li>
+                    <li>{{ index.age }}</li>
+                    <li v-if="index.duration">{{ formatDuration(index.duration) }}</li>
+                </ul>
+                <ul>
+                    <li class="white-li">{{ formatReleaseDate(index.date) }}</li>
+                    <li class="white-li">|</li>
+                    <li class="white-li">{{ index.time }}</li>
+                </ul>
+                <button type="submit">                
+                <FontAwesome  class="fontawesome-icon" :icon="['fas', 'trash']" />
+                    Delete
+                </button>
+            </div>
+        </div>
+    </div>
 </template>
   
 <style scoped lang="scss">
@@ -121,85 +171,86 @@
         font-weight: 700;
         font-size: 1.2rem;
     }
-
-  .carousel-container {
-    width: 100%;
-    overflow: hidden;
-
-    .carousel__item {
+    .media-container {
         width: 100%;
-        color: #F1F1F1;
-        font-size: 20px;
-        justify-content: center;
-        align-items: center;
-        margin-top: 20px;
-        margin: auto;
-        padding: 0;
-    }
-    
-    .carousel__slide {
-        display: block;
-    }
-    
-    .carousel__prev,
-    .carousel__next {
-        box-sizing: content-box;
-        border: 5px solid #F1F1F1
-    }
-
-    .image-container {
-        width: 75vw;
-        height: 40vw;
-        border-radius: 8px;
-        border: 1px solid #2C2C2C;
-
-        img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 8px;
-        }
-    }
-
-    .trailer-info {
-        margin-top: 10px;
-        text-align: left;
+        padding: 10px;
         display: flex;
-        flex-direction: column;
+        overflow: auto;
         gap: 10px;
 
-        ul {
+        .slide-container {
             display: flex;
-            gap: 11px;
-            padding: 0;
+            flex-direction: column;
+            gap: 10px;
+            .image-container {
+                min-width: 239px;
+                max-width: 239px;
+                height: 121px;
+                border-radius: 8px;
 
-            li {
-                list-style: none;
-                font-family: Arial;
-                color: #FF7B0F; 
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    border-radius: 8px;
+                }
             }
+            .trailer-info {
+                padding-left: 1px;
+                margin-top: 10px;
+                text-align: left;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
 
-            .white-li {
-                list-style: none;
-                font-family: Arial;
-                color: #F1F1F1
+                ul {
+                    display: flex;
+                    gap: 11px;
+                    padding: 0;
+
+                    li {
+                        list-style: none;
+                        font-family: Arial;
+                        color: #FF7B0F; 
+                    }
+
+                    .white-li {
+                        list-style: none;
+                        font-family: Arial;
+                        color: #F1F1F1
+                    }
+                }
+
+                button {
+                    width: 110px;
+                    border-radius: 20px;
+                    border: none;
+                    display: flex;
+                    gap: 5px;
+                    padding: 10px;
+                    align-items: center;
+                    justify-content: center;
+                    background-color: #ff7b0f;
+                    font-family: Verdana;
+                    color: #F1F1F1;
+                    margin-bottom: 10px;
+                }
+            }  
+        }
+    }
+
+     @media screen and (min-width: 539px) {
+        .media-container {
+
+            .slide-container {
+
+                .image-container {
+                    min-width: 260px;
+                    max-width: 260px;
+                    height: 140px;
+
+                }
             }
         }
-
-        button {
-            width: 110px;
-            border-radius: 20px;
-            border: none;
-            display: flex;
-            gap: 5px;
-            padding: 10px;
-            align-items: center;
-            justify-content: center;
-            background-color: #ff7b0f;
-            font-family: Verdana;
-            color: #F1F1F1;
-            margin-bottom: 10px;
-        }
-    }  
-  }
+    }
 </style>
