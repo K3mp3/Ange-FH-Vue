@@ -9,11 +9,33 @@
     const trailers = ref<ITrailer[]>([]);
     const scrollContainer = ref<HTMLElement | null>(null);
 
-    const scroll = (amount: number) => {
+    let width = document.documentElement.clientWidth;
+
+    function updateScreenSize() {
+        width = document.documentElement.clientWidth;
+    }
+
+    const scroll = (scrollWidth: number) => {
+        console.log(scrollWidth);
         if (scrollContainer.value) {
-            gsap.to(scrollContainer.value, { scrollLeft: scrollContainer.value.scrollLeft + amount, duration: 0.4 });
+            gsap.to(scrollContainer.value, { scrollLeft: scrollContainer.value.scrollLeft + scrollWidth, duration: 0.4 });
         }
     };
+
+    function scrollRight() {
+        updateScreenSize();
+        scroll(width + 10)    
+        
+        if (width >= 360) scroll(width + 16)
+    }
+
+    function scrollLeft() {
+         updateScreenSize();
+
+        scroll(-width - 10)
+
+        if (width >= 360) scroll(-width - 16)
+    }
 
     async function getTrailer() {
         try {
@@ -40,100 +62,40 @@
     };
 
     const formatDuration = (duration: string | number): string => {
-    // If duration is a string, parse it into hours and minutes
-    if (typeof duration === 'string') {
-      const [hoursStr, minutesStr] = duration.split(':');
-      const hours = parseInt(hoursStr, 10);
-      const minutes = parseInt(minutesStr, 10);
+        // If duration is a string, parse it into hours and minutes
+        if (typeof duration === 'string') {
+        const [hoursStr, minutesStr] = duration.split(':');
+        const hours = parseInt(hoursStr, 10);
+        const minutes = parseInt(minutesStr, 10);
 
-      // Check if parsing is successful
-      if (Number.isNaN(hours) || Number.isNaN(minutes)) {
-        return 'Invalid Duration';
-      }
+        // Check if parsing is successful
+        if (Number.isNaN(hours) || Number.isNaN(minutes)) {
+            return 'Invalid Duration';
+        }
 
-      return `${hours}h ${minutes}min`;
-    }
+        return `${hours}h ${minutes}min`;
+        }
 
-    // If duration is a number, assume it's already in minutes
-    const hours = Math.floor(duration / 60);
-    const minutes = duration % 60;
+        // If duration is a number, assume it's already in minutes
+        const hours = Math.floor(duration / 60);
+        const minutes = duration % 60;
 
-    const formattedDuration = `${hours}h ${minutes}min`;
+        const formattedDuration = `${hours}h ${minutes}min`;
 
-    return formattedDuration;
-  };
-
-  function settings() {
-  return {
-    itemsToShow: 1,
-      snapAlign: 'center',
-  }
-}
-
-    const breakpoints = {
-        330: {
-            itemsToShow: 1.25,
-            snapAlign: 'center',
-        },
-        430: {
-            itemsToShow: 1.5,
-            snapAlign: 'center',
-        },
-        515: {
-            itemsToShow: 1.75,
-            snapAlign: 'center',
-        },
-        600: {
-            itemsToShow: 2,
-            snapAlign: 'center',
-        },
-    }
+        return formattedDuration;
+    };
 
     onMounted(() => {
         getTrailer();
+        updateScreenSize()
         scrollContainer.value = document.querySelector('.media-container');
-        scroll(0);
     })
 </script>
 
 <template>
-    <!-- <div class="carousel-container">
-      <Carousel :settings="settings" :breakpoints="breakpoints">
-        <Slide v-for="slide in trailers" :key="slide._id">
-            <div class="slide-container">
-                <div class="image-container">
-                    <img
-                        :src="`http://localhost:3000/trailer/image/${slide.poster}`"
-                        :alt="slide.title"
-                    />
-                </div>
-                <div class="trailer-info">
-                    <h2>{{ slide.title }}</h2>
-                    <ul>
-                        <li>{{ slide.genre }}</li>
-                        <li>{{ slide.age }}</li>
-                        <li v-if="slide.duration">{{ formatDuration(slide.duration) }}</li>
-                    </ul>
-                    <ul>
-                        <li class="white-li">{{ formatReleaseDate(slide.date) }}</li>
-                        <li class="white-li">|</li>
-                        <li class="white-li">{{ slide.time }}</li>
-                    </ul>
-                    <button type="submit">                
-                    <FontAwesome  class="fontawesome-icon" :icon="['fas', 'trash']" />
-                        Delete
-                    </button>
-                </div>
-            </div>
-        </Slide>
-        <template #addons>
-          <navigation />
-        </template>
-      </Carousel>
-    </div>  -->
     <div class="scroll-buttons">
-        <button type="button" @click="scroll(-249)">Scroll Left</button>
-        <button type="button" @click="scroll(249)">Scroll Right</button>
+        <button type="button" @click="scrollLeft()">Scroll Left</button>
+        <button type="button" @click="scrollRight()">Scroll Right</button>
     </div>
     <div class="media-container">
         <div v-for="index in trailers" :key="index._id" class="slide-container">
@@ -143,7 +105,7 @@
                     :alt="index.title"
                 />
             </div>
-            <div class="trailer-info">
+            <!-- <div class="trailer-info">
                 <h2>{{ index.title }}</h2>
                 <ul>
                     <li>{{ index.genre }}</li>
@@ -159,7 +121,7 @@
                 <FontAwesome  class="fontawesome-icon" :icon="['fas', 'trash']" />
                     Delete
                 </button>
-            </div>
+            </div> -->
         </div>
     </div>
 </template>
@@ -173,20 +135,22 @@
     }
     .media-container {
         width: 100%;
-        padding: 10px;
         display: flex;
         overflow: auto;
         gap: 10px;
+        background-color: #FF7B0F;
 
         .slide-container {
             display: flex;
             flex-direction: column;
             gap: 10px;
+            background-color: aquamarine;
             .image-container {
-                min-width: 239px;
-                max-width: 239px;
-                height: 121px;
+                width: calc(100vw);
+                height: 50vw;
                 border-radius: 8px;
+                background-color: aqua;
+                padding: 10px 15px;
 
                 img {
                     width: 100%;
@@ -239,16 +203,61 @@
         }
     }
 
-     @media screen and (min-width: 539px) {
+    @media screen and (min-width: 360px) {
         .media-container {
+            gap: 15px;
 
             .slide-container {
 
                 .image-container {
-                    min-width: 260px;
-                    max-width: 260px;
-                    height: 140px;
+                    width: calc(50vw - 7px);
+                    /* max-width: 310px; */
+                    height: 25vw;
+                    /* max-height: 170px; */
+                }
+            }
+        }
+    }
 
+    @media screen and (min-width: 660px) {
+        .media-container {
+
+            .slide-container {
+                .image-container {
+                    width: calc(33.33vw - 10px);
+                    /* max-width: 310px; */
+                    height: 16.5vw;
+                    /* max-height: 170px; */
+                }
+            }
+        }
+    }
+
+    @media screen and (min-width: 1090px) {
+        .media-container {
+            padding: 0px 20px;
+            gap: 20px;
+            .slide-container {
+
+                .image-container {
+                    width: calc(25vw - 25px);
+                    height: 12.5vw;
+                    padding: 10px 15px;
+                }
+            }
+        }
+    }
+
+    @media screen and (min-width: 1550px) {
+        .media-container {
+            margin: auto;
+            .slide-container {
+
+                .image-container {
+                    width: calc(20vw - 24px);
+                    /* max-width: 310px; */
+                    height: 10vw;
+                    /* max-height: 170px; */
                 }
             }
         }

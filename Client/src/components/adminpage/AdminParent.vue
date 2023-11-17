@@ -25,7 +25,6 @@ import AdminTrailers from './AdminTrailers.vue';
 
     main {
         background-color: #171717;
-        padding: 40px 15px;
         display: flex;
         flex-direction: column;
         gap: 50px;
