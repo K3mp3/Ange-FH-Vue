@@ -174,7 +174,7 @@
                     <h2>{{ slide.title }}</h2>
                     <ul>
                         <li>{{ slide.genre }}</li>
-                        <li>{{ slide.age }}</li>
+                        <li>{{ `${slide.age} years` }}</li>
                         <li v-if="slide.duration">{{ formatDuration(slide.duration) }}</li>
                     </ul>
                     <ul>
@@ -419,6 +419,37 @@
                 width: calc(50vw - 18px);
                 border: 1px solid red;
                 margin: auto;
+
+                .trailer-info {
+                    background-color: #47ff0f;
+                    width: 100%;
+                    margin-top: 10px;
+                    text-align: left;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
+
+                    ul {
+                        display: flex;
+                        flex-direction: row;
+                        gap: 10px;
+                        padding: 0;
+                        background-color: brown;
+                        flex-wrap: wrap;
+
+                        li {
+                            list-style: none;
+                            font-family: Arial;
+                            color: #FF7B0F; 
+                        }
+
+                        .white-li {
+                            list-style: none;
+                            font-family: Arial;
+                            color: #F1F1F1
+                        }
+                    }
+                }
                 
                 .image-container {
                     width: calc(50vw - 22px);
