@@ -5,6 +5,7 @@
     import 'vue3-carousel/dist/carousel.css'
     import { Carousel, Slide, Navigation  } from 'vue3-carousel'
     import gsap from 'gsap';
+import type { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
     const trailers = ref<ITrailer[]>([]);
     const scrollContainer = ref<HTMLElement | null>(null);
@@ -18,25 +19,71 @@
     const scroll = (scrollWidth: number) => {
         console.log(scrollWidth);
         if (scrollContainer.value) {
-            gsap.to(scrollContainer.value, { scrollLeft: scrollContainer.value.scrollLeft + scrollWidth, duration: 0.4 });
+            gsap.to(scrollContainer.value, { scrollLeft: scrollContainer.value.scrollLeft + scrollWidth, 
+                duration: 0.6, 
+                ease: "power2.inOut" 
+            });
         }
     };
 
     function scrollRight() {
         updateScreenSize();
-        scroll(width)  
-        
-        if (width >= 360) scroll(width - 33)
-        // if (width >= 1090) scroll(width + 20)
+        let scrollAmount;
+
+        switch (true) {
+            case width >= 2910:
+                scrollAmount = (width * 0.9) + 188;
+                break;
+            case width >= 2440:
+                scrollAmount = (width * 0.9) + 180;
+                break;
+            case width >= 1980:
+                scrollAmount = (width * 0.9) + 161;
+                break;
+            case width >= 1530:
+                scrollAmount = (width * 0.9) + 109;
+                break;
+            case width >= 1090:
+                scrollAmount = (width * 0.9) + 63;
+                break;
+            case width >= 660:
+                scrollAmount = (width * 0.9) + 30;
+                break;
+            default:
+                scrollAmount = (width * 0.9) + 15;
+        }
+
+        scroll(scrollAmount);
     }
 
     function scrollLeft() {
-         updateScreenSize();
+        updateScreenSize();
+        let scrollAmount;
 
-        scroll(-width - 10)
+        switch (true) {
+            case width >= 2910:
+                scrollAmount = (-width * 0.9) - 188;
+                break;
+            case width >= 2440:
+                scrollAmount = (- width * 0.9) - 180;
+                break;
+            case width >= 1980:
+                scrollAmount = (- width * 0.9) - 161;
+                break;
+            case width >= 1530:
+                scrollAmount = (- width * 0.9) - 109;
+                break;
+            case width >= 1090:
+                scrollAmount = (- width * 0.9) - 63;
+                break;
+            case width >= 660:
+                scrollAmount = (- width * 0.9) - 30;
+                break;
+            default:
+                scrollAmount = (- width * 0.9) - 15;
+        }
 
-        if (width >= 360) scroll(-width)
-        
+        scroll(scrollAmount);
     }
 
     async function getTrailer() {
@@ -87,40 +134,6 @@
         return formattedDuration;
     };
 
-    function settings() {
-        return {
-            itemsToShow: 1,
-            snapAlign: 'center',
-        }
-    }
-
-    const breakpoints = {
-        360: {
-            itemsToShow: 2,
-            snapAlign: 'start',
-        },
-
-        660: {
-            itemsToShow: 3.5,
-            snapAlign: 'center',
-        },
-
-        960: {
-            itemsToShow: 5.5,
-            snapAlign: 'center',
-        },
-
-        1260: {
-            itemsToShow: 7.5,
-            snapAlign: 'center',
-        },
-
-        3000: {
-            itemsToShow: 9.5,
-            snapAlign: 'center',
-        },
-    }
-
     onMounted(() => {
         getTrailer();
         updateScreenSize()
@@ -129,19 +142,19 @@
 </script>
 
 <template>
-    <!-- <div class="scroll-buttons">
-        <button type="button" @click="scrollLeft()">Scroll Left</button>
-        <button type="button" @click="scrollRight()">Scroll Right</button>
-    </div>
     <div class="media-container">
         <div v-for="index in trailers" :key="index._id" class="slide-container">
             <div class="image-container">
+                <div class="scroll-buttons"> 
+                    <button type="button" class="scroll-left" @click="scrollLeft()"><FontAwesome :icon="['fas', 'chevron-left']" class="fontawesom-icon" /></button>
+                    <button type="button" class="scroll-right" @click="scrollRight()"><FontAwesome :icon="['fas', 'chevron-right']" class="fontawesom-icon" /></button>
+                </div>
                 <img
                     :src="`http://localhost:3000/trailer/image/${index.poster}`"
                     :alt="index.title"
                 />
             </div>
-            <div class="trailer-info">
+            <!-- <div class="trailer-info">
                 <h2>{{ index.title }}</h2>
                 <ul>
                     <li>{{ index.genre }}</li>
@@ -157,61 +170,52 @@
                 <FontAwesome  class="fontawesome-icon" :icon="['fas', 'trash']" />
                     Delete
                 </button>
-            </div>
+            </div> -->
         </div>
-    </div> -->
-    <div class="carousel-container">
-      <Carousel :settings="settings" :breakpoints="breakpoints" :wrap-around="true">
-        <Slide v-for="slide in trailers" :key="slide._id">
-            <div class="slider-container">
-                <div class="image-container">
-                    <img
-                        :src="`http://localhost:3000/trailer/image/${slide.poster}`"
-                        :alt="slide.title"
-                    />
-                </div>
-                <div class="trailer-info">
-                    <h2>{{ slide.title }}</h2>
-                    <ul>
-                        <li>{{ slide.genre }}</li>
-                        <li>{{ `${slide.age} years` }}</li>
-                        <li v-if="slide.duration">{{ formatDuration(slide.duration) }}</li>
-                    </ul>
-                    <ul>
-                        <li class="white-li">{{ formatReleaseDate(slide.date) }}</li>
-                        <li class="white-li">|</li>
-                        <li class="white-li">{{ slide.time }}</li>
-                    </ul>
-                    <button type="submit">                
-                    <FontAwesome  class="fontawesome-icon" :icon="['fas', 'trash']" />
-                        Delete
-                    </button>
-                </div>
-            </div>
-        </Slide>
-        <template #addons>
-          <navigation />
-        </template>
-      </Carousel>
-    </div> 
+    </div>
 </template>
   
 <style scoped lang="scss">
-    /* h2 {
+    h2 {
         font-family: Arial;
         color: #F1F1F1;
         font-weight: 700;
         font-size: 1.2rem;
     }
+
+    .fontawesom-icon {
+        color: #F1F1F1;
+    }
+
     .media-container {
         width: 100%;
         display: flex;
         overflow: auto;
+        gap: 10px;
         background-color: #FF7B0F;
+
+        .scroll-left {
+            width: 30px;
+            background-color: rgb(23, 23, 23, 0.1);
+            border: none;
+            position: absolute;
+            left: 15px;
+            height: calc(50vw - 20px);
+        }
+
+        .scroll-right {
+            width: 30px;
+            background-color: rgb(23, 23, 23, 0.1);
+            border: none;
+            position: absolute;
+            right: 15px;
+            height: calc(50vw - 20px);
+        }
 
         .slide-container {
             display: flex;
             flex-direction: column;
+            gap: 10px;
             background-color: aquamarine;
             .image-container {
                 width: calc(100vw);
@@ -273,14 +277,23 @@
 
     @media screen and (min-width: 360px) {
         .media-container {
-            padding-left: 15px;
+            gap: 15px;
+
+            .scroll-left {
+                height: calc(40vw - 20px);
+            }
+
+            .scroll-right {
+                height: calc(40vw - 20px);
+            }
+
             .slide-container {
 
-                border: 1px solid red;
                 .image-container {
-                    width: calc(50vw - 18px);
-                    height: 25vw;
-                    padding: 5px 5px;
+                    width: calc(90vw);
+                    /* max-width: 310px; */
+                    height: 40vw;
+                    /* max-height: 170px; */
                 }
             }
         }
@@ -289,10 +302,20 @@
     @media screen and (min-width: 660px) {
         .media-container {
 
+            .scroll-left {
+                height: calc(22.5vw - 20px);
+            }
+
+            .scroll-right {
+                height: calc(22.5vw - 20px);
+            }
+
             .slide-container {
                 .image-container {
-                    width: calc(33.33vw - 2px);
-                    height: 16.5vw;
+                    width: calc(45vw);
+                    /* max-width: 310px; */
+                    height: 22.5vw;
+                    /* max-height: 170px; */
                 }
             }
         }
@@ -300,254 +323,108 @@
 
     @media screen and (min-width: 1090px) {
         .media-container {
-            padding: 0px 0px 0px 20px;
+            padding: 0px 20px 0 60px;
+            gap: 20px;
+
+            .scroll-left {
+                left: 60px;
+                height: calc(15vw - 20px);
+            }
+
+            .scroll-right {
+                height: calc(15vw - 20px);
+            }
             .slide-container {
+                /* margin-left: 20px; */
 
                 .image-container {
-                    width: calc(25vw - 7px);
-                    height: 12.5vw;
+                    width: calc(30vw - 19px);
+                    height: 15vw;
                     padding: 10px 15px;
                 }
             }
         }
     }
 
-    @media screen and (min-width: 1550px) {
+    @media screen and (min-width: 1530px) {
         .media-container {
             margin: auto;
+
+            .scroll-left {
+                height: calc(11vw - 20px);
+            }
+
+            .scroll-right {
+                height: calc(11vw - 20px);
+            }
             .slide-container {
 
                 .image-container {
-                    width: calc(20vw - 24px);
-                    height: 10vw;
-                }
-            }
-        }
-    } */
-    h2 {
-        font-family: Arial;
-        color: #F1F1F1;
-        font-weight: 700;
-        font-size: 1.2rem;
-    }
-
-  .carousel-container {
-    width: 100%;
-    overflow: hidden;
-    
-    .carousel__slide {
-        display: block;
-    }
-    
-    .carousel__prev,
-    .carousel__next {
-        box-sizing: content-box;
-        border: 5px solid #F1F1F1
-    }
-
-    .slider-container {
-        background-color: aqua;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 10px;
-        width: 100vw;
-
-        .image-container {
-            width: 100%;
-            height: 50vw;
-            border-radius: 8px;
-            border: 1px solid #2C2C2C;
-
-            img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                border-radius: 8px;
-            }
-        }
-    }
-
-    .trailer-info {
-        width: 100%;
-        margin-top: 10px;
-        text-align: left;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-
-        ul {
-            display: flex;
-            gap: 11px;
-            padding: 0;
-
-            li {
-                list-style: none;
-                font-family: Arial;
-                color: #FF7B0F; 
-            }
-
-            .white-li {
-                list-style: none;
-                font-family: Arial;
-                color: #F1F1F1
-            }
-        }
-
-        button {
-            width: 110px;
-            border-radius: 20px;
-            border: none;
-            display: flex;
-            gap: 5px;
-            padding: 10px;
-            align-items: center;
-            justify-content: center;
-            background-color: #ff7b0f;
-            font-family: Verdana;
-            color: #F1F1F1;
-            margin-bottom: 10px;
-        }
-    }  
-  }
-
-    @media screen and (min-width: 360px) {
-        .carousel-container {
-            background-color: #FF7B0F;
-
-            .slider-container {
-                width: calc(50vw - 18px);
-                border: 1px solid red;
-                margin: auto;
-
-                .trailer-info {
-                    background-color: #47ff0f;
-                    width: 100%;
-                    margin-top: 10px;
-                    text-align: left;
-                    display: flex;
-                    flex-direction: column;
-                    gap: 10px;
-
-                    ul {
-                        display: flex;
-                        flex-direction: row;
-                        gap: 10px;
-                        padding: 0;
-                        background-color: brown;
-                        flex-wrap: wrap;
-
-                        li {
-                            list-style: none;
-                            font-family: Arial;
-                            color: #FF7B0F; 
-                        }
-
-                        .white-li {
-                            list-style: none;
-                            font-family: Arial;
-                            color: #F1F1F1
-                        }
-                    }
-                }
-                
-                .image-container {
-                    width: calc(50vw - 22px);
-                    height: 25vw;
-                    display: flex;
-                    align-items: center;
-
-                    img {
-                        width: 100%;
-                    }
+                    width: calc(22vw);
+                    height: 11vw;
                 }
             }
         }
     }
 
-    @media screen and (min-width: 660px) {
-        .carousel-container {
+    @media screen and (min-width: 1980px) {
+        .media-container {
+            margin: auto;
 
-            .slider-container {
-                width: calc(28.57vw - 18px);
-                border: 1px solid red;
-                margin: auto;
+            .scroll-left {
+                height: calc(9vw - 20px);
+            }
+
+            .scroll-right {
+                height: calc(9vw - 20px);
+            }
+            .slide-container {
 
                 .image-container {
-                    width: calc(28.57vw - 22px);
-                    height: 16.5vw;
-                    display: flex;
-                    align-items: center;
-
-                    img {
-                        width: 100%;
-                    }
+                    width: calc(18vw);
+                    height: 9vw;
                 }
             }
         }
     }
 
-    @media screen and (min-width: 960px) {
-        .carousel-container {
+    @media screen and (min-width: 2440px) {
+        .media-container {
+            margin: auto;
 
-            .slider-container {
-                width: calc(18.18vw - 18px);
-                border: 1px solid red;
-                margin: auto;
+            .scroll-left {
+                height: calc(7.5vw - 20px);
+            }
+
+            .scroll-right {
+                height: calc(7.5vw - 20px);
+            }
+            .slide-container {
 
                 .image-container {
-                    width: calc(18.18vw - 22px);
-                    height: 9.9vw;
-                    display: flex;
-                    align-items: center;
-
-                    img {
-                        width: 100%;
-                    }
+                    width: calc(15vw);
+                    height: 7.5vw;
                 }
             }
         }
     }
 
-    @media screen and (min-width: 960px) {
-        .carousel-container {
+    @media screen and (min-width: 2910px) {
+        .media-container {
+            margin: auto;
 
-            .slider-container {
-                width: calc(13.33vw - 18px);
-                border: 1px solid red;
-                margin: auto;
-
-                .image-container {
-                    width: calc(13.33vw - 22px);
-                    height: 6.665vw;
-                    display: flex;
-                    align-items: center;
-
-                    img {
-                        width: 100%;
-                    }
-                }
+            .scroll-left {
+                height: calc(6.4vw - 20px);
             }
-        }
-    }
 
-    @media screen and (min-width: 3000px) {
-        .carousel-container {
-
-            .slider-container {
-                width: calc(10.52vw - 18px);
-                border: 1px solid red;
-                margin: auto;
+            .scroll-right {
+                height: calc(6.4vw - 20px);
+            }
+            .slide-container {
 
                 .image-container {
-                    width: calc(10.52vw - 22px);
-                    height: 5.26vw;
-                    display: flex;
-                    align-items: center;
-
-                    img {
-                        width: 100%;
-                    }
+                    width: calc(12.8vw);
+                    height: 6.4vw;
                 }
             }
         }
