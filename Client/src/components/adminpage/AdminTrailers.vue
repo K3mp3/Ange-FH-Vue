@@ -28,62 +28,20 @@ import type { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
     function scrollRight() {
         updateScreenSize();
-        let scrollAmount;
-
-        switch (true) {
-            case width >= 2910:
-                scrollAmount = (width * 0.9) + 188;
-                break;
-            case width >= 2440:
-                scrollAmount = (width * 0.9) + 180;
-                break;
-            case width >= 1980:
-                scrollAmount = (width * 0.9) + 161;
-                break;
-            case width >= 1530:
-                scrollAmount = (width * 0.9) + 109;
-                break;
-            case width >= 1090:
-                scrollAmount = (width * 0.9) + 63;
-                break;
-            case width >= 660:
-                scrollAmount = (width * 0.9) + 30;
-                break;
-            default:
-                scrollAmount = (width * 0.9) + 15;
-        }
-
-        scroll(scrollAmount);
+        scroll(width + 10)    
+        
+        if (width >= 360) scroll((width * 0.9) + 15) 
+        if (width >= 660) scroll((width * 0.9) + 30)  
+        if (width >= 1090) scroll(width * 0.9)
     }
 
     function scrollLeft() {
         updateScreenSize();
-        let scrollAmount;
+        scroll(- width - 10)    
 
-        switch (true) {
-            case width >= 2910:
-                scrollAmount = (-width * 0.9) - 188;
-                break;
-            case width >= 2440:
-                scrollAmount = (- width * 0.9) - 180;
-                break;
-            case width >= 1980:
-                scrollAmount = (- width * 0.9) - 161;
-                break;
-            case width >= 1530:
-                scrollAmount = (- width * 0.9) - 109;
-                break;
-            case width >= 1090:
-                scrollAmount = (- width * 0.9) - 63;
-                break;
-            case width >= 660:
-                scrollAmount = (- width * 0.9) - 30;
-                break;
-            default:
-                scrollAmount = (- width * 0.9) - 15;
-        }
-
-        scroll(scrollAmount);
+        if (width >= 360) scroll((- width * 0.9) - 15) 
+        if (width >= 660) scroll((- width * 0.9) - 30)  
+        if (width >= 1090) scroll(- width * 0.9)   
     }
 
     async function getTrailer() {
@@ -154,7 +112,7 @@ import type { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
                     :alt="index.title"
                 />
             </div>
-            <!-- <div class="trailer-info">
+            <div class="trailer-info">
                 <h2>{{ index.title }}</h2>
                 <ul>
                     <li>{{ index.genre }}</li>
@@ -170,7 +128,7 @@ import type { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
                 <FontAwesome  class="fontawesome-icon" :icon="['fas', 'trash']" />
                     Delete
                 </button>
-            </div> -->
+            </div>
         </div>
     </div>
 </template>
@@ -232,7 +190,7 @@ import type { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
                 }
             }
             .trailer-info {
-                padding-left: 1px;
+                padding-left: 15px;
                 margin-top: 10px;
                 text-align: left;
                 display: flex;
@@ -243,6 +201,7 @@ import type { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
                     display: flex;
                     gap: 11px;
                     padding: 0;
+                    flex-wrap: wrap;
 
                     li {
                         list-style: none;
@@ -327,7 +286,6 @@ import type { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
             gap: 20px;
 
             .scroll-left {
-                left: 60px;
                 height: calc(15vw - 20px);
             }
 
@@ -404,27 +362,6 @@ import type { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
                 .image-container {
                     width: calc(15vw);
                     height: 7.5vw;
-                }
-            }
-        }
-    }
-
-    @media screen and (min-width: 2910px) {
-        .media-container {
-            margin: auto;
-
-            .scroll-left {
-                height: calc(6.4vw - 20px);
-            }
-
-            .scroll-right {
-                height: calc(6.4vw - 20px);
-            }
-            .slide-container {
-
-                .image-container {
-                    width: calc(12.8vw);
-                    height: 6.4vw;
                 }
             }
         }
