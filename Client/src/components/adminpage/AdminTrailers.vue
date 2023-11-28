@@ -3,12 +3,17 @@
     import getTrailers from '@/services/trailerService';
     import { onMounted, ref } from 'vue';
     import 'vue3-carousel/dist/carousel.css'
-    import { Carousel, Slide, Navigation  } from 'vue3-carousel'
     import gsap from 'gsap';
-import type { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+    import debounce from 'lodash/debounce';
 
     const trailers = ref<ITrailer[]>([]);
     const scrollContainer = ref<HTMLElement | null>(null);
+    const canScrollRight = ref(true);
+    const activateLeftClick = ref(false);
+    const numberOfClicksRight = ref(0);
+    const numberOfClicksLeft = ref(0);
+    const isRightButtonDisabled = ref(false);
+    const isLeftButtonDisabled = ref(false);
 
     let width = document.documentElement.clientWidth;
 
@@ -17,7 +22,6 @@ import type { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
     }
 
     const scroll = (scrollWidth: number) => {
-        console.log(scrollWidth);
         if (scrollContainer.value) {
             gsap.to(scrollContainer.value, { scrollLeft: scrollContainer.value.scrollLeft + scrollWidth, 
                 duration: 0.6, 
@@ -26,22 +30,87 @@ import type { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
         }
     };
 
-    function scrollRight() {
-        updateScreenSize();
-        scroll(width + 10)    
+    function rightScroll() {
+        numberOfClicksRight.value += 1;
+        numberOfClicksLeft.value += 1;
+
+        if (width >= 1090) {
+            numberOfClicksRight.value += 2;
+            numberOfClicksLeft.value += 2;
+            console.log(numberOfClicksRight.value)
+            if (numberOfClicksRight.value === ((trailers.value.length - 3))) canScrollRight.value = false;
+            return;
+        }
+
+        if (width >= 1530) {
+            numberOfClicksRight.value += 3;
+            numberOfClicksLeft.value += 3;
+            console.log(numberOfClicksRight.value)
+            if (numberOfClicksRight.value === ((trailers.value.length - 4))) canScrollRight.value = false; 
+            return;
+        }
         
-        if (width >= 360) scroll((width * 0.9) + 15) 
-        if (width >= 660) scroll((width * 0.9) + 30)  
-        if (width >= 1090) scroll(width * 0.9)
+       
+
+        if (width >= 660) {
+            if (numberOfClicksRight.value === ((trailers.value.length - 1) / 2)) canScrollRight.value = false;
+            return;
+        }
+
+        if (numberOfClicksRight.value > 0) activateLeftClick.value = true;
+        if (numberOfClicksRight.value === (trailers.value.length - 1)) canScrollRight.value = false;
+    }
+
+    function leftScroll() {
+        numberOfClicksRight.value -= 1;
+        numberOfClicksLeft.value -= 1;
+
+        if (width >= 660) {
+            console.log("hej")
+        }
+
+        if (numberOfClicksLeft.value === 0) activateLeftClick.value = false;
+        if (numberOfClicksLeft.value > 0) canScrollRight.value = true;
+    }
+
+    function scrollRight() {
+        if (isRightButtonDisabled.value) return
+
+        isRightButtonDisabled.value = true;
+
+        rightScroll();
+
+        updateScreenSize();
+        scroll(width + 10) 
+        
+        if (width >= 360) scroll(width * 0.92)
+        if (width >= 660) scroll(width * 0.954)  
+        if (width >= 1090) scroll(width * 0.91)
+        if (width >= 1530) scroll(width * 0.9325)
+
+        setTimeout(() => {
+            isRightButtonDisabled.value = false;
+        }, 600);
     }
 
     function scrollLeft() {
+        if (isLeftButtonDisabled.value) return
+
+        isLeftButtonDisabled.value = true;
+
+        leftScroll()
+
         updateScreenSize();
         scroll(- width - 10)    
 
-        if (width >= 360) scroll((- width * 0.9) - 15) 
-        if (width >= 660) scroll((- width * 0.9) - 30)  
-        if (width >= 1090) scroll(- width * 0.9)   
+        if (width >= 360) scroll(- width * 0.92)
+        if (width >= 660) scroll(- width * 0.954)   
+        if (width >= 1090) scroll(- width * 0.91)   
+        if (width >= 1090) scroll(- width * 0.91) 
+
+        setTimeout(() => {
+            isLeftButtonDisabled.value = false;
+        }, 600);
     }
 
     async function getTrailer() {
@@ -49,7 +118,6 @@ import type { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
         const response = await getTrailers();
         trailers.value = response;
 
-        console.log(trailers.value)
         } catch (error) {
             alert(error);
         }
@@ -94,7 +162,7 @@ import type { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
     onMounted(() => {
         getTrailer();
-        updateScreenSize()
+        updateScreenSize();
         scrollContainer.value = document.querySelector('.media-container');
     })
 </script>
@@ -104,8 +172,8 @@ import type { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
         <div v-for="index in trailers" :key="index._id" class="slide-container">
             <div class="image-container">
                 <div class="scroll-buttons"> 
-                    <button type="button" class="scroll-left" @click="scrollLeft()"><FontAwesome :icon="['fas', 'chevron-left']" class="fontawesom-icon" /></button>
-                    <button type="button" class="scroll-right" @click="scrollRight()"><FontAwesome :icon="['fas', 'chevron-right']" class="fontawesom-icon" /></button>
+                    <button type="button" v-if="activateLeftClick" class="scroll-left" @click="scrollLeft()"><FontAwesome :icon="['fas', 'chevron-left']" class="fontawesom-icon" /></button>
+                    <button type="button" v-if="canScrollRight" class="scroll-right" @click="scrollRight()" :disabled="isRightButtonDisabled"><FontAwesome :icon="['fas', 'chevron-right']" class="fontawesom-icon" /></button>
                 </div>
                 <img
                     :src="`http://localhost:3000/trailer/image/${index.poster}`"
@@ -236,7 +304,7 @@ import type { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
     @media screen and (min-width: 360px) {
         .media-container {
-            gap: 15px;
+            gap: 1vw;
 
             .scroll-left {
                 height: calc(40vw - 20px);
@@ -249,10 +317,8 @@ import type { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
             .slide-container {
 
                 .image-container {
-                    width: calc(90vw);
-                    /* max-width: 310px; */
+                    width: calc(90.9vw);
                     height: 40vw;
-                    /* max-height: 170px; */
                 }
             }
         }
@@ -271,10 +337,8 @@ import type { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
             .slide-container {
                 .image-container {
-                    width: calc(45vw);
-                    /* max-width: 310px; */
+                    width: calc(46.619vw);
                     height: 22.5vw;
-                    /* max-height: 170px; */
                 }
             }
         }
@@ -282,8 +346,8 @@ import type { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
     @media screen and (min-width: 1090px) {
         .media-container {
-            padding: 0px 20px 0 60px;
-            gap: 20px;
+            padding-left:5vw;
+            gap: 1vw;
 
             .scroll-left {
                 height: calc(15vw - 20px);
@@ -296,7 +360,7 @@ import type { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
                 /* margin-left: 20px; */
 
                 .image-container {
-                    width: calc(30vw - 19px);
+                    width: calc(29.32vw);
                     height: 15vw;
                     padding: 10px 15px;
                 }
@@ -318,8 +382,8 @@ import type { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
             .slide-container {
 
                 .image-container {
-                    width: calc(22vw);
-                    height: 11vw;
+                    width: calc(22.17vw);
+                    height: 11.585vw;
                 }
             }
         }
@@ -339,8 +403,8 @@ import type { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
             .slide-container {
 
                 .image-container {
-                    width: calc(18vw);
-                    height: 9vw;
+                    width: calc(17.627vw);
+                    height: 8.81vw;
                 }
             }
         }
