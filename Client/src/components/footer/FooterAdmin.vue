@@ -1,11 +1,27 @@
 <script setup lang="ts">
+    import { useSignInPopUp } from '@/stores/signInPopUp';
+    import { useRouter } from 'vue-router';
+
+    const router = useRouter();
+
+    function showSignInForm() {
+        const signInPopUpStore = useSignInPopUp();
+
+        window.scrollTo({
+            top: 0,
+        });
+
+        signInPopUpStore.showSignInForm(true);
+
+        router.push({ name: 'sign in' });
+    }
 </script>
 
 <template>
     <div class="info-container">
         <div class="content-container">
             <h2>Admin</h2>
-            <router-link to="sign-in" class="footer-link">Logga in</router-link>
+            <button type="button" class="footer-link" @click="showSignInForm">Sign in</button>
         </div>
     </div>
 </template>
@@ -31,6 +47,12 @@
     .footer-link {
         color: #fff;
         font-size: 0.9rem;
+        background: transparent;
+        border: none;
+        text-decoration: underline;
+        text-align: left;
+        font-size: 0.9rem;
+        font-family: arial;
     }
 }
 

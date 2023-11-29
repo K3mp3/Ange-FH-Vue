@@ -93,6 +93,7 @@ function closeIframeContainer() {
   display: none;
 }
 .carousel__slide {
+  display: block;
   flex-direction: column;
 }
 .carousel__prev, 

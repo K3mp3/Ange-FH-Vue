@@ -10,11 +10,6 @@ const UserModel = require ("../models/user_model");
 let magicToken = ""; 
 let foundToken = "";
 
-router.get('/', async (req, res) => {
-  const allUsers = await UserModel.find();
-  res.status(200).json(allUsers);
-});
-
 router.post("/createuser", async(req, res) => {
   async function generateUniqueToken() {
     magicToken = Math.random().toString(36).substring(2, 7);
@@ -39,6 +34,7 @@ router.post("/createuser", async(req, res) => {
             password: hashedPassword,
             email: req.body.email,
             magicToken: magicToken,
+            isSignedIn: false,
           });
 
           res.status(201).json(newUser);
@@ -65,8 +61,30 @@ router.post("/loginuser", async(req, res) => {
     const { password, email } = req.body;   
     try {
       const foundUser = await UserModel.findOne({ email: email });
+      console.log("foundUser:", foundUser);
+
+      if (!foundUser) {
+        console.log("null foundUser");
+        res.status(401).json({ message: "Email or password is wrong" });
+        return;
+      }
+
       const match = await bcrypt.compare(password, foundUser.password);
+      console.log(match);
+
+      if (!match) {
+        console.log("null match");
+        res.status(401).json({ message: "Email or password is wrong" });
+        return;
+      }
+
       const magicTokenTimeout = 60 * 60 * 1000; // 60 minutes in milliseconds
+
+      if (!foundUser) {
+        console.log("null");
+        res.status(401).json({ message: "Email or password is wrong" });
+        return;
+      }
   
       if (match) {
         foundUser.magicToken = magicToken;
@@ -121,6 +139,49 @@ router.post("/loginuser", async(req, res) => {
     }
   }
   signInUser();
+})
+
+
+router.post("/checktoken", async(req, res) => {
+  const {token, email} = req.body;
+
+  try {
+    const foundUser = await UserModel.findOne({email: email});
+    console.log("foundUser Token:", foundUser.magicToken)
+    console.log(token);
+
+    if (token === foundUser.magicToken) {
+      foundUser.isSignedIn = true;
+      await foundUser.save();
+      res.status(201).json({ message: "Authentication successful" });
+    } else {
+      res.status(401).json({ message: "Unauthorized" });
+    }
+
+  } catch (error) {
+    res.status(500);
+  }
+})
+
+
+router.post("/issignedin", async(req, res) => {
+  let isUserSignedIn = false;
+  console.log("isUserSignedIn:", isUserSignedIn);
+  const {signedIn} = req.body;
+  console.log("isSignedIn:", signedIn);
+
+  isUserSignedIn = signedIn;
+  console.log("isUserSignedIn:", isUserSignedIn);
+})
+
+router.post("/isusersignedin", async(req, res) => {
+  let isUserSignedIn = false;
+  console.log("isUserSignedIn:", isUserSignedIn);
+  const {signedIn} = req.body;
+  console.log("isSignedIn:", signedIn);
+
+  isUserSignedIn = signedIn;
+  console.log("isUserSignedIn:", isUserSignedIn);
 })
 
 module.exports = router;

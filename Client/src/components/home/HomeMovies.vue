@@ -134,7 +134,6 @@ span {
   width: 100%;
 	color: white;
 	font-size: 20px;
-	display: flex;
 	justify-content: center;
 	align-items: center;
   margin-top: 20px;
@@ -176,6 +175,7 @@ h6 {
 }
 
 .carousel__slide {
+  display: block;
   padding: 0;
 }
 

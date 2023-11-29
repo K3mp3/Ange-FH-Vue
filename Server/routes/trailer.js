@@ -1,9 +1,10 @@
-var express = require("express");
-var router = express.Router();
+const express = require("express");
+
+const router = express.Router();
 const multer = require("multer");
+const fs = require("fs"); // Import the fs module
 const path = require("path");
 const TrailerModel = require("../models/trailer_model");
-const fs = require("fs"); // Import the fs module
 
 const fileStorageEngine = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -18,37 +19,37 @@ const upload = multer({ storage: fileStorageEngine });
 
 router.get("/", async (req, res) => {
   try {
-    let trailer = await TrailerModel.find();
-
+    const trailer = await TrailerModel.find();
     res.status(200).json(trailer);
-    console.log(trailer);
   } catch (error) {
-    console.log("Error retrieving movies:", error);
     res.status(500).json({ error: "Failed to retrieve movies" });
   }
 });
 
 router.post("/savetrailer", upload.single("poster"), async (req, res) => {
-  const { title } = req.body;
   const poster = req.file.filename; // Hämta filnamnet för den sparade bilden
-  const link = req.body.link;
-
-  console.log("link:", link);
-
-  console.log(poster);
+  const {link} = req.body;
+  const { title } = req.body;
+  const { genre } = req.body;
+  const { age } = req.body;
+  const { duration } = req.body;
+  const { date } = req.body;
+  const { time } = req.body;
 
   try {
     const newMovie = await TrailerModel.create({
-      poster: poster,
-      title: title,
-      link: link,
+      poster,
+      link,
+      title,
+      genre,
+      age,
+      duration,
+      date,
+      time
     });
-
-    console.log("newMovie", newMovie);
 
     res.status(201).json(newMovie);
   } catch (error) {
-    console.log("Error saving movie:", error);
     res.status(500).json({ error: "Failed to save movie" });
   }
 });

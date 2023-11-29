@@ -181,15 +181,15 @@ span {
 }
 
 .carousel-items-container {
-  display: flex;
+  /* display: flex; */
   justify-content: end;
+  background-color: aqua;
 }
 
 .carousel__item {
   width: 100%;
 	color: white;
 	font-size: 20px;
-	display: flex;
 	justify-content: center;
 	align-items: center;
   margin-top: 20px;
@@ -197,6 +197,7 @@ span {
 }
 
 .carousel__slide {
+  display: block;
   padding: 0;
 }
 
