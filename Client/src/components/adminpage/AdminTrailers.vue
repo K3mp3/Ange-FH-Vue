@@ -4,7 +4,6 @@
     import { onMounted, ref } from 'vue';
     import 'vue3-carousel/dist/carousel.css'
     import gsap from 'gsap';
-    import debounce from 'lodash/debounce';
 
     const trailers = ref<ITrailer[]>([]);
     const scrollContainer = ref<HTMLElement | null>(null);
@@ -14,11 +13,20 @@
     const numberOfClicksLeft = ref(0);
     const isRightButtonDisabled = ref(false);
     const isLeftButtonDisabled = ref(false);
+    const isScrollButtonsVisible = ref(false);
 
     let width = document.documentElement.clientWidth;
 
     function updateScreenSize() {
         width = document.documentElement.clientWidth;
+    }
+
+    function showScrollButtons() {
+        isScrollButtonsVisible.value = true;
+    }
+
+    function hideScrollButtons() {
+        isScrollButtonsVisible.value = false;
     }
 
     const scroll = (scrollWidth: number) => {
@@ -106,7 +114,6 @@
         if (width >= 360) scroll(- width * 0.92)
         if (width >= 660) scroll(- width * 0.954)   
         if (width >= 1090) scroll(- width * 0.91)   
-        if (width >= 1090) scroll(- width * 0.91) 
 
         setTimeout(() => {
             isLeftButtonDisabled.value = false;
@@ -168,12 +175,14 @@
 </script>
 
 <template>
-    <div class="media-container">
+    <div class="media-container" @mouseover="showScrollButtons" @focus="showScrollButtons" @mouseleave="hideScrollButtons"  @focusout="showScrollButtons">
         <div v-for="index in trailers" :key="index._id" class="slide-container">
             <div class="image-container">
-                <div class="scroll-buttons"> 
-                    <button type="button" v-if="activateLeftClick" class="scroll-left" @click="scrollLeft()"><FontAwesome :icon="['fas', 'chevron-left']" class="fontawesom-icon" /></button>
-                    <button type="button" v-if="canScrollRight" class="scroll-right" @click="scrollRight()" :disabled="isRightButtonDisabled"><FontAwesome :icon="['fas', 'chevron-right']" class="fontawesom-icon" /></button>
+                <div class="left-btn-container">
+                    <button type="button" :class="isScrollButtonsVisible ? 'scroll-left' : 'scroll-left' " @click="scrollLeft()"><FontAwesome :icon="['fas', 'chevron-left']" class="fontawesom-icon" /></button>
+                </div>
+                <div class="right-btn-container">
+                    <button type="button" v-if="canScrollRight" :class="isScrollButtonsVisible ? 'scroll-right' : 'scroll-right' " @click="scrollRight()" :disabled="isRightButtonDisabled"><FontAwesome :icon="['fas', 'chevron-right']" class="fontawesom-icon" /></button>
                 </div>
                 <img
                     :src="`http://localhost:3000/trailer/image/${index.poster}`"
@@ -218,36 +227,25 @@
         display: flex;
         overflow: auto;
         gap: 10px;
-        background-color: #FF7B0F;
 
-        .scroll-left {
-            width: 30px;
-            background-color: rgb(23, 23, 23, 0.1);
-            border: none;
-            position: absolute;
-            left: 15px;
-            height: calc(50vw - 20px);
+        .hide {
+            visibility: hidden;
         }
 
-        .scroll-right {
-            width: 30px;
-            background-color: rgb(23, 23, 23, 0.1);
-            border: none;
-            position: absolute;
-            right: 15px;
-            height: calc(50vw - 20px);
+        .left-btn-container,
+        .right-btn-container {
+            display: none;
         }
 
         .slide-container {
             display: flex;
             flex-direction: column;
             gap: 10px;
-            background-color: aquamarine;
+
             .image-container {
                 width: calc(100vw);
                 height: 50vw;
                 border-radius: 8px;
-                background-color: aqua;
                 padding: 10px 15px;
 
                 img {
@@ -306,14 +304,6 @@
         .media-container {
             gap: 1vw;
 
-            .scroll-left {
-                height: calc(40vw - 20px);
-            }
-
-            .scroll-right {
-                height: calc(40vw - 20px);
-            }
-
             .slide-container {
 
                 .image-container {
@@ -327,12 +317,28 @@
     @media screen and (min-width: 660px) {
         .media-container {
 
-            .scroll-left {
-                height: calc(22.5vw - 20px);
+            .left-btn-container,
+            .right-btn-container {
+                position: absolute;
+                height: 19.5vw;
+                display: flex;
+                align-items: center;
             }
 
+            .left-btn-container {
+                left: 2.4vw;
+            }
+
+            .right-btn-container {
+                right: 2.4vw;
+            }
+
+            .scroll-left,
             .scroll-right {
-                height: calc(22.5vw - 20px);
+                background: rgb(23, 23, 23, 0.1);
+                border: none;
+                padding: 20px;
+                border-radius: 10px;
             }
 
             .slide-container {
@@ -349,12 +355,17 @@
             padding-left:5vw;
             gap: 1vw;
 
-            .scroll-left {
-                height: calc(15vw - 20px);
+            .left-btn-container,
+            .right-btn-container {
+                height: 13.2vw;
             }
 
-            .scroll-right {
-                height: calc(15vw - 20px);
+            .left-btn-container {
+                left: 6.2vw;
+            }
+
+            .right-btn-container {
+                right: 6.3vw;
             }
             .slide-container {
                 /* margin-left: 20px; */
@@ -372,12 +383,17 @@
         .media-container {
             margin: auto;
 
-            .scroll-left {
-                height: calc(11vw - 20px);
+            .left-btn-container,
+            .right-btn-container {
+                height: 10.3vw;
             }
 
-            .scroll-right {
-                height: calc(11vw - 20px);
+            .left-btn-container {
+                left: 6vw;
+            }
+
+            .right-btn-container {
+                right: 4.3vw;
             }
             .slide-container {
 
@@ -393,12 +409,17 @@
         .media-container {
             margin: auto;
 
-            .scroll-left {
-                height: calc(9vw - 20px);
+            .left-btn-container,
+            .right-btn-container {
+                height: 7.8vw;
             }
 
-            .scroll-right {
-                height: calc(9vw - 20px);
+            .left-btn-container {
+                left: 5.8vw;
+            }
+
+            .right-btn-container {
+                right: 3.7vw;
             }
             .slide-container {
 
@@ -414,17 +435,22 @@
         .media-container {
             margin: auto;
 
-            .scroll-left {
-                height: calc(7.5vw - 20px);
+            .left-btn-container,
+            .right-btn-container {
+                height: 6.67vw;
             }
 
-            .scroll-right {
-                height: calc(7.5vw - 20px);
+            .left-btn-container {
+                left: 5.6vw;
+            }
+
+            .right-btn-container {
+                right: 3vw;
             }
             .slide-container {
 
                 .image-container {
-                    width: calc(15vw);
+                    width: calc(14.59vw);
                     height: 7.5vw;
                 }
             }

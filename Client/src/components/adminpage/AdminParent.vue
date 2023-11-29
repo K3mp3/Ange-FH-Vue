@@ -46,5 +46,6 @@ import AdminTrailers from './AdminTrailers.vue';
         font-family: Verdana;
         font-size: 0.9rem;
         padding: 10px;
+        margin-top: 30px;
     }
 </style>
