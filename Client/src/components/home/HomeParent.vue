@@ -27,7 +27,7 @@
   <div class="sign-in-pop-up" v-if="isSignInClicked">
     <SignInView></SignInView>
   </div>
-  <!-- <HomeTrailer></HomeTrailer> -->
+  <HomeTrailer></HomeTrailer>
   <HomeMovies></HomeMovies>
   <!-- <HomeEvents></HomeEvents> -->
 </template>
