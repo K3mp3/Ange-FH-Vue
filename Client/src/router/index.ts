@@ -16,7 +16,7 @@ const router = createRouter({
       component: Layout,
       children: [
         {
-          path: "/admin",
+          path: "/admin/trailers",
           name: "admin page",
           component: AdminView,
         },

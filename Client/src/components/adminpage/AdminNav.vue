@@ -2,6 +2,7 @@
     import { ref } from 'vue';
     import { RouterLink } from 'vue-router';
     import gsap from 'gsap';
+import type { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
     const isNavOpen = ref(false);
     const navElement = ref<HTMLElement | null>(null)
@@ -24,6 +25,19 @@
     <div class="nav-top">
         <img src="../../../public/img/AngeFh-logo.png" alt="square icon with blue and yellow 'propellers' and the organisation name to the left"/>
     </div>
+    <div class="nav-bottom">
+        <ul>
+            <div class="li-container">
+                <li><RouterLink to="/admin/trailers" class="active"><FontAwesome :icon="['fas', 'film']"/>Trailers</RouterLink></li>
+                <li><RouterLink to="/admin/movies"><FontAwesome :icon="['fas', 'video']" />Movies</RouterLink></li>
+                <li><RouterLink to="/admin/events"><FontAwesome :icon="['fas', 'calendar-check']" />Events</RouterLink></li>
+            </div>
+        </ul>
+
+        <div class="shadow-container">
+
+        </div>
+    </div>
 </template>
 
 <style scoped lang="scss">
@@ -36,6 +50,70 @@
 
         img {
             max-width: 110px;
+        }
+    }
+
+    .nav-bottom {
+        width: 100vw;
+        position: fixed;
+        z-index: 1;
+        bottom: 0;
+        background: linear-gradient(180deg, rgba(23, 23, 23, 0.00) 0%, rgba(23, 23, 23, 0.57) 42.84%, #171717 88.5%);
+        background-color: rgb(23, 23, 23, 0.9);
+
+        ul {
+            padding: 0 20px;
+            position: absolute;
+            width: 100vw;
+            margin-top: 10px;
+            z-index: 1;
+
+            .li-container {
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                max-width: 310px;
+                margin: auto;
+
+                li {
+                    list-style: none;
+
+                    > a {
+                        text-decoration: none;
+                        color: #EEEEEE;
+                        font-family: Arial;
+                        display: flex;
+                        flex-direction: column;
+                        gap: 5px;
+                        align-items: center;
+                        font-size: 1rem;
+
+                        &:active {
+                            color: #FF7B0F;
+                        }
+                    }
+
+                    .active {
+                        color: #FF7B0F;
+
+                        &:active {
+                           color: #EEEEEE;  
+                           
+                        }
+                    }
+
+                    /* &:hover {
+                        margin-top: -3px;
+                        transition: all 0.1s ease-in-out;
+                    } */
+                }
+            }
+        }
+
+        .shadow-container {
+            height: 70px;
+            background-image: linear-gradient(to bottom, rgba(255, 0, 0, 0), rgb(23, 23, 23));
+            bottom: 0;
         }
     }
 

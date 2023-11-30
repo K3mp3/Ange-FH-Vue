@@ -227,6 +227,13 @@
         display: flex;
         overflow: auto;
         gap: 10px;
+        scrollbar-width: thin; /* Firefox */
+        scrollbar-color: transparent transparent; /* Firefox */
+        scro
+
+        .hide-scrollbar {
+            overflow: hidden;
+        }
 
         .hide {
             visibility: hidden;
