@@ -229,6 +229,7 @@
         gap: 10px;
         scrollbar-width: thin; /* Firefox */
         scrollbar-color: transparent transparent; /* Firefox */
+        margin-top: 50px;
 
         .hide-scrollbar {
             overflow: hidden;
@@ -387,7 +388,7 @@
 
     @media screen and (min-width: 1530px) {
         .media-container {
-            margin: auto;
+            margin-top: 100px;
 
             .left-btn-container,
             .right-btn-container {
