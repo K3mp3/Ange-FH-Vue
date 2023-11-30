@@ -10,7 +10,7 @@ import AdminTrailers from './AdminTrailers.vue';
         <AdminNav></AdminNav>
     </nav>
     <header>
-        <AdminTrailerHero></AdminTrailerHero>
+        <!-- <AdminTrailerHero></AdminTrailerHero> -->
     </header>
     <main>
         <RouterLink class="router-link" to="/admin/trailerform"><FontAwesome :icon="['fas', 'upload']" style="color: #171717;" /> Upload trailer poster</RouterLink>

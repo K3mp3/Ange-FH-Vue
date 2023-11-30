@@ -263,8 +263,8 @@
                 }
             }
             .trailer-info {
-                padding-left: 15px;
-                margin-top: 10px;
+                padding-left: 20px;
+                margin: 10px 0 30px 0;
                 text-align: left;
                 display: flex;
                 flex-direction: column;
