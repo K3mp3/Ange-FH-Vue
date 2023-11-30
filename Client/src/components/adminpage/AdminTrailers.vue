@@ -175,7 +175,7 @@
 </script>
 
 <template>
-    <div class="media-container" @mouseover="showScrollButtons" @focus="showScrollButtons" @mouseleave="hideScrollButtons"  @focusout="showScrollButtons">
+    <div class="media-container">
         <div v-for="index in trailers" :key="index._id" class="slide-container">
             <div class="image-container">
                 <div class="left-btn-container">
@@ -225,11 +225,11 @@
     .media-container {
         width: 100%;
         display: flex;
-        overflow: auto;
+        flex-direction: column;
         gap: 10px;
         scrollbar-width: thin; /* Firefox */
         scrollbar-color: transparent transparent; /* Firefox */
-        scro
+        background-color: #171717;
 
         .hide-scrollbar {
             overflow: hidden;
@@ -253,7 +253,7 @@
                 width: calc(100vw);
                 height: 50vw;
                 border-radius: 8px;
-                padding: 10px 15px;
+                padding: 10px 20px;
 
                 img {
                     width: 100%;
