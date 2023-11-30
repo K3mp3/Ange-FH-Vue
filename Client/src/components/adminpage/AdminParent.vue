@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import AdminNav from './AdminNav.vue';
+    // import AdminNav from './AdminNav.vue';
     import AdminTrailerHero from './AdminTrailerHero.vue';
 import AdminTrailers from './AdminTrailers.vue';
 
@@ -7,7 +7,7 @@ import AdminTrailers from './AdminTrailers.vue';
 
 <template>
     <nav>
-        <AdminNav></AdminNav>
+        <!-- <AdminNav></AdminNav> -->
     </nav>
     <header>
         <AdminTrailerHero></AdminTrailerHero>

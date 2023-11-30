@@ -5,6 +5,7 @@
   import HomeMovies from './HomeMovies.vue';
   import HomeEvents from './HomeEvents.vue';
   import HomeTrailer from './HomeTrailer.vue';
+  import NavbarVue from '../nav/Navbar.vue';
 
 
   const isSignInClicked = ref(false);
@@ -20,12 +21,15 @@
 </script>
 
 <template>
+  <nav>
+    <NavbarVue></NavbarVue>
+  </nav>
   <div class="sign-in-pop-up" v-if="isSignInClicked">
     <SignInView></SignInView>
   </div>
-  <HomeTrailer></HomeTrailer>
+  <!-- <HomeTrailer></HomeTrailer> -->
   <HomeMovies></HomeMovies>
-  <HomeEvents></HomeEvents>
+  <!-- <HomeEvents></HomeEvents> -->
 </template>
 
 <style scoped lang="scss">
